@@ -1,0 +1,252 @@
+'use client';
+
+import { useState, useMemo, useEffect } from 'react';
+import { useUser } from '@/firebase';
+import { Move, InventoryItem, Box, PackingPlan, GroupingSuggestion } from '@/lib/types';
+import { getBoxes, saveBox, deleteBox, updateItem } from '@/lib/data';
+import { generatePackingPlan } from '@/lib/backend';
+import { ArrowLeft, Plus, Package, Printer, Trash2, X, Lightbulb, Loader2, Sparkles, Check, Crown } from 'lucide-react';
+import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
+
+const PackingPlanModal = ({ plan, onClose, onCreateBox }: { plan: PackingPlan, onClose: () => void, onCreateBox: (group: GroupingSuggestion) => void }) => {
+  return null;
+};
+
+interface MoveDetailProps {
+    move: Move;
+    items: InventoryItem[];
+    onBack: () => void;
+    onUpdateItems: () => void;
+    onPrintLabel: (box: Box, items: InventoryItem[]) => void;
+    onUpgradeReq: (feature: string) => void;
+    isLandscape: boolean;
+}
+
+const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgradeReq, isLandscape }: MoveDetailProps) => {
+  const { user } = useUser();
+  const [boxes, setBoxes] = useState<Box[]>([]);
+  const [showAddBox, setShowAddBox] = useState(false);
+  const [newBoxName, setNewBoxName] = useState('');
+  const [newBoxRoom, setNewBoxRoom] = useState('');
+  const [selectedItemIds, setSelectedItemIds] = useState<Set<string>>(new Set());
+  const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
+
+  // AI State
+  const [packingPlan, setPackingPlan] = useState<PackingPlan | null>(null);
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
+
+  const unpackedItems = useMemo(() => items.filter(item => !item.boxId), [items]);
+
+  const refreshBoxes = () => setBoxes(getBoxes(move.id));
+
+  useEffect(() => {
+    refreshBoxes();
+  }, [move.id]);
+
+  const handleAddBox = () => {
+    if (!newBoxName.trim()) return;
+    saveBox({ name: newBoxName.trim(), moveId: move.id, destinationRoom: newBoxRoom.trim() || undefined });
+    refreshBoxes();
+    setNewBoxName('');
+    setNewBoxRoom('');
+    setShowAddBox(false);
+  };
+  
+  const handleDeleteBox = (boxId: string) => {
+    if (window.confirm("Delete this box? All items inside will be marked as unpacked.")) {
+      deleteBox(boxId);
+      refreshBoxes();
+      onUpdateItems();
+    }
+  };
+
+  const handleItemSelection = (itemId: string) => {
+    const newSet = new Set(selectedItemIds);
+    if (newSet.has(itemId)) newSet.delete(itemId);
+    else newSet.add(itemId);
+    setSelectedItemIds(newSet);
+  };
+  
+  const assignSelectedToBox = (boxId: string) => {
+    if (selectedItemIds.size === 0) return;
+    selectedItemIds.forEach(id => {
+      const item = items.find(i => i.id === id);
+      if (item) updateItem({ ...item, boxId });
+    });
+    setSelectedItemIds(new Set());
+    onUpdateItems();
+  };
+  
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, boxId: string) => {
+    e.preventDefault();
+    if (draggedItemId) {
+      const item = items.find(i => i.id === draggedItemId);
+      if (item) {
+        updateItem({ ...item, boxId });
+        onUpdateItems();
+      }
+      setDraggedItemId(null);
+    }
+    e.currentTarget.classList.remove('border-indigo-500', 'bg-indigo-50');
+  };
+  
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.currentTarget.classList.add('border-indigo-500', 'bg-indigo-50');
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.currentTarget.classList.remove('border-indigo-500', 'bg-indigo-50');
+  };
+
+  const handleGeneratePlan = async () => {
+    if (!checkPermission(user, PERMISSIONS.MOVE_AI)) {
+        onUpgradeReq('AI Move Planning');
+        return;
+    }
+
+    setIsGeneratingPlan(true);
+    setPackingPlan(null);
+    const plan = await generatePackingPlan(unpackedItems);
+    setPackingPlan(plan);
+    setIsGeneratingPlan(false);
+  };
+  
+  const createBoxFromSuggestion = (group: GroupingSuggestion) => {
+    const box = saveBox({ name: group.groupName, moveId: move.id });
+    group.itemIds.forEach(id => {
+      const item = items.find(i => i.id === id);
+      if (item) updateItem({ ...item, boxId: box.id });
+    });
+    refreshBoxes();
+    onUpdateItems();
+    setPackingPlan(null); // Close modal after action
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm h-full flex flex-col overflow-hidden">
+      {isGeneratingPlan && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+           <Loader2 size={40} className="text-white animate-spin mb-4" />
+           <p className="text-white font-bold text-lg">Generating Your AI Packing Plan...</p>
+           <p className="text-indigo-200">This may take a moment.</p>
+        </div>
+      )}
+      {packingPlan && <PackingPlanModal plan={packingPlan} onClose={() => setPackingPlan(null)} onCreateBox={createBoxFromSuggestion} />}
+      
+      <header className="p-4 border-b border-gray-100 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-3">
+          <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full text-gray-500"><ArrowLeft size={20} /></button>
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">{move.name}</h2>
+            <p className="text-sm text-gray-500">Move Date: {new Date(move.date).toLocaleDateString()}</p>
+          </div>
+        </div>
+        <button onClick={handleGeneratePlan} className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-indigo-100 border border-indigo-100 relative overflow-hidden">
+           {!checkPermission(user, PERMISSIONS.MOVE_AI) && <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10"><Crown size={14} className="text-amber-500"/></div>}
+           <Sparkles size={16}/> Get AI Packing Plan
+        </button>
+      </header>
+
+      <div className={`flex-1 grid ${isLandscape ? 'grid-cols-2' : 'grid-cols-1'} md:grid-cols-2 overflow-hidden`}>
+        {/* Left: Unpacked Items */}
+        <div className="flex flex-col border-r border-gray-100 overflow-hidden">
+          <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center shrink-0">
+            <h3 className="font-bold text-gray-800">Unpacked Items ({unpackedItems.length})</h3>
+            {selectedItemIds.size > 0 && <span className="text-xs bg-indigo-100 text-indigo-700 font-bold px-2 py-1 rounded-full">{selectedItemIds.size} selected</span>}
+          </div>
+          <div className="flex-1 overflow-y-auto p-2 space-y-1">
+            {unpackedItems.map(item => (
+              <div 
+                key={item.id}
+                draggable
+                onDragStart={() => setDraggedItemId(item.id)}
+                className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer border transition-colors ${selectedItemIds.has(item.id) ? 'bg-indigo-50 border-indigo-300' : 'border-transparent hover:bg-gray-100'}`}
+                onClick={() => handleItemSelection(item.id)}
+              >
+                <div className="w-10 h-10 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                  {item.imageUrl && <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />}
+                </div>
+                <div className="flex-1"><p className="text-sm font-medium text-gray-800 truncate">{item.name}</p><p className="text-xs text-gray-500">{item.location}</p></div>
+                {selectedItemIds.has(item.id) && <Check size={16} className="text-indigo-600" />}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: Boxes */}
+        <div className="flex flex-col overflow-hidden">
+          <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center shrink-0">
+            <h3 className="font-bold text-gray-800">Boxes ({boxes.length})</h3>
+            <button onClick={() => setShowAddBox(!showAddBox)} className="p-2 hover:bg-gray-200 rounded-full text-gray-500"><Plus size={18} /></button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-2">
+            {showAddBox && (
+              <div className="p-4 mb-2 bg-white border border-gray-200 rounded-xl shadow-sm space-y-3">
+                <input value={newBoxName} onChange={e => setNewBoxName(e.target.value)} placeholder="Box Name (e.g., Kitchen Fragile)" className="w-full p-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                <input value={newBoxRoom} onChange={e => setNewBoxRoom(e.target.value)} placeholder="Destination Room (Optional)" className="w-full p-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                <div className="flex gap-3 pt-2">
+                  <button onClick={() => setShowAddBox(false)} className="flex-1 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
+                  <button onClick={handleAddBox} className="flex-1 py-2.5 text-sm bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors">Add Box</button>
+                </div>
+              </div>
+            )}
+            <div className="space-y-2">
+              {boxes.map((box, index) => {
+                const itemsInBox = items.filter(i => i.boxId === box.id);
+                return (
+                  <div key={box.id} onDrop={e => handleDrop(e, box.id)} onDragOver={handleDragOver} onDragLeave={handleDragLeave} className="border border-gray-200 rounded-lg transition-colors">
+                    <div className="p-3 border-b border-gray-200 flex justify-between items-start">
+                      <div>
+                        <p className="font-bold text-gray-900 flex items-center gap-2"><span className="text-xs bg-gray-200 font-mono p-1 rounded">#{index + 1}</span> {box.name}</p>
+                        {box.destinationRoom && <p className="text-xs text-gray-500 mt-1">For: {box.destinationRoom}</p>}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => onPrintLabel(box, itemsInBox)} className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-full"><Printer size={16} /></button>
+                        <button onClick={() => handleDeleteBox(box.id)} className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full"><Trash2 size={16} /></button>
+                      </div>
+                    </div>
+                    <div className="p-2 space-y-1">
+                      {itemsInBox.map(item => (
+                        <div key={item.id} className="text-xs text-gray-600 p-1 bg-white rounded flex items-center gap-2">
+                           <div className="w-4 h-4 rounded bg-gray-100 overflow-hidden flex-shrink-0">
+                             {item.imageUrl ? (
+                               <img src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} />
+                             ) : null}
+                           </div>
+                           <span className="truncate">{item.name}</span>
+                        </div>
+                      ))}
+                      {selectedItemIds.size > 0 && <button onClick={() => assignSelectedToBox(box.id)} className="w-full text-center text-xs py-2 bg-indigo-50 text-indigo-700 font-bold rounded-md hover:bg-indigo-100">Add {selectedItemIds.size} items here</button>}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function MovePlannerPage() {
+  const [moves, setMoves] = useState<Move[]>([]);
+  const [selectedMove, setSelectedMove] = useState<Move | null>(null);
+
+  const handleCreateMove = (name: string, date: Date) => {
+    const newMove = { id: Date.now().toString(), name, date: date.toISOString() };
+    setMoves([...moves, newMove]);
+    setSelectedMove(newMove);
+  };
+
+  if (selectedMove) {
+    return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => {}} onPrintLabel={() => {}} onUpgradeReq={() => {}} isLandscape={false} />
+  }
+
+  return (
+    <div>
+      {/* Move creation UI will be here */}
+    </div>
+  )
+}

@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the MyARK application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "User's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "User's last name."
+        },
+        "profilePicture": {
+          "type": "string",
+          "description": "URL to the user's profile picture.",
+          "format": "uri"
+        },
+        "oauthProvider": {
+          "type": "string",
+          "description": "The OAuth2 provider used for authentication (e.g., 'apple', 'facebook', 'google')."
+        },
+        "oauthId": {
+          "type": "string",
+          "description": "The user ID provided by the OAuth2 provider."
+        },
+        "permissions": {
+          "type": "object",
+          "description": "Permissions granted by the user.",
+          "properties": {
+            "camera": { "type": "string", "enum": ["granted", "denied", "prompt"] },
+            "microphone": { "type": "string", "enum": ["granted", "denied", "prompt"] },
+            "location": { "type": "string", "enum": ["granted", "denied", "prompt"] }
+          }
+        }
+      },
+      "required": [
+        "id",
+        "email"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous",
+      "google.com",
+      "apple.com",
+      "facebook.com"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user data, including OAuth provider, OAuth ID, and permissions. Authorization is based on the `userId` in the path. Each user can only read/write their own document.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user, corresponding to their Firebase Authentication UID."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure authorization independence, clarity, and scalability, aligning with the core design principles. User data, including OAuth information and permissions, is stored under `/users/{userId}`. This adheres to Path-Based ownership, where each user's data is isolated and controlled by their respective ID. The OAuth provider and ID are explicitly stored within the user document, facilitating simple lookups without requiring complex queries or security rules based on external factors. No denormalization is required as there are no subcollections and data requirements for single user. This simple structure supports the required QAPs by clearly delineating ownership and permissions."
+  }
+}

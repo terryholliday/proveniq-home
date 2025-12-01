@@ -1,0 +1,82 @@
+{
+  "placeholderImages": [
+    {
+      "id": "armchair",
+      "description": "A comfortable vintage leather armchair in a well-lit room.",
+      "imageUrl": "https://images.unsplash.com/photo-1736795654926-4aadfb16be32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGVhdGhlciUyMGFybWNoYWlyfGVufDB8fHx8MTc2NDQ1MDUzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "leather armchair"
+    },
+    {
+      "id": "laptop",
+      "description": "A modern laptop on a clean desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1455894127589-22f75500213a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxsYXB0b3AlMjBkZXNrfGVufDB8fHx8MTc2NDM3NTI0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "laptop desk"
+    },
+    {
+      "id": "book",
+      "description": "An old, valuable book with a decorative cover.",
+      "imageUrl": "https://images.unsplash.com/photo-1476081718509-d5d0b661a376?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxvbGQlMjBib29rfGVufDB8fHx8MTc2NDQxMjEyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "old book"
+    },
+    {
+      "id": "guitar",
+      "description": "An acoustic guitar leaning against a wall.",
+      "imageUrl": "https://images.unsplash.com/photo-1588449668365-d15e397f6787?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhY291c3RpYyUyMGd1aXRhcnxlbnwwfHx8fDE3NjQ0MTUzODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "acoustic guitar"
+    },
+    {
+      "id": "dutch-oven",
+      "description": "A red enameled cast iron dutch oven on a stovetop.",
+      "imageUrl": "https://images.unsplash.com/photo-1677666939405-9aeb5156c3a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZHV0Y2glMjBvdmVufGVufDB8fHx8MTc2NDQ3NTI2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dutch oven"
+    },
+    {
+      "id": "bike",
+      "description": "A modern mountain bike in a natural outdoor setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1606087492572-424ebe0f2f61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtb3VudGFpbiUyMGJpa2V8ZW58MHx8fHwxNzY0MzgwMzIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountain bike"
+    },
+    {
+      "id": "camera",
+      "description": "A professional DSLR camera with a lens attached.",
+      "imageUrl": "https://images.unsplash.com/photo-1615747873253-4c4ad5633311?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxEU0xSJTIwY2FtZXJhfGVufDB8fHx8MTc2NDM5MTg1MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "DSLR camera"
+    },
+    {
+      "id": "eames-chair",
+      "description": "A classic lounge chair and ottoman in a modern living room.",
+      "imageUrl": "https://images.unsplash.com/photo-1606744824163-985d376605aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsb3VuZ2UlMjBjaGFpcnxlbnwwfHx8fDE3NjQ0NzUyNjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "lounge chair"
+    },
+    {
+      "id": "login-background",
+      "description": "Abstract geometric pattern.",
+      "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzY0Mzc3NjI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract background"
+    },
+    {
+      "id": "user-avatar-1",
+      "description": "A placeholder for a user's avatar.",
+      "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQ0NTkzNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "user-avatar-2",
+      "description": "A placeholder for a user's avatar.",
+      "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQ0NTkzNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "user-avatar-3",
+      "description": "A placeholder for a user's avatar.",
+      "imageUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQ0NTkzNjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "default-item",
+      "description": "A generic placeholder for an inventory item.",
+      "imageUrl": "https://images.unsplash.com/photo-1673157082033-365b3c38c964?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxncmF5JTIwYm94fGVufDB8fHx8MTc2NDQ3NTI2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gray box"
+    }
+  ]
+}

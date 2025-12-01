@@ -1,0 +1,100 @@
+/**
+ * This ruleset enforces a strict user-ownership security model for the MyARK application.
+ *
+ * Core Philosophy:
+ * The security model is built on the principle that a user's data is private and
+ * should only be accessible by that user. All operations (read, create, update, delete)
+ * are restricted to the authenticated owner of the data.
+ *
+ * Data Structure:
+ * All user-specific data is stored within a top-level `users` collection. Each user
+ * is represented by a single document where the document ID is the user's
+ * Firebase Authentication UID. The structure is `/users/{userId}`.
+ *
+ * Key Security Decisions:
+ * - User Listing Disabled: To protect user privacy and prevent data scraping, it is
+ *   impossible for any client to list the documents in the top-level `/users` collection.
+ * - Strict Ownership: All access to a `/users/{userId}` document is gated by a check
+ *   that ensures the requester's UID matches the `userId` in the path.
+ * - Self-Creation: A newly authenticated user is permitted to create their own
+ *   user profile document, which is essential for account setup.
+ *
+ * Denormalization for Authorization:
+ * The data model is simple and requires no denormalization. Authorization decisions
+ * are made using the `userId` directly from the document path, which is the most
+ * efficient and secure method for this structure.
+ *
+ * Structural Segregation:
+ * This principle is not applicable as there is no mixed public/private data. The
+ * entire `/users` collection is treated as private user-owned data.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions for Reusable Logic
+
+    /**
+     * Checks if the current request is from an authenticated user.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the requesting user's UID matches the provided userId.
+     * This is the core function for enforcing document ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Verifies that a document exists AND that the requester is the owner.
+     * Crucial for preventing modification or deletion of non-existent data.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * On create, validates that the document's internal 'id' field matches the
+     * user's auth UID, ensuring relational integrity from the start.
+     */
+    function hasValidIdOnCreate(userId) {
+      return request.resource.data.id == userId;
+    }
+
+    /**
+     * On update, ensures that the document's internal 'id' field cannot be changed,
+     * protecting the immutable link between the document and its owner.
+     */
+    function isIdImmutable() {
+      return request.resource.data.id == resource.data.id;
+    }
+
+    /**
+     * @description
+     *   Manages access to a user's own profile document. It allows a user to
+     *   read, create, update, and delete their own data, but nobody else's.
+     * @path
+     *   /users/{userId}
+     * @allow
+     *   An authenticated user (uid: 'user123') can create their own profile document
+     *   at `/users/user123`, provided the document data includes `{"id": "user123"}`.
+     * @deny
+     *   An authenticated user (uid: 'user456') is denied from reading the document
+     *   at `/users/user123`.
+     * @principle
+     *   Restricts access to a user's own data tree, enforcing strict data privacy
+     *   and ownership for all operations.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // CRITICAL: Prevents clients from listing all users.
+      allow create: if isOwner(userId) && hasValidIdOnCreate(userId);
+      allow update: if isExistingOwner(userId) && isIdImmutable();
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}
