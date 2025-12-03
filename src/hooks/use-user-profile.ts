@@ -15,7 +15,7 @@ export function useUserProfile(user?: User | null) {
 
     const { data: userProfile, isLoading, error } = useDoc<UserProfile>(userDocRef);
 
-    const createUserProfile = async (user: User) => {
+    const createUserProfile = async (user: User, overrides?: Partial<UserProfile>) => {
         if (!firestore) return;
         const userDocRef = doc(firestore, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);
@@ -36,8 +36,11 @@ export function useUserProfile(user?: User | null) {
                     camera: 'prompt',
                     microphone: 'prompt',
                     location: 'prompt',
-                }
+                },
+                ...overrides,
             });
+        } else if (overrides && Object.keys(overrides).length > 0) {
+            await setDoc(userDocRef, overrides, { merge: true });
         }
     };
 

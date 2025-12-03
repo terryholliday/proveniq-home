@@ -1,0 +1,35 @@
+{
+  "hosting": [
+    {
+      "site": "myarkapp-io",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "site": "myarkapp-io-www",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "redirects": [
+        {
+          "source": "/**",
+          "destination": "https://myarkapp.io",
+          "type": 301
+        }
+      ]
+    }
+  ]
+}
