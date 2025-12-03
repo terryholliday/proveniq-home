@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { InventoryItem, User } from '@/lib/types';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Section, Field } from './Section';

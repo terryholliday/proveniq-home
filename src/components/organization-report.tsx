@@ -21,7 +21,7 @@ const mockSuggestions: OrganizationSuggestion[] = [
 ];
 
 const OrganizationReport: React.FC = () => {
-  const [suggestions, setSuggestions] = useState<OrganizationSuggestion[]>(mockSuggestions); 
+  const [suggestions] = useState<OrganizationSuggestion[]>(mockSuggestions);
   const [accepted, setAccepted] = useState<Set<string>>(new Set());
 
   const handleAccept = (id: string) => {

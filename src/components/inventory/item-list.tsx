@@ -8,8 +8,7 @@ import { aiSearchInventory } from '@/ai/flows/ai-search-inventory';
 import { Skeleton } from '../ui/skeleton';
 
 export function ItemList() {
-    const [isPending, startTransition] = useTransition();
-    const [searchQuery, setSearchQuery] = useState('');
+    const [, startTransition] = useTransition();
     const [items, setItems] = useState<InventoryItem[]>(mockInventory);
     const [isSearching, setIsSearching] = useState(false);
 
@@ -18,7 +17,6 @@ export function ItemList() {
 
         const handleSearch = (e: Event) => {
             const query = (e.target as HTMLInputElement).value;
-            setSearchQuery(query);
             if (query.trim() === '') {
                 setItems(mockInventory);
                 return;

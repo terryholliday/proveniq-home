@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, XCircle, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { guideTopics, GuideTopic, GuideCategory } from '@/lib/guide-data';

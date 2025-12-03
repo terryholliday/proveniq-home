@@ -43,7 +43,7 @@ export function PermissionsInitializer() {
                         // Important: Stop the tracks immediately to turn off camera/mic light
                         stream.getTracks().forEach(track => track.stop());
                     }
-                } catch (err) {
+                } catch {
                     if(permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'denied' });
                     if(permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'denied' });
                     toast({
@@ -68,7 +68,7 @@ export function PermissionsInitializer() {
                             );
                         });
                     }
-                } catch (err) {
+                } catch {
                     toast({
                         variant: 'destructive',
                         title: 'Location Access Denied',

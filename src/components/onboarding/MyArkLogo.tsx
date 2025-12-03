@@ -1,15 +1,15 @@
 'use client';
 import React from 'react';
+import Image, { ImageProps } from 'next/image';
 
-interface MyArkLogoProps {
+type MyArkLogoProps = {
   size?: number;
   className?: string;
-  [key: string]: any;
-}
+} & Omit<ImageProps, 'src' | 'alt' | 'width' | 'height'>;
 
 export const MyArkLogo: React.FC<MyArkLogoProps> = ({ size = 64, className = '', ...props }) => {
   return (
-    <img
+    <Image
       src="/MyArkLogo.png"
       alt="MyARK Logo"
       width={size}

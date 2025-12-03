@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { InventoryItem } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Heart, ImageIcon } from 'lucide-react';
@@ -34,7 +35,7 @@ export function ItemImageGallery({ item, onBack, onUpdate }: ItemImageGalleryPro
                 {allImages.map((img, idx) => (
                     <CarouselItem key={idx} className="h-full">
                         <div className="w-full h-full flex items-center justify-center p-4">
-                           <img src={img} alt={`${item.name} image ${idx + 1}`} className="max-w-full max-h-full object-contain" />
+                           <Image src={img} alt={`${item.name} image ${idx + 1}`} width={800} height={600} className="max-w-full max-h-full object-contain" unoptimized />
                         </div>
                     </CarouselItem>
                 ))}

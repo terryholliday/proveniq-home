@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import QRCode from 'react-qr-code';
-import { Box, InventoryItem } from '@/lib/types';
 import { Package } from 'lucide-react';
+import { Box, InventoryItem } from '@/lib/types';
 
 interface PrintableBoxLabelProps {
   box: Box;
@@ -16,7 +16,7 @@ const PrintableBoxLabel: React.FC<PrintableBoxLabelProps> = ({ box, items, onDon
     // We use a small timeout to allow the print dialog to appear.
     const timer = setTimeout(onDone, 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [onDone]);
   
   const qrData = JSON.stringify({
       type: 'MyARK_box',

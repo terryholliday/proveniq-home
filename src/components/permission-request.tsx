@@ -1,5 +1,5 @@
 import React from 'react';
-import { Camera, Shield, Check, ArrowRight, Mic } from 'lucide-react';
+import { Camera, Shield, Check, Mic } from 'lucide-react';
 import { MyArkLogo } from './onboarding/MyArkLogo';
 
 interface PermissionRequestProps {

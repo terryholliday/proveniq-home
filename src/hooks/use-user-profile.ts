@@ -3,6 +3,7 @@
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { User } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { UserProfile } from '@/lib/types';
 
 export function useUserProfile(user?: User | null) {
     const firestore = useFirestore();
@@ -12,7 +13,7 @@ export function useUserProfile(user?: User | null) {
         return doc(firestore, 'users', user.uid);
     }, [firestore, user]);
 
-    const { data: userProfile, isLoading, error } = useDoc(userDocRef);
+    const { data: userProfile, isLoading, error } = useDoc<UserProfile>(userDocRef);
 
     const createUserProfile = async (user: User) => {
         if (!firestore) return;
@@ -40,7 +41,7 @@ export function useUserProfile(user?: User | null) {
         }
     };
 
-    const updateUserProfile = async (data: any) => {
+    const updateUserProfile = async (data: Partial<UserProfile>) => {
         if (!userDocRef) return;
         await setDoc(userDocRef, data, { merge: true });
     };

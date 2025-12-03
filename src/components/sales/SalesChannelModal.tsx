@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { InventoryItem } from '@/lib/types';
-import { X, Gavel, ShoppingBag, Facebook, Globe, Tag, Copy, Check, Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { X, Gavel, ShoppingBag, Copy, Check, Loader2, Sparkles, AlertCircle } from 'lucide-react';
 import { generateBundleAd } from '@/services/backendService';
 
 interface SalesChannelModalProps {
@@ -32,7 +32,7 @@ const SalesChannelModal: React.FC<SalesChannelModalProps> = ({ items, onClose, o
           const result = await generateBundleAd(items, platformId);
           setAdCopy(result.adCopy);
           setSuggestedPrice(result.suggestedPrice);
-      } catch (e) {
+      } catch {
           setAdCopy("Failed to generate ad copy. Please try again.");
       } finally {
           setIsGenerating(false);
@@ -146,7 +146,7 @@ const SalesChannelModal: React.FC<SalesChannelModalProps> = ({ items, onClose, o
                             <div className="bg-yellow-50 border border-yellow-100 p-3 rounded-lg flex gap-3 items-start">
                                 <AlertCircle size={18} className="text-yellow-600 shrink-0 mt-0.5"/>
                                 <p className="text-xs text-yellow-800">
-                                    Copy this text and paste it into a new listing on {selectedPlatform}. Don't forget to attach your photos!
+                                    Copy this text and paste it into a new listing on {selectedPlatform}. Don&apos;t forget to attach your photos!
                                 </p>
                             </div>
                          </>

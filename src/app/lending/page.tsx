@@ -1,8 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { mockInventory } from "@/lib/data";
 import { MoreHorizontal } from "lucide-react";
@@ -21,7 +20,7 @@ export default function LendingPage() {
         <>
             <PageHeader
                 title="Lending Tracker"
-                description="Keep track of items you've lent to friends and family."
+                description="Keep track of items you&apos;ve lent to friends and family."
             />
             <Card>
                 <CardContent className="p-0">
@@ -84,7 +83,7 @@ export default function LendingPage() {
                     </Table>
                      {lentItems.length === 0 && (
                         <div className="text-center p-8 text-muted-foreground">
-                            You haven't lent out any items.
+                            You haven&apos;t lent out any items.
                         </div>
                     )}
                 </CardContent>

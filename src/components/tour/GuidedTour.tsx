@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { TourStep, AppView } from '@/lib/types';
 import { ArrowRight, X } from 'lucide-react';
 
@@ -60,19 +60,21 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
   const tourSteps = getTourSteps();
   const currentStep = tourSteps[stepIndex];
 
-  const handleNext = () => {
-    if (stepIndex < tourSteps.length - 1) {
-      setStepIndex(stepIndex + 1);
-    } else {
+  const handleNext = useCallback(() => {
+    setStepIndex((prev) => {
+      if (prev < tourSteps.length - 1) {
+        return prev + 1;
+      }
       onComplete();
-    }
-  };
+      return prev;
+    });
+  }, [onComplete, tourSteps.length]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onComplete();
-  };
+  }, [onComplete]);
 
-  const positionElement = (step: TourStep) => {
+  const positionElement = useCallback((step: TourStep) => {
     const element = document.getElementById(step.targetId);
     if (element) {
       const isFixed = window.getComputedStyle(element).position === 'fixed';
@@ -88,7 +90,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
       console.warn(`Tour target not found: ${step.targetId}`);
       handleNext();
     }
-  };
+  }, [handleNext]);
 
   useEffect(() => {
     if (!isActive) {
@@ -122,7 +124,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
 
-  }, [stepIndex, isActive, onNavigate, currentStep, onComplete]);
+  }, [stepIndex, isActive, onNavigate, currentStep, onComplete, positionElement]);
 
   useLayoutEffect(() => {
     if (!targetRect || !tooltipRef.current) return;

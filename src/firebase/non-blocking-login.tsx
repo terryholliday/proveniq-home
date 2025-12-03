@@ -4,6 +4,7 @@ import {
   signInAnonymously,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  UserCredential,
   // Assume getAuth and app are initialized elsewhere
 } from 'firebase/auth';
 
@@ -15,7 +16,7 @@ export function initiateAnonymousSignIn(authInstance: Auth): void {
 }
 
 /** Initiate email/password sign-up (non-blocking). */
-export function initiateEmailSignUp(authInstance: Auth, email: string, password: string): Promise<any> {
+export function initiateEmailSignUp(authInstance: Auth, email: string, password: string): Promise<UserCredential> {
   // This is now blocking because we need to handle the user creation logic in the component
   return createUserWithEmailAndPassword(authInstance, email, password);
 }

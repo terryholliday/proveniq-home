@@ -36,7 +36,7 @@ export default function PermissionsPage() {
         title: 'Permissions Granted',
         description: 'You can now use all of MyARK\'s smart features.',
       });
-    } catch (err) {
+    } catch {
       await updateUserProfile({
         'permissions.camera': 'denied',
         'permissions.microphone': 'denied',

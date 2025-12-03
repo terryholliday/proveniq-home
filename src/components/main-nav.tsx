@@ -4,19 +4,13 @@ import * as React from 'react'
 import { usePathname } from 'next/navigation'
 import {
   Archive,
-  ArrowRightLeft,
   Box,
-  FileText,
   GanttChartSquare,
   HeartHandshake,
   HelpCircle,
-  Home,
   LayoutGrid,
-  Settings,
   ShieldCheck,
-  Siren,
   Sparkles,
-  Users,
   Wallet,
 } from 'lucide-react'
 import {
@@ -31,7 +25,6 @@ import {
 } from '@/components/ui/sidebar'
 import Link from 'next/link'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible'
-import { cn } from '@/lib/utils'
 
 export function MainNav() {
   const pathname = usePathname()

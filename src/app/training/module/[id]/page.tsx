@@ -1,12 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import { notFound, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, BrainCircuit, MessageSquare, Target } from 'lucide-react';
+import { ArrowLeft, BrainCircuit, Target } from 'lucide-react';
 import Link from 'next/link';
-import { trainingModules, TrainingModule } from '@/lib/training-data';
+import { trainingModules } from '@/lib/training-data';
 import { Quiz } from '@/components/training/Quiz';
 import { Roleplay } from '@/components/training/Roleplay';
 
@@ -70,7 +69,7 @@ export default function ModulePage() {
                   <Target />
                   Roleplay Scenario
                 </CardTitle>
-                <CardDescription>Practice what you've learned.</CardDescription>
+                <CardDescription>Practice what you&apos;ve learned.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Roleplay scenario={trainingModule.roleplay.scenario} />

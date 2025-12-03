@@ -4,7 +4,6 @@ import { RestrictedAccess } from './RestrictedAccess';
 import { Button } from '../ui/button';
 import { Bell } from 'lucide-react';
 import { UserNav } from '../user-nav';
-import { PageHeader } from '../page-header';
 import { MyArkLogo } from '../onboarding/MyArkLogo';
 
 export default function TrainingLayout({ children }: { children: React.ReactNode }) {

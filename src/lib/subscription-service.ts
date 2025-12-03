@@ -1,5 +1,3 @@
-import { User } from './types';
-
 export const PERMISSIONS = {
   HO3_CLAIMS: 'ho3_claims',
   INVENTORY_UNLIMITED: 'inventory_unlimited',
@@ -10,7 +8,11 @@ export const PERMISSIONS = {
   SALES_ADS: 'sales_ads',
 };
 
-export function checkPermission(user: any, permission: string): boolean {
+export function checkPermission(
+  user: { subscriptionTier?: string; tier?: string; subscriptionStatus?: string } | null | undefined,
+  _permission: string,
+): boolean {
+  void _permission;
   // Basic implementation: allow everything for now or based on user tier
   // For this fix, we'll assume all users have access to basic features, 
   // but you might want to restrict this based on user.subscriptionTier

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Camera, Map, AlertTriangle, X, Search, MapPin, HelpCircle, Loader2, ArrowLeft, ScanLine } from 'lucide-react';
+import { Camera, AlertTriangle, X, Search, MapPin, HelpCircle, Loader2, ArrowLeft, ScanLine } from 'lucide-react';
 import { InventoryItem, Anomaly } from '@/lib/types';
 import { auditRoom } from '@/services/backendService';
 
@@ -178,7 +178,7 @@ const SpaceMapper: React.FC<SpaceMapperProps> = ({ items, onSelectItem, onBack }
         <div className="p-4 border-b border-gray-100 flex items-center gap-3">
             <button onClick={reset} className="p-2 hover:bg-gray-100 rounded-full text-gray-500"><ArrowLeft size={20} /></button>
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Audit Results for "{selectedLocation}"</h2>
+              <h2 className="text-xl font-bold text-gray-900">Audit Results for &quot;{selectedLocation}&quot;</h2>
               <p className="text-sm text-gray-500">The AI has identified the following discrepancies.</p>
             </div>
         </div>
@@ -220,3 +220,5 @@ const SpaceMapper: React.FC<SpaceMapperProps> = ({ items, onSelectItem, onBack }
     </div>
   );
 };
+
+export default SpaceMapper;

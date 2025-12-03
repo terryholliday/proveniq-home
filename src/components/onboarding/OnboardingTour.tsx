@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowRight, Check, Camera, Shield, Truck, Zap, ShieldCheck, Gavel } from 'lucide-react';
+import { ArrowRight, Check, Truck, Zap, ShieldCheck, Gavel } from 'lucide-react';
 import { MyArkLogo } from './MyArkLogo';
 
 interface OnboardingTourProps {

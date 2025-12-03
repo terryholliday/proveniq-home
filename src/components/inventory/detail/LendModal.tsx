@@ -36,7 +36,7 @@ export function LendModal({ item, onClose, onUpdate }: LendModalProps) {
         <Dialog open={true} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Lend "{item.name}"</DialogTitle>
+                    <DialogTitle>Lend &quot;{item.name}&quot;</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                     <div className="grid gap-2">

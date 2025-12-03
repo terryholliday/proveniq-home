@@ -2,7 +2,7 @@
 
 import { InventoryItem } from "@/lib/types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { HandCoins, Calendar, Clock, User, Phone, Mail } from "lucide-react";
+import { HandCoins, Clock, User, Phone, Mail } from "lucide-react";
 
 interface LendingInfoProps {
     item: InventoryItem;

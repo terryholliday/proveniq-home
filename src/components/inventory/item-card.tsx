@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { MoreHorizontal, ArrowUpRight, HeartHandshake } from "lucide-react";
+import { MoreHorizontal, HeartHandshake } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,

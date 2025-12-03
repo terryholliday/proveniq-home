@@ -1,14 +1,28 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AppView } from '@/lib/types';
 import { MyArkLogo } from './onboarding/MyArkLogo';
-import { Camera, Sparkles, Shield, ArrowRight, ArrowLeft, AlertTriangle, Database, TrendingUp, Users, Building2, ChevronRight, X } from 'lucide-react';
+import { Camera, Sparkles, Shield, ArrowRight, ArrowLeft, AlertTriangle, Database, TrendingUp, Building2, X } from 'lucide-react';
 
 interface PitchDeckSlideshowProps {
   onNavigate: (view: AppView) => void;
 }
 
-const slides = [
+type Slide = {
+  id: string;
+  layout: 'cover' | 'split' | 'graphic' | 'grid' | 'stats';
+  title: string;
+  subtitle?: string;
+  content?: string;
+  color?: string;
+  icon?: JSX.Element;
+  bullets?: string[];
+  Graphic?: React.FC;
+  items?: { icon: JSX.Element; title: string; desc: string }[];
+  stats?: { label: string; value: string }[];
+};
+
+const slides: Slide[] = [
   {
     id: 'cover',
     layout: 'cover',
@@ -133,6 +147,20 @@ const PitchDeckSlideshow: React.FC<PitchDeckSlideshowProps> = ({ onNavigate }) =
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Keyboard navigation
+  const handleNext = useCallback(() => {
+    setCurrentSlide((prev) => {
+      if (prev < slides.length - 1) {
+        return prev + 1;
+      }
+      onNavigate('login');
+      return prev;
+    });
+  }, [onNavigate]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : prev));
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') handleNext();
@@ -140,21 +168,7 @@ const PitchDeckSlideshow: React.FC<PitchDeckSlideshowProps> = ({ onNavigate }) =
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlide]);
-
-  const handleNext = () => {
-    if (currentSlide < slides.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    } else {
-      onNavigate('login');
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
+  }, [handleNext, handlePrev]);
 
   const slide = slides[currentSlide];
   const progress = ((currentSlide + 1) / slides.length) * 100;
@@ -223,7 +237,7 @@ const PitchDeckSlideshow: React.FC<PitchDeckSlideshowProps> = ({ onNavigate }) =
             <div className="w-full h-full p-6 md:p-12 flex flex-col justify-center overflow-y-auto">
                 <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-8 md:mb-16 shrink-0">{slide.title}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                    {slide.items?.map((item: any, i: number) => (
+                    {slide.items?.map((item, i) => (
                         <div key={i} className="p-6 md:p-8 bg-gray-50 rounded-2xl border border-gray-100 text-center">
                             <div className="w-12 h-12 md:w-16 md:h-16 mx-auto bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 md:mb-6">
                                 {React.cloneElement(item.icon, { size: 32 })}
@@ -240,7 +254,7 @@ const PitchDeckSlideshow: React.FC<PitchDeckSlideshowProps> = ({ onNavigate }) =
             <div className="w-full h-full flex flex-col items-center justify-center p-6 md:p-12 bg-indigo-900 text-white">
                  <h2 className="text-2xl md:text-4xl font-bold mb-8 md:mb-16 text-center">{slide.title}</h2>
                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-8 md:mb-16 w-full max-w-4xl">
-                    {slide.stats?.map((stat: any, i: number) => (
+                    {slide.stats?.map((stat, i) => (
                         <div key={i} className="text-center bg-indigo-800/50 p-4 rounded-xl md:bg-transparent md:p-0">
                             <p className="text-4xl md:text-6xl font-black mb-2 text-indigo-300">{stat.value}</p>
                             <p className="text-sm md:text-xl uppercase tracking-widest opacity-70">{stat.label}</p>

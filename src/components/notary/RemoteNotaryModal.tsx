@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { LegalDocument } from '@/lib/types';
 import { X, Scale, Camera, Loader2, Edit3, CheckCircle, ShieldCheck } from 'lucide-react';
 
@@ -14,7 +15,6 @@ const RemoteNotaryModal: React.FC<RemoteNotaryModalProps> = ({ document, onClose
   const [step, setStep] = useState<NotaryStep>('intro');
   const [idImage, setIdImage] = useState<string | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isSealing, setIsSealing] = useState(false);
   const [signature, setSignature] = useState<string | null>(null);
 
   useEffect(() => {
@@ -26,9 +26,7 @@ const RemoteNotaryModal: React.FC<RemoteNotaryModalProps> = ({ document, onClose
       return () => clearTimeout(timer);
     }
     if (step === 'sealing') {
-      setIsSealing(true);
       const timer = setTimeout(() => {
-        setIsSealing(false);
         setStep('success');
       }, 3000);
       return () => clearTimeout(timer);
@@ -69,7 +67,7 @@ const RemoteNotaryModal: React.FC<RemoteNotaryModalProps> = ({ document, onClose
                     <p className="mt-2 text-sm text-gray-600">Verifying ID with notary...</p>
                 </div>
             ) : idImage ? (
-                <img src={idImage} className="w-48 h-auto mx-auto rounded-lg border shadow-sm" alt="ID Preview"/>
+                <Image src={idImage} width={192} height={192} className="w-48 h-auto mx-auto rounded-lg border shadow-sm" alt="ID Preview" />
             ) : (
                 <input type="file" onChange={handleIdUpload} accept="image/*" className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
             )}
@@ -124,7 +122,7 @@ const RemoteNotaryModal: React.FC<RemoteNotaryModalProps> = ({ document, onClose
            <div className="text-center p-8">
             <CheckCircle size={48} className="text-green-500 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-900">Document Notarized!</h3>
-            <p className="text-gray-600 mt-2 max-w-sm mx-auto">Your document has been digitally signed and sealed. It is now saved in your Legacy Vault with 'Notarized' status.</p>
+            <p className="text-gray-600 mt-2 max-w-sm mx-auto">Your document has been digitally signed and sealed. It is now saved in your Legacy Vault with &apos;Notarized&apos; status.</p>
             <button onClick={handleComplete} className="w-full mt-8 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700">Done</button>
           </div>
         );

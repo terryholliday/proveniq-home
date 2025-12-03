@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Gift, Gavel, Wrench, ShieldCheck, Truck, TrendingUp, Shield, Heart, PlayCircle, ChevronLeft, ChevronRight, Camera, Facebook, Check, GanttChartSquare, Sparkles, AlertTriangle, FileText, Tv2, Home, Cloud, ArrowDown, CloudRain, Search, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, Gift, Gavel, Wrench, ShieldCheck, Truck, TrendingUp, Shield, Heart, PlayCircle, ChevronLeft, ChevronRight, Camera, Facebook, Check, GanttChartSquare, AlertTriangle, FileText, Tv2, Home, CloudRain, Search, Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
@@ -70,7 +70,7 @@ const features = [
   },
 ];
 
-function CommandCenterIllustration() {
+function CommandCenterIllustration(): JSX.Element {
     const icons = [
         { icon: <Gift className="h-8 w-8 text-pink-500" />, name: 'Legacy' },
         { icon: <Gavel className="h-8 w-8 text-purple-500" />, name: 'Auctions' },
@@ -104,7 +104,7 @@ function CommandCenterIllustration() {
     );
 }
 
-function SearchEngineIllustration() {
+function SearchEngineIllustration(): JSX.Element {
   return (
     <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm">
       <div className="flex items-center border border-gray-200 rounded-lg p-3 mb-4">
@@ -122,14 +122,14 @@ function SearchEngineIllustration() {
   );
 }
 
-function AskYourArkIllustration() {
+function AskYourArkIllustration(): JSX.Element {
   return (
     <div className="relative w-full max-w-sm h-64 flex items-center justify-center p-4">
       <div className="relative w-full h-full flex items-center justify-center">
         {/* Left Device */}
         <div className="z-10 absolute left-4 w-40 h-56 bg-gray-800 rounded-2xl flex flex-col items-center justify-center p-4 shadow-2xl transform -rotate-6">
           <div className="w-5 h-5 bg-blue-400 rounded-full mb-3 animate-pulse" />
-          <p className="text-white text-sm text-center font-medium">"Alexa, ask MyARK where Grandma's bracelet is."</p>
+          <p className="text-white text-sm text-center font-medium">&quot;Alexa, ask MyARK where Grandma&apos;s bracelet is.&quot;</p>
         </div>
 
         {/* Right Device */}
@@ -140,14 +140,14 @@ function AskYourArkIllustration() {
             <div className="w-3 h-3 bg-yellow-400 rounded-full" />
             <div className="w-3 h-3 bg-green-500 rounded-full" />
           </div>
-          <p className="text-gray-800 text-sm text-center font-medium">"Hey Google, what's my passport's current value?"</p>
+          <p className="text-gray-800 text-sm text-center font-medium">&quot;Hey Google, what&apos;s my passport&apos;s current value?&quot;</p>
         </div>
       </div>
     </div>
   );
 }
 
-function StoryIllustration() {
+function StoryIllustration(): JSX.Element {
     const beneficiaryAvatar = PlaceHolderImages.find(img => img.id === 'user-avatar-1');
     return (
         <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-xs">
@@ -155,7 +155,7 @@ function StoryIllustration() {
                 <div className="bg-pink-100 rounded-full p-4 mb-4">
                     <Heart className="h-8 w-8 text-pink-500" />
                 </div>
-                <h2 className="font-bold text-lg">Grandma's Bracelet</h2>
+                <h2 className="font-bold text-lg">Grandma&apos;s Bracelet</h2>
                 <p className="text-sm text-muted-foreground mb-4">Acquired: 1978</p>
                 <div className="bg-gray-50 rounded-lg p-3 w-full flex items-center gap-3 mb-3 border">
                     {beneficiaryAvatar && (
@@ -177,7 +177,7 @@ function StoryIllustration() {
     );
 }
 
-function CertaintyIllustration() {
+function CertaintyIllustration(): JSX.Element {
   return (
     <div className="relative w-full max-w-sm h-80 flex items-center justify-center">
       <div className="absolute -left-8 top-10 animate-bounce-slow">
@@ -199,7 +199,7 @@ function CertaintyIllustration() {
   );
 }
 
-function ValueIllustration() {
+function ValueIllustration(): JSX.Element {
     return (
         <div className="flex items-center justify-center gap-4 md:gap-8 p-4">
             {/* Item Card */}
@@ -225,7 +225,7 @@ function ValueIllustration() {
                     <p className="font-bold text-sm">Marketplace</p>
                 </div>
                 <div className="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs text-gray-600 mb-3">
-                    "Selling my classic film camera. Great condition, works perfectly..."
+                    &quot;Selling my classic film camera. Great condition, works perfectly...&quot;
                 </div>
                 <div className="flex justify-between items-center">
                     <p className="font-bold text-blue-600 text-sm">$175 OBO</p>
@@ -240,7 +240,7 @@ function ValueIllustration() {
 }
 
 
-function ClaimsIllustration() {
+function ClaimsIllustration(): JSX.Element {
     return (
         <div className="flex items-center justify-center gap-4 md:gap-8 p-4">
             {/* Damaged Item Card */}
@@ -272,7 +272,7 @@ function ClaimsIllustration() {
     );
 }
 
-function AutopilotIllustration() {
+function AutopilotIllustration(): JSX.Element {
     return (
         <div className="relative h-80 w-80 flex flex-col items-center justify-center gap-8">
             <svg width="120" height="180" viewBox="0 0 120 180" className="absolute" style={{top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
@@ -297,7 +297,7 @@ function AutopilotIllustration() {
                 </div>
                 <div>
                     <p className="font-bold">Near Home Depot?</p>
-                    <p className="text-sm text-gray-500">Don't forget to scan new items.</p>
+                    <p className="text-sm text-gray-500">Don&apos;t forget to scan new items.</p>
                 </div>
             </div>
         </div>
@@ -305,7 +305,7 @@ function AutopilotIllustration() {
 }
 
 
-function MoveIllustration() {
+function MoveIllustration(): JSX.Element {
     return (
         <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
             <h3 className="font-bold text-lg mb-3">Kitchen Box #3</h3>
@@ -342,29 +342,29 @@ export default function LandingPage() {
       router.push('/dashboard');
     }
   }, [user, router]);
-  
+
+  const handleNext = useCallback(() => {
+    setSlideDirection('slide-out');
+    setTimeout(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % features.length);
+      setSlideDirection('slide-in');
+    }, 500);
+  }, []);
+
+  const handlePrev = useCallback(() => {
+    setSlideDirection('slide-out');
+    setTimeout(() => {
+      setActiveIndex((prevIndex) => (prevIndex - 1 + features.length) % features.length);
+      setSlideDirection('slide-in');
+    }, 500);
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
-        handleNext();
+      handleNext();
     }, 5000);
     return () => clearInterval(interval);
-  }, [activeIndex]);
-
-  const handleNext = () => {
-    setSlideDirection('slide-out');
-    setTimeout(() => {
-        setActiveIndex((prevIndex) => (prevIndex + 1) % features.length);
-        setSlideDirection('slide-in');
-    }, 500); 
-  };
-
-  const handlePrev = () => {
-    setSlideDirection('slide-out');
-    setTimeout(() => {
-        setActiveIndex((prevIndex) => (prevIndex - 1 + features.length) % features.length);
-        setSlideDirection('slide-in');
-    }, 500);
-  };
+  }, [handleNext]);
 
   const userAvatars = PlaceHolderImages.filter(img => ['user-avatar-1', 'user-avatar-2', 'user-avatar-3'].includes(img.id));
   

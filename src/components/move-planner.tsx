@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Truck, Plus, Package, ArrowRight, Calendar } from 'lucide-react';
+import { Truck, Plus, ArrowRight, Calendar } from 'lucide-react';
 import { Move, Box, InventoryItem } from '@/lib/types';
 import { mockInventory } from '@/lib/data';
 
@@ -120,7 +120,6 @@ const MovePlanner: React.FC<MovePlannerProps> = ({ onSelectMove }) => {
           ) : (
             <div className="space-y-4">
               {moves.map(move => {
-                const itemsInMove = items.filter(i => !i.boxId); // Simple logic for now
                 const boxesInMove = boxes.filter(b => b.moveId === move.id);
                 return (
                   <button 

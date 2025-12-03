@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { InventoryItem, User, ServiceProvider } from '@/lib/types';
-import { X, Wrench, Calendar, Info, Send, Loader2, CheckCircle, Sparkles, Users, UserCheck, Star } from 'lucide-react';
+import { InventoryItem, ServiceProvider } from '@/lib/types';
+import { X, Wrench, Info, Send, Loader2, CheckCircle, Sparkles, Users, UserCheck, Star } from 'lucide-react';
 import { generateRepairEstimate } from '@/services/backendService';
 
 interface ServiceRequestModalProps {
   item: InventoryItem;
-  user: User;
   onClose: () => void;
 }
 
@@ -17,12 +16,11 @@ const mockProviders: ServiceProvider[] = [
     { id: 'pro3', name: 'Tech Restore Inc.', specialty: 'Electronics & Computers', rating: 4.7 },
 ];
 
-const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, user, onClose }) => {
+const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, onClose }) => {
   const [step, setStep] = useState<ServiceStep>('form');
   const [problem, setProblem] = useState('');
   const [date1, setDate1] = useState('');
   const [date2, setDate2] = useState('');
-  const [requestId, setRequestId] = useState('');
   const [finalMessage, setFinalMessage] = useState({ title: '', body: '' });
   const [estimate, setEstimate] = useState<{ costEstimateMin: number, costEstimateMax: number, commissionRate: number, reasoning: string } | null>(null);
 
@@ -57,7 +55,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, user, o
           setStep('submitting');
           setFinalMessage({
               title: "Request Sent for Bids!",
-              body: "Local MyARK Pros have been notified. You'll receive bids in your service dashboard shortly."
+              body: "Local MyARK Pros have been notified. You&apos;ll receive bids in your service dashboard shortly."
           });
           // Simulate submission
           setTimeout(() => setStep('success'), 1500);
@@ -107,7 +105,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, user, o
                       <div className="text-center">
                         <div className="inline-block p-2 bg-indigo-100 text-indigo-600 rounded-full mb-2"><Sparkles size={24}/></div>
                         <h3 className="text-xl font-bold text-gray-900">AI Repair Estimate</h3>
-                        <p className="text-sm text-gray-500">For your "{item.name}"</p>
+                        <p className="text-sm text-gray-500">For your &quot;{item.name}&quot;</p>
                       </div>
                       <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 text-center">
                           <p className="text-xs font-bold uppercase text-gray-500">Estimated Cost</p>
@@ -115,7 +113,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, user, o
                           <p className="text-xs text-gray-600 px-4">{estimate.reasoning}</p>
                       </div>
                       <div className="bg-green-50 text-green-800 text-xs p-3 rounded-lg border border-green-100">
-                          <strong>Platform Fee:</strong> MyARK will take a {estimate.commissionRate}% commission from the provider's final fee. This helps us maintain a network of trusted professionals.
+                          <strong>Platform Fee:</strong> MyARK will take a {estimate.commissionRate}% commission from the provider&apos;s final fee. This helps us maintain a network of trusted professionals.
                       </div>
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <button onClick={() => handleChooseOption('choose')} className="p-4 border-2 border-indigo-200 rounded-xl text-left hover:bg-indigo-50 hover:border-indigo-500 transition-all group">
@@ -164,7 +162,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, user, o
                               onChange={e => setProblem(e.target.value)}
                               rows={4}
                               className="w-full mt-1 p-3 bg-white text-gray-900 border border-gray-300 rounded-lg"
-                              placeholder={`e.g., "The ice maker is not working", "The screen is cracked"`}
+                              placeholder={`e.g., &quot;The ice maker is not working&quot;, &quot;The screen is cracked&quot;`}
                               required
                           />
                       </div>
@@ -195,7 +193,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, user, o
         <header className="p-4 border-b border-gray-100 flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-100 text-indigo-600 rounded-full"><Wrench size={20} /></div>
-            <h3 className="text-lg font-bold text-gray-900">Request Service for "{item.name}"</h3>
+            <h3 className="text-lg font-bold text-gray-900">Request Service for &quot;{item.name}&quot;</h3>
           </div>
           <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"><X size={18} /></button>
         </header>

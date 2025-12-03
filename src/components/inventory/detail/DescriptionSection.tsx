@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { InventoryItem } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Edit2, Save, X } from 'lucide-react';
+import { Edit2 } from 'lucide-react';
 import { Section } from './Section';
 
 interface DescriptionSectionProps {

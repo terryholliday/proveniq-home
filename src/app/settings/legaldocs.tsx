@@ -35,7 +35,7 @@ export const TermsOfService: React.FC<LegalProps> = ({ onBack }) => (
     <p><strong>Last Updated: {new Date().toLocaleDateString()}</strong></p>
     
     <h3>1. Acceptance of Terms</h3>
-    <p>By accessing and using the MyARK application ("App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.</p>
+    <p>By accessing and using the MyARK application (&quot;App&quot;), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.</p>
 
     <h3>2. Description of Service</h3>
     <p>MyARK provides a home inventory management system that utilizes artificial intelligence to help users catalog, track, and value their personal property.</p>
@@ -47,7 +47,7 @@ export const TermsOfService: React.FC<LegalProps> = ({ onBack }) => (
     <p>The App uses Google Gemini API for image recognition and data processing. While we strive for accuracy, the App makes no guarantees regarding the accuracy of AI-generated descriptions, values, or identifications. Users should verify all auto-generated information.</p>
 
     <h3>5. Limitation of Liability</h3>
-    <p>MyARK is provided "AS IS" and "AS AVAILABLE" basis. We shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of data or data corruption.</p>
+    <p>MyARK is provided &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis. We shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of data or data corruption.</p>
   </LegalLayout>
 );
 
@@ -75,13 +75,13 @@ export const PrivacyPolicy: React.FC<LegalProps> = ({ onBack }) => (
     <p>Your inventory data is primarily stored locally on your device using browser LocalStorage. We do not maintain a central cloud database of your personal inventory items unless explicitly stated otherwise in future updates.</p>
 
     <h3>4. Third-Party Services</h3>
-    <p>We use Google Gemini API for image processing. Images sent for analysis are processed according to Google's Privacy Policy and are not used by MyARK to train our own models.</p>
+    <p>We use Google Gemini API for image processing. Images sent for analysis are processed according to Google&apos;s Privacy Policy and are not used by MyARK to train our own models.</p>
   </LegalLayout>
 );
 
 export const EULA: React.FC<LegalProps> = ({ onBack }) => (
   <LegalLayout title="End User License Agreement" icon={<Scale size={32}/>} onBack={onBack}>
-    <p>This End User License Agreement ("Agreement") is between you and MyARK App and governs use of this app made available through the web or app stores.</p>
+    <p>This End User License Agreement (&quot;Agreement&quot;) is between you and MyARK App and governs use of this app made available through the web or app stores.</p>
 
     <h3>1. License Grant</h3>
     <p>MyArk grants you a limited, non-exclusive, non-transferable, revocable license to use the App for your personal, non-commercial purposes in accordance with this Agreement.</p>
@@ -98,6 +98,6 @@ export const EULA: React.FC<LegalProps> = ({ onBack }) => (
     <p>This license is effective until terminated. Your rights under this license will terminate automatically without notice if you fail to comply with any term(s) of this Agreement.</p>
 
     <h3>4. Disclaimer of Warranties</h3>
-    <p>YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT USE OF THE APP IS AT YOUR SOLE RISK. THE APPLICATION IS PROVIDED "AS IS", WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND.</p>
+    <p>YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT USE OF THE APP IS AT YOUR SOLE RISK. THE APPLICATION IS PROVIDED &quot;AS IS&quot;, WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND.</p>
   </LegalLayout>
 );

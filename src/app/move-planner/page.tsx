@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { useUser } from '@/firebase';
 import { Move, InventoryItem, Box, PackingPlan, GroupingSuggestion } from '@/lib/types';
 import { getBoxes, saveBox, deleteBox, updateItem } from '@/lib/data';
 import { generatePackingPlan } from '@/lib/backend';
-import { ArrowLeft, Plus, Package, Printer, Trash2, X, Lightbulb, Loader2, Sparkles, Check, Crown } from 'lucide-react';
+import { ArrowLeft, Plus, Printer, Trash2, Loader2, Sparkles, Check, Crown } from 'lucide-react';
 import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 
-const PackingPlanModal = ({ plan, onClose, onCreateBox }: { plan: PackingPlan, onClose: () => void, onCreateBox: (group: GroupingSuggestion) => void }) => {
+const PackingPlanModal = () => {
   return null;
 };
 
@@ -37,11 +38,11 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
 
   const unpackedItems = useMemo(() => items.filter(item => !item.boxId), [items]);
 
-  const refreshBoxes = () => setBoxes(getBoxes(move.id));
+  const refreshBoxes = useCallback(() => setBoxes(getBoxes(move.id)), [move.id]);
 
   useEffect(() => {
     refreshBoxes();
-  }, [move.id]);
+  }, [refreshBoxes]);
 
   const handleAddBox = () => {
     if (!newBoxName.trim()) return;
@@ -165,7 +166,16 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
                 onClick={() => handleItemSelection(item.id)}
               >
                 <div className="w-10 h-10 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
-                  {item.imageUrl && <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />}
+                  {item.imageUrl && (
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.name}
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover"
+                      unoptimized
+                    />
+                  )}
                 </div>
                 <div className="flex-1"><p className="text-sm font-medium text-gray-800 truncate">{item.name}</p><p className="text-xs text-gray-500">{item.location}</p></div>
                 {selectedItemIds.has(item.id) && <Check size={16} className="text-indigo-600" />}
@@ -211,7 +221,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
                         <div key={item.id} className="text-xs text-gray-600 p-1 bg-white rounded flex items-center gap-2">
                            <div className="w-4 h-4 rounded bg-gray-100 overflow-hidden flex-shrink-0">
                              {item.imageUrl ? (
-                               <img src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} />
+                               <Image src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} width={16} height={16} unoptimized />
                              ) : null}
                            </div>
                            <span className="truncate">{item.name}</span>
@@ -231,14 +241,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
 }
 
 export default function MovePlannerPage() {
-  const [moves, setMoves] = useState<Move[]>([]);
   const [selectedMove, setSelectedMove] = useState<Move | null>(null);
-
-  const handleCreateMove = (name: string, date: Date) => {
-    const newMove = { id: Date.now().toString(), name, date: date.toISOString() };
-    setMoves([...moves, newMove]);
-    setSelectedMove(newMove);
-  };
 
   if (selectedMove) {
     return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => {}} onPrintLabel={() => {}} onUpgradeReq={() => {}} isLandscape={false} />

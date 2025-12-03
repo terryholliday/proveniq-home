@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 import { InventoryItem } from '@/lib/types';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Edit2, ExternalLink, Receipt } from 'lucide-react';
+import { ExternalLink, Receipt } from 'lucide-react';
 import { Section, Field } from './Section';
 
 interface FinancialsSectionProps {

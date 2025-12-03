@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { LayoutDashboard, BookOpen, FileText, Award, Menu, Briefcase, ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
+import { LayoutDashboard, BookOpen, FileText, Award, Menu, Briefcase, ArrowLeft, ArrowRight } from 'lucide-react';
 
 // --- STATIC DATA ---
 const MODULES = [

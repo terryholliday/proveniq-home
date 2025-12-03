@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { InventoryItem, User } from '@/lib/types';
 import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 import { reevaluateValue, checkMarketValue } from '@/lib/ai-service';
 import { Section } from './Section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowDownRight, ArrowUpRight, LineChart, Loader2, Sparkles, Tag, TrendingUp } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, LineChart, Loader2, Sparkles, TrendingUp } from 'lucide-react';
 
 interface SalesToolsProps {
   item: InventoryItem;
@@ -92,7 +93,7 @@ export function SalesTools({ item, user, onUpdate, onUpgradeReq }: SalesToolsPro
                     {item.comparableSales.map((comp: { title: string; price: number; url: string; date: string; source: string; imageUrl: string }, i: number) => (
                         <a key={i} href={comp.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-2 bg-muted/30 rounded-lg hover:bg-muted/60 transition-colors">
                             <div className="w-12 h-12 bg-background rounded-md overflow-hidden flex-shrink-0">
-                                <img src={comp.imageUrl} alt={comp.title} className="w-full h-full object-cover"/>
+                                <Image src={comp.imageUrl} alt={comp.title} className="w-full h-full object-cover" width={48} height={48} unoptimized />
                             </div>
                             <div className="flex-1">
                                 <p className="text-sm font-medium text-foreground truncate">{comp.title}</p>

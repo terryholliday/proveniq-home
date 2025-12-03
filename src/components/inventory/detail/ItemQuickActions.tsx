@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { InventoryItem, User } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { HandCoins, Hammer, Shield, Trash2, Home } from 'lucide-react';
 import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 import ClaimModal from '@/components/claims/ClaimModal';
 import ServiceRequestModal from '@/components/service/ServiceRequestModal';
