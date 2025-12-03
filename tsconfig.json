@@ -19,9 +19,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "firebase-functions/logger": ["./node_modules/firebase-functions/lib/logger/index.d.ts"]
     }
   },
-  "include": ["next-env.d.ts", "src/**/*", ".next/types/**/*.ts", "../shared/**/*.ts"],
+  "include": ["next-env.d.ts", "src/**/*", "types/**/*.d.ts", ".next/types/**/*.ts", "../shared/**/*.ts"],
   "exclude": ["node_modules", "functions", "functions/**/*"]
 }
