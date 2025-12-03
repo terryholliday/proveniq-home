@@ -45,3 +45,7 @@ firebase-debug.log
 firestore-debug.log
 # Local Netlify folder
 .netlify
+
+# Google Service Account Keys
+studio-2016353273-627b9-0e3de9bb808b
+*.json
