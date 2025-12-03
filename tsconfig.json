@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "firebase-functions/logger": ["./node_modules/firebase-functions/lib/logger/index.d.ts"]
-    }
+    },
+    "typeRoots": ["./types", "./src/types", "./node_modules/@types"]
   },
   "include": ["next-env.d.ts", "src/**/*", "types/**/*.d.ts", ".next/types/**/*.ts", "../shared/**/*.ts"],
   "exclude": ["node_modules", "functions", "functions/**/*"]
