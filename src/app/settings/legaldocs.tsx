@@ -174,48 +174,48 @@ export const CookiePolicy: React.FC<LegalProps> = ({ onBack }) => (
 );
 
 export const ArkiveAIDisclosure: React.FC<LegalProps> = ({ onBack }) => (
-  <LegalLayout title="ARKIVE AI Disclosure" icon={<Bot size={32} />} onBack={onBack}>
-    <p><strong>ARKIVE Auctions AI Disclosure &amp; User Consent Addendum</strong></p>
+  <LegalLayout title="myarkauctions AI Disclosure" icon={<Bot size={32} />} onBack={onBack}>
+    <p><strong>myarkauctions AI Disclosure &amp; User Consent Addendum</strong></p>
 
     <h3>1. Purpose of This Addendum</h3>
-    <p>This Addendum supplements the ARKIVE Auctions Terms of Service and Privacy Policy, defining the scope and risks of AI integration within the auction platform.</p>
+    <p>This Addendum supplements the myarkauctions Terms of Service and Privacy Policy, defining the scope and risks of AI integration within the auction platform.</p>
 
-    <h3>2. Use of AI in ARKIVE</h3>
-    <p>ARKIVE utilizes AI tools to enhance listing visibility, generate listing data, detect fraud patterns, and identify high-risk listings.</p>
+    <h3>2. Use of AI in myarkauctions</h3>
+    <p>myarkauctions utilizes AI tools to enhance listing visibility, generate listing data, detect fraud patterns, and identify high-risk listings.</p>
 
     <h3>3. Data Shared With AI Providers</h3>
-    <p>ARKIVE may share listing photos, titles, descriptions, bidding activity patterns, and seller behavior indicators with third-party AI vendors for operational safety and functionality.</p>
+    <p>myarkauctions may share listing photos, titles, descriptions, bidding activity patterns, and seller behavior indicators with third-party AI vendors for operational safety and functionality.</p>
 
     <h3>4. No Training Use Without Consent</h3>
-    <p>ARKIVE does not authorize AI vendors to use your data for model training unless explicitly permitted by law or via your express consent.</p>
+    <p>myarkauctions does not authorize AI vendors to use your data for model training unless explicitly permitted by law or via your express consent.</p>
 
     <h3>5. AI OUTPUT LIMITATIONS &amp; FINANCIAL RISK</h3>
     <p><strong>AI SUGGESTIONS DO NOT GUARANTEE AUTHENTICITY, PROVENANCE, VALUATION, OR COMPLIANCE.</strong> We do not claim specific accuracy percentages. AI outputs may be incomplete, outdated, or incorrect and must not be used as the sole basis for pricing or compliance decisions.</p>
-    <p>You acknowledge that relying on AI-generated listing data or valuations may result in financial loss. All listing decisions, including reserve prices and authenticity representations, remain the <strong>sole responsibility of the seller</strong>. ARKIVE is not liable for items sold below market value or for refund claims resulting from inaccurate AI-generated descriptions.</p>
+    <p>You acknowledge that relying on AI-generated listing data or valuations may result in financial loss. All listing decisions, including reserve prices and authenticity representations, remain the <strong>sole responsibility of the seller</strong>. myarkauctions is not liable for items sold below market value or for refund claims resulting from inaccurate AI-generated descriptions.</p>
 
     <h3>6. Automated Moderation &amp; Account Actions</h3>
-    <p>ARKIVE utilizes AI to detect patterns indicative of fraud, shill bidding, or prohibited items. You acknowledge that these automated systems may result in false positives. <strong>ARKIVE reserves the right to suspend listings or accounts based on AI risk scoring without prior notice.</strong> While we may review appeals at our discretion, we are under no obligation to reinstate accounts flagged by our safety algorithms.</p>
+    <p>myarkauctions utilizes AI to detect patterns indicative of fraud, shill bidding, or prohibited items. You acknowledge that these automated systems may result in false positives. <strong>myarkauctions reserves the right to suspend listings or accounts based on AI risk scoring without prior notice.</strong> While we may review appeals at our discretion, we are under no obligation to reinstate accounts flagged by our safety algorithms.</p>
 
     <h3>7. Consent</h3>
-    <p>By using ARKIVE auction features, you consent to the processing of your data by AI providers for operational and safety-related functions.</p>
+    <p>By using myarkauctions features, you consent to the processing of your data by AI providers for operational and safety-related functions.</p>
   </LegalLayout>
 );
 
 export const ArkiveAuctionTerms: React.FC<LegalProps> = ({ onBack }) => (
-  <LegalLayout title="ARKIVE Auctions Terms" icon={<Scale size={32} />} onBack={onBack}>
+  <LegalLayout title="myarkauctions Terms" icon={<Scale size={32} />} onBack={onBack}>
     <p><strong>Last Updated: {new Date().toLocaleDateString()}</strong></p>
 
     <h3>1. Contract Formation &amp; Assent</h3>
-    <p>Use of ARKIVE requires an affirmative act of consent (e.g., checking the agreement box during sign-up or when prompted on re-entry). Material updates require renewed assent upon next login; passive notice is insufficient.</p>
+    <p>Use of myarkauctions requires an affirmative act of consent (e.g., checking the agreement box during sign-up or when prompted on re-entry). Material updates require renewed assent upon next login; passive notice is insufficient.</p>
 
     <h3>2. Role &amp; Agent-of-Payee</h3>
-    <p>For payments collected for sellers, ARKIVE acts as the seller’s limited payment collection agent solely to receive funds from buyers. Receipt of funds by ARKIVE constitutes receipt by the seller for purposes of the “agent of payee” exemption under applicable money transmission laws. ARKIVE does not hold funds in trust and is not a money transmitter to the extent permitted by law.</p>
+    <p>For payments collected for sellers, myarkauctions acts as the seller's limited payment collection agent solely to receive funds from buyers. Receipt of funds by myarkauctions constitutes receipt by the seller for purposes of the "agent of payee" exemption under applicable money transmission laws. myarkauctions does not hold funds in trust and is not a money transmitter to the extent permitted by law.</p>
 
     <h3>3. Auctions &amp; Pricing</h3>
-    <p>ARKIVE does not use non-public competitor or market data to set or suggest prices and does not coordinate pricing among sellers. Any pricing insights are optional, non-binding, and must be independently evaluated by the seller.</p>
+    <p>myarkauctions does not use non-public competitor or market data to set or suggest prices and does not coordinate pricing among sellers. Any pricing insights are optional, non-binding, and must be independently evaluated by the seller.</p>
 
     <h3>4. AI, Authenticity, and Disclaimers</h3>
-    <p>AI outputs (including descriptions or indicative valuations) are speculative and may be inaccurate. Sellers are solely responsible for authenticity and compliance. ARKIVE disclaims any guarantee of accuracy and makes no specific performance or accuracy claims.</p>
+    <p>AI outputs (including descriptions or indicative valuations) are speculative and may be inaccurate. Sellers are solely responsible for authenticity and compliance. myarkauctions disclaims any guarantee of accuracy and makes no specific performance or accuracy claims.</p>
 
     <h3>5. Mass Arbitration Protocol</h3>
     <p>Disputes are subject to binding individual arbitration under the American Arbitration Association (AAA) Consumer Rules and AAA Mass Arbitration Supplementary Rules. Claims may be batched for administrative efficiency under those AAA rules; no bellwether process applies. Court claims must be filed in a court of competent jurisdiction if AAA declines jurisdiction.</p>

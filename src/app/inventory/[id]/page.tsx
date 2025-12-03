@@ -82,7 +82,7 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
             </div>
             <div className="md:hidden">
               <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
-                Sell via ARKIVE Auctions
+                Sell via myarkauctions
               </Button>
             </div>
             <DescriptionSection item={item} onUpdate={handleUpdate} />
@@ -97,7 +97,7 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
             <div className="sticky top-24 space-y-6">
               <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
               <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
-                Sell via ARKIVE Auctions
+                Sell via myarkauctions
               </Button>
             </div>
           </aside>
@@ -114,7 +114,7 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
           item={item}
           onClose={() => setShowAuctionWizard(false)}
           onComplete={(auctionId) => {
-            toast({ title: "Auction created", description: `Listing ${auctionId} published via ARKIVE.` });
+            toast({ title: "Auction created", description: `Listing ${auctionId} published via myarkauctions.` });
             setShowAuctionWizard(false);
           }}
         />

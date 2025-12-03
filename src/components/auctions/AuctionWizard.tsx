@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { InventoryItem } from '@/lib/types';
 import { createAuctionListing } from '@/services/arkiveClient';
-import type { CreateAuctionInput } from '../../../../shared/types';
+import type { CreateAuctionInput } from '@/lib/auction-types';
 import { AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react';
 
 type WizardStep = 'confirm' | 'pricing' | 'review' | 'done';
@@ -57,6 +57,11 @@ export function AuctionWizard({ item, onClose, onComplete }: AuctionWizardProps)
         reservePrice: reservePrice !== undefined ? Math.max(0, reservePrice) : undefined,
         startsAt,
         endsAt,
+        exif: item.exif,
+        authenticity: {
+          photoVerified: Boolean(item.exif),
+          geoVerified: Boolean((item as any).exif?.GPSLatitude && (item as any).exif?.GPSLongitude),
+        },
       };
       const res = await createAuctionListing(auth, payload);
       setCreatedId(res.auctionId);

@@ -1,7 +1,10 @@
 import { getIdToken, Auth } from "firebase/auth";
-import type { CreateAuctionInput, CreateAuctionResponse } from "../../../shared/types";
+import type { CreateAuctionInput, CreateAuctionResponse } from "@/lib/auction-types";
 
-const getBaseUrl = () => process.env.NEXT_PUBLIC_ARKIVE_BASE_URL || process.env.ARKIVE_BASE_URL || "";
+const getBaseUrl = () =>
+  process.env.NEXT_PUBLIC_MYARKAUCTIONS_BASE_URL ||
+  process.env.MYARKAUCTIONS_BASE_URL ||
+  "";
 
 export async function createAuctionListing(auth: Auth, payload: CreateAuctionInput): Promise<CreateAuctionResponse> {
   if (!auth.currentUser) {
@@ -10,7 +13,7 @@ export async function createAuctionListing(auth: Auth, payload: CreateAuctionInp
 
   const baseUrl = getBaseUrl();
   if (!baseUrl) {
-    throw new Error("ARKIVE_BASE_URL is not configured");
+    throw new Error("MYARKAUCTIONS_BASE_URL is not configured");
   }
 
   const token = await getIdToken(auth.currentUser, true);
@@ -26,6 +29,32 @@ export async function createAuctionListing(auth: Auth, payload: CreateAuctionInp
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`ARKive create auction failed (${res.status}): ${text}`);
+  }
+
+  return res.json();
+}
+
+export async function fetchMyAuctions(auth: Auth, ownerUid: string) {
+  if (!auth.currentUser) {
+    throw new Error("User must be signed in to fetch auctions");
+  }
+
+  const baseUrl = getBaseUrl();
+  if (!baseUrl) {
+    throw new Error("MYARKAUCTIONS_BASE_URL is not configured");
+  }
+
+  const token = await getIdToken(auth.currentUser, true);
+  const url = `${baseUrl.replace(/\/$/, "")}/api/auctions?ownerUid=${encodeURIComponent(ownerUid)}`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`ARKive fetch auctions failed (${res.status}): ${text}`);
   }
 
   return res.json();
