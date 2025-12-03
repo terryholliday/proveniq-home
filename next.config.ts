@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    externalDir: true,
+  },
   images: {
     remotePatterns: [
       {

@@ -11,7 +11,7 @@ interface QRCodeSectionProps {
 
 declare global {
     interface Window {
-        qrcode: any;
+        qrcode: unknown;
     }
 }
 

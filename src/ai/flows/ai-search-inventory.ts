@@ -56,7 +56,8 @@ const aiSearchInventoryFlow = ai.defineFlow(
 
       try {
         // Attempt to parse the output as JSON. If it fails, return an empty array to avoid crashing the app.
-        return JSON.parse(output as any);
+        const asString = typeof output === 'string' ? output : JSON.stringify(output);
+        return JSON.parse(asString);
       } catch (error) {
         console.error('Failed to parse LLM output as JSON:', error);
         return []; // Return an empty array in case of parsing failure

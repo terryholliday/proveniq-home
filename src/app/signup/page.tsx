@@ -5,10 +5,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@/firebase";
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider as AppleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider as AppleAuthProvider, createUserWithEmailAndPassword, User as FirebaseUser } from 'firebase/auth';
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { useEffect } from "react";
-import { initiateEmailSignUp } from "@/firebase";
 import { Apple, Facebook, CaseSensitive } from "lucide-react";
 
 
@@ -23,7 +22,7 @@ export default function SignupPage() {
         // The individual signup handlers will redirect.
     }, [user, isUserLoading, router]);
 
-    const handleSignupSuccess = (newUser: any) => {
+    const handleSignupSuccess = (newUser: FirebaseUser) => {
         // After profile is created, go to the permissions screen
         router.push('/onboarding/permissions');
     }

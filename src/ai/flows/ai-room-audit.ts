@@ -70,7 +70,8 @@ const aiRoomAuditFlow = ai.defineFlow(
       // Attempt to parse the inventory. If this fails, the prompt won't be called.
       JSON.parse(input.inventory);
     } catch (e) {
-      throw new Error('Invalid inventory JSON: ' + (e as any).message);
+      const message = e instanceof Error ? e.message : 'unknown error';
+      throw new Error('Invalid inventory JSON: ' + message);
     }
     const {output} = await aiRoomAuditPrompt(input);
     return output!;

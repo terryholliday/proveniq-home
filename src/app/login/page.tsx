@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@/firebase";
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider as AppleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider as AppleAuthProvider } from 'firebase/auth';
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { useEffect } from "react";
 import { initiateEmailSignIn } from "@/firebase";

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { MyArkLogo } from '../onboarding/MyArkLogo';
 import { login, signup } from '../../services/authService';
 import { User, AppView } from '../../lib/types';
-import { Loader2, ArrowRight, Mail, Lock, User as UserIcon, FileText } from 'lucide-react';
+import { Loader2, ArrowRight, Mail, Lock, User as UserIcon } from 'lucide-react';
 
 // --- Social Icons ---
 const GoogleIcon = () => (
@@ -92,8 +92,9 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
         user = await signup(name, email, password);
       }
       handleSuccess(user);
-    } catch (err: any) {
-      setError(err.message || "An authentication error occurred");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "An authentication error occurred";
+      setError(message);
     } finally {
       setIsLoading(false);
     }

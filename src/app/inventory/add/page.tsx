@@ -1,15 +1,11 @@
 'use client';
-
-import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { UploadCloud, Camera, QrCode } from "lucide-react";
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function AddItemPage() {
     const { toast } = useToast();
-    const router = useRouter();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];

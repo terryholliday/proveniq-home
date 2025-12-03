@@ -13,9 +13,9 @@ import { Roleplay } from '@/components/training/Roleplay';
 export default function ModulePage() {
   const params = useParams();
   const { id } = params;
-  const module = trainingModules.find((m) => m.id === id);
+  const trainingModule = trainingModules.find((m) => m.id === id);
 
-  if (!module) {
+  if (!trainingModule) {
     notFound();
   }
 
@@ -31,13 +31,13 @@ export default function ModulePage() {
       </div>
 
       <header className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">{module.title}</h1>
-        <p className="mt-2 text-lg text-muted-foreground">{module.description}</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">{trainingModule.title}</h1>
+        <p className="mt-2 text-lg text-muted-foreground">{trainingModule.description}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          {module.content.map((section, index) => (
+          {trainingModule.content.map((section, index) => (
             <div key={index}>
               <h2 className="text-2xl font-semibold tracking-tight text-foreground">{section.heading}</h2>
               <div className="mt-2 text-muted-foreground prose prose-sm max-w-none">
@@ -48,7 +48,7 @@ export default function ModulePage() {
         </div>
 
         <aside className="space-y-8 lg:col-span-1">
-          {module.quiz && (
+          {trainingModule.quiz && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -58,12 +58,12 @@ export default function ModulePage() {
                 <CardDescription>Test your understanding of the key concepts.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Quiz questions={module.quiz.questions} moduleId={module.id} />
+                <Quiz questions={trainingModule.quiz.questions} moduleId={trainingModule.id} />
               </CardContent>
             </Card>
           )}
 
-          {module.roleplay && (
+          {trainingModule.roleplay && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -73,7 +73,7 @@ export default function ModulePage() {
                 <CardDescription>Practice what you've learned.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Roleplay scenario={module.roleplay.scenario} />
+                <Roleplay scenario={trainingModule.roleplay.scenario} />
               </CardContent>
             </Card>
           )}

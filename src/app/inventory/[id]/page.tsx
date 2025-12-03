@@ -17,15 +17,17 @@ import { SalesTools } from '@/components/inventory/detail/SalesTools';
 import { LendingInfo } from '@/components/inventory/detail/LendingInfo';
 import { useToast } from '@/components/ui/use-toast';
 import UpgradeModal from '@/components/subscriptions/UpgradeModal';
+import { AuctionWizard } from '@/components/auctions/AuctionWizard';
+import { Button } from '@/components/ui/button';
 
-export default function ItemDetailPage(props: any) {
-  const { params } = props as { params: { id: string } };
+export default function ItemDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<InventoryItem | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const [upgradeModal, setUpgradeModal] = useState<{isOpen: boolean, feature: string}>({ isOpen: false, feature: '' });
+  const [showAuctionWizard, setShowAuctionWizard] = useState(false);
 
   useEffect(() => {
     const foundItem = DUMMY_ITEMS.find(i => i.id === params.id);
@@ -78,6 +80,11 @@ export default function ItemDetailPage(props: any) {
             <div className="md:hidden">
                 <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             </div>
+            <div className="md:hidden">
+              <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
+                Sell via ARKIVE Auctions
+              </Button>
+            </div>
             <DescriptionSection item={item} onUpdate={handleUpdate} />
             <FinancialsSection item={item} onUpdate={handleUpdate} />
             <LocationSection item={item} onUpdate={handleUpdate} />
@@ -89,6 +96,9 @@ export default function ItemDetailPage(props: any) {
           <aside className="hidden md:block">
             <div className="sticky top-24 space-y-6">
               <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+              <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
+                Sell via ARKIVE Auctions
+              </Button>
             </div>
           </aside>
         </main>
@@ -98,6 +108,16 @@ export default function ItemDetailPage(props: any) {
             feature={upgradeModal.feature} 
             onClose={() => setUpgradeModal({isOpen: false, feature: ''})} 
           />
+      )}
+      {showAuctionWizard && (
+        <AuctionWizard
+          item={item}
+          onClose={() => setShowAuctionWizard(false)}
+          onComplete={(auctionId) => {
+            toast({ title: "Auction created", description: `Listing ${auctionId} published via ARKIVE.` });
+            setShowAuctionWizard(false);
+          }}
+        />
       )}
     </div>
   );

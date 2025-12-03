@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { request, session } = body;
+    const { request } = body;
 
     console.log("Alexa Request:", JSON.stringify(body, null, 2));
 
