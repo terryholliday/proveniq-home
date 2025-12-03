@@ -16,7 +16,7 @@ export default function SignupPage() {
     const router = useRouter();
     const auth = useAuth();
     const { user, isUserLoading } = useUser();
-    const { createUserProfile } = useUserProfile();
+    const { createUserProfile } = useUserProfile(user);
 
     useEffect(() => {
         // We no longer redirect to dashboard here.
@@ -61,7 +61,7 @@ export default function SignupPage() {
     };
 
     const handleAppleSignup = () => {
-        const provider = new AppleAuthProvider();
+        const provider = new AppleAuthProvider('apple.com');
         handleOAuthSignup(provider);
     };
 

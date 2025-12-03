@@ -11,7 +11,8 @@ export const login = async (email: string, password: string): Promise<User> => {
             name: 'Test User',
             email: 'test@test.com',
             preferences: { enableSalesAds: true },
-            tier: 'free'
+            tier: 'free',
+            subscriptionStatus: 'active'
         };
     }
 
@@ -27,6 +28,12 @@ export const signup = async (name: string, email: string, password: string): Pro
         name,
         email,
         preferences: { enableSalesAds: true },
-        tier: 'free'
+        tier: 'free',
+        subscriptionStatus: 'active'
     };
+};
+
+export const updateUser = (user: User) => {
+    console.log('Mock update user', user);
+    return user;
 };

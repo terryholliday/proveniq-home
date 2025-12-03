@@ -10,7 +10,8 @@ interface LendingInfoProps {
 }
 
 export function LendingInfo({ item }: LendingInfoProps) {
-    if (!item.isLent) return null;
+    const lentInfo = item.isLent || item.lent;
+    if (!lentInfo) return null;
 
     const getReturnDateStatus = () => {
         if (!item.expectedReturnDate) return { text: 'No return date set', color: 'text-muted-foreground' };

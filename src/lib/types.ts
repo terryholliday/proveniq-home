@@ -31,7 +31,7 @@ export type InventoryItem = {
   id: string;
   name: string;
   category: string;
-  description:string;
+  description: string;
   imageUrl: string;
   imageHint: string;
   quantity: number;
@@ -41,7 +41,45 @@ export type InventoryItem = {
   location: string;
   addedDate: string;
   warrantyInfo?: string;
+  // Optional media and flags
+  favorite?: boolean;
+  additionalImages?: string[];
+  images?: string[];
+  // Financials
+  purchaseDate?: string;
+  receiptUrl?: string;
+  currentValue?: number;
+  valueSource?: string;
+  marketTrend?: 'up' | 'down';
+  marketTrendPercentage?: number;
+  lastMarketCheck?: string;
+  comparableSales?: {
+    title: string;
+    price: number;
+    url: string;
+    date: string;
+    source: string;
+    imageUrl: string;
+  }[];
+  // Location
+  container?: string;
+  // Lending
+  isLent?: boolean;
+  lentTo?: string;
+  lentToEmail?: string;
+  lentToPhone?: string;
+  lentDate?: string;
+  expectedReturnDate?: string;
   lent?: LentDetails;
+  // Maintenance
+  lastMaintenanceDate?: string;
+  nextMaintenanceDate?: string;
+  maintenanceNotes?: string;
+  // Legacy
+  beneficiaryId?: string;
+  legacyNote?: string;
+  // Vehicle
+  vin?: string;
   exif?: ExifData;
   boxId?: string;
 };
@@ -107,7 +145,17 @@ export type PackingPlan = {
   groups?: GroupingSuggestion[];
 };
 
-export type AppView = 'login' | 'landing' | 'dashboard' | 'inventory' | 'move-planner' | 'pitch-deck' | 'permissions';
+export type AppView =
+  | 'login'
+  | 'landing'
+  | 'dashboard'
+  | 'inventory'
+  | 'move-planner'
+  | 'pitch-deck'
+  | 'permissions'
+  | 'legal-terms'
+  | 'legal-privacy'
+  | 'legal-eula';
 
 export type SubscriptionTier = 'free' | 'plus' | 'pro';
 
@@ -115,4 +163,36 @@ export type User = UserProfile & {
   tier: SubscriptionTier;
   subscriptionStatus: 'active' | 'trial' | 'canceled';
   trialEndDate?: string;
+  name?: string;
+  preferences?: {
+    enableSalesAds?: boolean;
+  };
+};
+
+export type TourStep = {
+  targetId: string;
+  title: string;
+  content: string;
+  view: AppView;
+  placement: 'top' | 'bottom' | 'left' | 'right';
+};
+
+export type Anomaly = {
+  type: 'misplaced' | 'missing' | 'unexpected';
+  itemName?: string;
+  description: string;
+  originalLocation?: string;
+};
+
+export type LegalDocument = {
+  id: string;
+  name: string;
+  status: 'draft' | 'pending' | 'notarized';
+};
+
+export type ServiceProvider = {
+  id: string;
+  name: string;
+  specialty: string;
+  rating: number;
 };

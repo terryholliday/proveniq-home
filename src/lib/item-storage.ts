@@ -15,3 +15,18 @@ export const CATEGORIES = [
 export function getCategories(): string[] {
   return CATEGORIES;
 }
+
+const LOCATIONS = [
+  "Living Room",
+  "Kitchen",
+  "Bedroom",
+  "Garage",
+  "Office",
+  "Storage",
+  "Basement",
+  "Attic"
+];
+
+export function getLocations(): string[] {
+  return LOCATIONS;
+}

@@ -16,7 +16,7 @@ export default function LoginPage() {
     const router = useRouter();
     const auth = useAuth();
     const { user, isUserLoading } = useUser();
-    const { createUserProfile } = useUserProfile();
+    const { createUserProfile } = useUserProfile(user);
 
     useEffect(() => {
         if (!isUserLoading && user) {
@@ -45,7 +45,7 @@ export default function LoginPage() {
     };
 
     const handleAppleLogin = () => {
-        const provider = new AppleAuthProvider();
+        const provider = new AppleAuthProvider('apple.com');
         handleOAuthLogin(provider);
     };
 

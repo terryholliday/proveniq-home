@@ -1,3 +1,3 @@
-import AuthLayout from "@/components/layouts/auth-layout";
-
-export default AuthLayout;
+export default function SignupLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}

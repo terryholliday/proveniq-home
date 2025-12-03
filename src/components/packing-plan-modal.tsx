@@ -37,7 +37,7 @@ const PackingPlanModal: React.FC<PackingPlanModalProps> = ({ plan, onClose, onCr
       case 'declutter':
         return (
           <div className="space-y-3">
-            {plan.declutter?.length > 0 ? plan.declutter.map((item, i) => (
+            {(plan.declutter ?? []).length > 0 ? (plan.declutter ?? []).map((item, i) => (
               <div key={i} className="p-3 bg-gray-50 rounded-lg border">
                 <div className="flex justify-between items-start">
                   <p className="font-bold text-gray-900">{item.itemName}</p>
@@ -54,7 +54,7 @@ const PackingPlanModal: React.FC<PackingPlanModalProps> = ({ plan, onClose, onCr
       case 'groups':
         return (
             <div className="space-y-3">
-                {plan.groups?.length > 0 ? plan.groups.map((group, i) => (
+                {(plan.groups ?? []).length > 0 ? (plan.groups ?? []).map((group, i) => (
                     <div key={i} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                         <h4 className="font-bold text-gray-900">{group.groupName}</h4>
                         <p className="text-xs text-gray-500 italic mb-2">{group.reasoning}</p>

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import QRCode from 'react-qr-code';
 // @ts-ignore
 import Barcode from 'react-barcode';
-import { InventoryItem } from '../types';
+import { InventoryItem } from '@/lib/types';
 import { QrCode, ScanLine, Printer } from 'lucide-react';
 
 interface QRCodeDisplayProps {

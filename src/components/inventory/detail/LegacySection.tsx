@@ -18,7 +18,7 @@ interface LegacySectionProps {
 }
 
 // Mock user for permission check
-const mockUser: User = { id: '1', name: 'Test User', email: 'test@user.com', settings: { tier: 'pro' }};
+const mockUser: User = { id: '1', name: 'Test User', email: 'test@user.com', tier: 'pro', subscriptionStatus: 'active' };
 
 export function LegacySection({ item, beneficiaries, onUpdate, onUpgradeReq }: LegacySectionProps) {
   const [isEditing, setIsEditing] = useState(false);

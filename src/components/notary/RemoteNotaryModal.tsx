@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LegalDocument } from '../types';
+import { LegalDocument } from '@/lib/types';
 import { X, Scale, Camera, Loader2, Edit3, CheckCircle, ShieldCheck } from 'lucide-react';
 
 interface RemoteNotaryModalProps {

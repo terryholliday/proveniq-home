@@ -372,7 +372,7 @@ export default function LandingPage() {
     return <div className="flex h-screen items-center justify-center">Loading...</div>;
   }
 
-  const activeFeature = features.find((_, i) => i === activeIndex) || features.find(f => f.id === 'one-tap-claims');
+  const activeFeature = features[activeIndex] ?? features[0];
 
   return (
     <PublicLayout>

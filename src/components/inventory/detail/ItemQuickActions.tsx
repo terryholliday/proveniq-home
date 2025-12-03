@@ -50,7 +50,7 @@ export function ItemQuickActions({ item, user, onDelete, onUpdate, onUpgradeReq 
         )}
         <Button variant="outline" onClick={() => setShowServiceModal(true)} className="h-auto py-3">Request Service</Button>
         <Button variant="outline" onClick={handleOpenClaimModal} className="h-auto py-3">File a Claim</Button>
-        <Button variant="destructive-outline" onClick={onDelete} className="h-auto py-3">Delete Item</Button>
+        <Button variant="destructive" onClick={onDelete} className="h-auto py-3">Delete Item</Button>
       </div>
 
       {showLendModal && <LendModal item={item} onClose={() => setShowLendModal(false)} onUpdate={onUpdate} />}

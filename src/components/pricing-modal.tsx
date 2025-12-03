@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { User, SubscriptionTier } from '@/lib/types';
 import { updateUser } from '@/services/authService';
 import { Check, Star, Crown, Zap, X, ShieldCheck, CreditCard, ChevronLeft, Loader2 } from 'lucide-react';
-import { getEffectiveTier } from '@/services/subscriptionService';
+import { getEffectiveTier } from '@/lib/subscription-service';
 
 interface PricingModalProps {
   currentUser: User;

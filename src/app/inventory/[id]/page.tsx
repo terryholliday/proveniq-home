@@ -18,7 +18,8 @@ import { LendingInfo } from '@/components/inventory/detail/LendingInfo';
 import { useToast } from '@/components/ui/use-toast';
 import UpgradeModal from '@/components/subscriptions/UpgradeModal';
 
-export default function ItemDetailPage({ params }: { params: { id: string } }) {
+export default function ItemDetailPage(props: any) {
+  const { params } = props as { params: { id: string } };
   const [item, setItem] = useState<InventoryItem | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
@@ -72,7 +73,7 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
         
         <main className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-6">
-            <ItemImageGallery images={item.images || []} />
+            <ItemImageGallery item={item} onBack={() => window.history.back()} onUpdate={handleUpdate} />
             <LendingInfo item={item} onUpdate={handleUpdate} />
             <div className="md:hidden">
                 <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />

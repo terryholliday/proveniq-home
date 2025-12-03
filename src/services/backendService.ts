@@ -4,5 +4,28 @@ export async function submitServiceRequest(data: any) {
 }
 
 export async function generateRepairEstimate(item: any, issue: string) {
-  return { min: 50, max: 150 };
+  return {
+    costEstimateMin: 50,
+    costEstimateMax: 150,
+    commissionRate: 15,
+    reasoning: `Estimated repair cost for ${item} based on description: ${issue}`
+  };
+}
+
+export async function generateBundleAd(items: any[], platformId: string) {
+  const itemNames = items.map((i) => i.name || 'item').join(', ');
+  return {
+    adCopy: `Listing ${itemNames} on ${platformId}. Great condition, priced to move!`,
+    suggestedPrice: Math.max(50, items.length * 25)
+  };
+}
+
+export async function auditRoom(
+  frameImage: string,
+  location: string,
+  itemsInLocation: any[],
+  allItems: any[]
+) {
+  // Stubbed room audit that returns no anomalies.
+  return [];
 }

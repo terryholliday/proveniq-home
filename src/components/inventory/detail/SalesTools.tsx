@@ -89,7 +89,7 @@ export function SalesTools({ item, user, onUpdate, onUpgradeReq }: SalesToolsPro
             <div className="mt-4">
                 <h4 className="font-semibold text-sm mb-2">Recent Comparable Sales</h4>
                 <div className="space-y-2">
-                    {item.comparableSales.map((comp, i) => (
+                    {item.comparableSales.map((comp: any, i: number) => (
                         <a key={i} href={comp.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-2 bg-muted/30 rounded-lg hover:bg-muted/60 transition-colors">
                             <div className="w-12 h-12 bg-background rounded-md overflow-hidden flex-shrink-0">
                                 <img src={comp.imageUrl} alt={comp.title} className="w-full h-full object-cover"/>

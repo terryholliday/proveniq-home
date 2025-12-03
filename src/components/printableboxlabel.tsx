@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import QRCode from 'react-qr-code';
-import { Box, InventoryItem } from '../types';
+import { Box, InventoryItem } from '@/lib/types';
 import { Package } from 'lucide-react';
 
 interface PrintableBoxLabelProps {

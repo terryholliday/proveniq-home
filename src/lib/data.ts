@@ -91,6 +91,10 @@ export const mockInventory: InventoryItem[] = [
       lentDate: '2024-06-01',
       expectedReturnDate: '2024-09-01',
     },
+    isLent: true,
+    lentTo: 'Jane Doe',
+    lentDate: '2024-06-01',
+    expectedReturnDate: '2024-09-01',
   },
   {
     id: 'item-4',
@@ -176,6 +180,10 @@ export const mockInventory: InventoryItem[] = [
       contact: 'john.smith@email.com',
       lentDate: '2024-07-10',
       expectedReturnDate: '2024-08-10',
-    }
+    },
+    isLent: true,
+    lentTo: 'John Smith',
+    lentDate: '2024-07-10',
+    expectedReturnDate: '2024-08-10',
   },
 ];

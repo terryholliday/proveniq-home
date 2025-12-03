@@ -4,7 +4,7 @@ import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { User } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-export function useUserProfile(user: User | null) {
+export function useUserProfile(user?: User | null) {
     const firestore = useFirestore();
 
     const userDocRef = useMemoFirebase(() => {

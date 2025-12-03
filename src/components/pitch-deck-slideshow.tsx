@@ -1,8 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { AppView } from '@/lib/types';
-import { MyArkLogo } from './MyArkLogo';
+import { MyArkLogo } from './onboarding/MyArkLogo';
 import { Camera, Sparkles, Shield, ArrowRight, ArrowLeft, AlertTriangle, Database, TrendingUp, Users, Building2, ChevronRight, X } from 'lucide-react';
+
+interface PitchDeckSlideshowProps {
+  onNavigate: (view: AppView) => void;
+}
 
 const slides = [
   {

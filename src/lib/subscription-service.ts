@@ -5,6 +5,9 @@ export const PERMISSIONS = {
   INVENTORY_UNLIMITED: 'inventory_unlimited',
   AI_ASSISTANT: 'ai_assistant',
   MOVE_AI: 'move_ai',
+  LEGACY_PLANNING: 'legacy_planning',
+  MAINTENANCE_SCHEDULES: 'maintenance_schedules',
+  SALES_ADS: 'sales_ads',
 };
 
 export function checkPermission(user: any, permission: string): boolean {
@@ -18,4 +21,8 @@ export function checkPermission(user: any, permission: string): boolean {
   // if (user.subscriptionTier === 'premium') return true;
   
   return true; // Allow all for dev/fix purposes
+}
+
+export function getEffectiveTier(user: { tier?: string; subscriptionStatus?: string }) {
+  return user?.tier ?? 'free';
 }
