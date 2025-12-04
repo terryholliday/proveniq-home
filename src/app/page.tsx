@@ -113,7 +113,7 @@ function SearchEngineIllustration(): JSX.Element {
       </div>
       <div className="grid grid-cols-2 gap-3">
         {['Living', 'Kitchen', 'Bedroom', 'Office'].map(tag => (
-          <div key={tag} className="bg-primary/5 text-.primary/80 rounded-md p-3 text-center text-sm font-medium">
+          <div key={tag} className="bg-primary/5 text-primary/80 rounded-md p-3 text-center text-sm font-medium">
             {tag}
           </div>
         ))}
