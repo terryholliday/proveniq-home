@@ -27,7 +27,7 @@ export default function PermissionsPage() {
       await updateUserProfile({
         'permissions.camera': 'granted',
         'permissions.microphone': 'granted',
-      });
+      } as any);
 
       // Stop the tracks immediately to turn off camera/mic light
       stream.getTracks().forEach((track) => track.stop());
@@ -40,7 +40,7 @@ export default function PermissionsPage() {
       await updateUserProfile({
         'permissions.camera': 'denied',
         'permissions.microphone': 'denied',
-      });
+      } as any);
       toast({
         variant: 'destructive',
         title: 'Permissions Denied',

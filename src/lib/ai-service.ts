@@ -68,7 +68,7 @@ export async function checkMarketValue(
       url: "#",
       date: new Date().toISOString(),
       source: "Marketplace",
-      imageUrl: item.imageUrl,
+      imageUrl: item.imageUrl || '',
     },
   ];
   return {

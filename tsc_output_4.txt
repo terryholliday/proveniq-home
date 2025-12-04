@@ -1,0 +1,58 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+.next/types/app/inventory/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+src/app/dashboard/page.tsx(65,26): error TS18048: 'item.marketValue' is possibly 'undefined'.
+src/app/dashboard/page.tsx(71,67): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'string | number | Date'.
+      Type 'undefined' is not assignable to type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'string | number'.
+      Type 'undefined' is not assignable to type 'string | number'.
+src/app/dashboard/page.tsx(71,101): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'string | number | Date'.
+      Type 'undefined' is not assignable to type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'string | number'.
+      Type 'undefined' is not assignable to type 'string | number'.
+src/app/move-planner/page.tsx(104,26): error TS2345: Argument of type 'User | null' is not assignable to parameter of type 'User | { subscriptionTier?: string | undefined; tier?: string | undefined; subscriptionStatus?: string | undefined; } | null | undefined'.
+  Type 'User' is not assignable to type 'User | { subscriptionTier?: string | undefined; tier?: string | undefined; subscriptionStatus?: string | undefined; } | null | undefined'.
+    Type 'import("C:/Users/TERRYHOLLIDAY/Dropbox/TrueARK Technologies/MyArk/App-main/App/node_modules/firebase/node_modules/@firebase/auth/dist/auth-public").User' is not assignable to type 'import("C:/Users/TERRYHOLLIDAY/Dropbox/TrueARK Technologies/MyArk/App-main/App/src/lib/types").User'.
+      Type 'User' is missing the following properties from type 'UserProfile': id, firstName, lastName, createdAt, and 5 more.
+src/app/move-planner/page.tsx(117,27): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/app/move-planner/page.tsx(136,41): error TS2322: Type '{ plan: PackingPlan; onClose: () => void; onCreateBox: (group: GroupingSuggestion) => void; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'plan' does not exist on type 'IntrinsicAttributes'.
+src/app/move-planner/page.tsx(147,30): error TS2345: Argument of type 'User | null' is not assignable to parameter of type 'User | { subscriptionTier?: string | undefined; tier?: string | undefined; subscriptionStatus?: string | undefined; } | null | undefined'.
+  Type 'User' is not assignable to type 'User | { subscriptionTier?: string | undefined; tier?: string | undefined; subscriptionStatus?: string | undefined; } | null | undefined'.
+    Type 'import("C:/Users/TERRYHOLLIDAY/Dropbox/TrueARK Technologies/MyArk/App-main/App/node_modules/firebase/node_modules/@firebase/auth/dist/auth-public").User' is not assignable to type 'import("C:/Users/TERRYHOLLIDAY/Dropbox/TrueARK Technologies/MyArk/App-main/App/src/lib/types").User'.
+      Type 'User' is missing the following properties from type 'UserProfile': id, firstName, lastName, createdAt, and 5 more.
+src/app/onboarding/permissions/page.tsx(28,9): error TS2353: Object literal may only specify known properties, and ''permissions.camera'' does not exist in type 'Partial<UserProfile>'.
+src/app/onboarding/permissions/page.tsx(41,9): error TS2353: Object literal may only specify known properties, and ''permissions.camera'' does not exist in type 'Partial<UserProfile>'.
+src/components/inventory/detail/ItemQuickActions.tsx(56,61): error TS2322: Type '{ item: InventoryItem; user: User; onClose: () => void; }' is not assignable to type 'IntrinsicAttributes & ServiceRequestModalProps'.
+  Property 'user' does not exist on type 'IntrinsicAttributes & ServiceRequestModalProps'.
+src/components/inventory/item-card.tsx(33,15): error TS2322: Type 'string | undefined' is not assignable to type 'string | StaticImport'.
+  Type 'undefined' is not assignable to type 'string | StaticImport'.
+src/components/inventory/item-card.tsx(70,50): error TS18048: 'item.marketValue' is possibly 'undefined'.
+src/components/packing-plan-modal.tsx(62,29): error TS18048: 'group.itemNames' is possibly 'undefined'.
+src/components/permissions-initializer.tsx(40,95): error TS2353: Object literal may only specify known properties, and ''permissions.camera'' does not exist in type 'Partial<UserProfile>'.
+src/components/permissions-initializer.tsx(41,99): error TS2353: Object literal may only specify known properties, and ''permissions.microphone'' does not exist in type 'Partial<UserProfile>'.
+src/components/permissions-initializer.tsx(47,91): error TS2353: Object literal may only specify known properties, and ''permissions.camera'' does not exist in type 'Partial<UserProfile>'.
+src/components/permissions-initializer.tsx(48,95): error TS2353: Object literal may only specify known properties, and ''permissions.microphone'' does not exist in type 'Partial<UserProfile>'.
+src/components/permissions-initializer.tsx(61,63): error TS2353: Object literal may only specify known properties, and ''permissions.location'' does not exist in type 'Partial<UserProfile>'.
+src/components/permissions-initializer.tsx(65,63): error TS2353: Object literal may only specify known properties, and ''permissions.location'' does not exist in type 'Partial<UserProfile>'.
+src/components/QRCodeDisplay.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/components/space/SpaceMapper.tsx(213,71): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/firebase/non-blocking-updates.tsx(27,24): error TS2345: Argument of type 'SetOptions | undefined' is not assignable to parameter of type 'SetOptions'.
+  Type 'undefined' is not assignable to type 'SetOptions'.
+src/lib/ai-service.ts(78,5): error TS2322: Type '{ title: string; price: number; url: string; date: string; source: string; imageUrl: string | undefined; }[]' is not assignable to type '{ title: string; price: number; url: string; date: string; source: string; imageUrl: string; }[]'.
+  Type '{ title: string; price: number; url: string; date: string; source: string; imageUrl: string | undefined; }' is not assignable to type '{ title: string; price: number; url: string; date: string; source: string; imageUrl: string; }'.
+    Types of property 'imageUrl' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.

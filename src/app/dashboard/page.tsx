@@ -62,13 +62,13 @@ export default function DashboardPage() {
   };
 
   const totalValue = mockInventory.reduce(
-    (sum, item) => sum + item.marketValue * item.quantity,
+    (sum, item) => sum + (item.marketValue || 0) * item.quantity,
     0
   );
   const totalItems = mockInventory.reduce((sum, item) => sum + item.quantity, 0);
   const itemsOnLoan = mockInventory.filter((item) => !!item.lent).length;
   const totalLocations = new Set(mockInventory.map(item => item.location)).size;
-  const recentlyAdded = [...mockInventory].sort((a,b) => new Date(b.addedDate).getTime() - new Date(a.addedDate).getTime()).slice(0, 3);
+  const recentlyAdded = [...mockInventory].sort((a, b) => new Date(b.addedDate || Date.now()).getTime() - new Date(a.addedDate || Date.now()).getTime()).slice(0, 3);
 
 
   const actions = [
@@ -113,20 +113,20 @@ export default function DashboardPage() {
         </Alert>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-              <StatCard title="Total Value" value={`$${totalValue.toLocaleString()}`} icon="dollar-sign" />
-              <StatCard title="Total Items" value={totalItems} icon="archive" />
-              <StatCard title="Items on Loan" value={itemsOnLoan} icon="heart-handshake" />
-              <StatCard title="Locations" value={totalLocations} icon="map-pin" />
+          <StatCard title="Total Value" value={`$${totalValue.toLocaleString()}`} icon="dollar-sign" />
+          <StatCard title="Total Items" value={totalItems} icon="archive" />
+          <StatCard title="Items on Loan" value={itemsOnLoan} icon="heart-handshake" />
+          <StatCard title="Locations" value={totalLocations} icon="map-pin" />
         </div>
-        
+
         <div className="mb-8">
           <Link href="/inventory/add" passHref>
-              <Card className="group flex h-full flex-col items-center justify-center p-6 text-center transition-all hover:shadow-md bg-primary text-primary-foreground hover:bg-primary/90">
-                   <div className="mb-3 rounded-full bg-primary-foreground/20 p-3">
-                       <Plus className="h-6 w-6 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-semibold">Add Item</h3>
-              </Card>
+            <Card className="group flex h-full flex-col items-center justify-center p-6 text-center transition-all hover:shadow-md bg-primary text-primary-foreground hover:bg-primary/90">
+              <div className="mb-3 rounded-full bg-primary-foreground/20 p-3">
+                <Plus className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <h3 className="font-semibold">Add Item</h3>
+            </Card>
           </Link>
         </div>
 
@@ -140,9 +140,9 @@ export default function DashboardPage() {
         <div className="mt-8">
           <h2 className="text-2xl font-bold tracking-tight mb-4">Recently Added</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {recentlyAdded.map(item => (
-                  <ItemCard key={item.id} item={item} />
-              ))}
+            {recentlyAdded.map(item => (
+              <ItemCard key={item.id} item={item} />
+            ))}
           </div>
         </div>
       </div>

@@ -9,18 +9,18 @@ import { generatePackingPlan } from '@/lib/backend';
 import { ArrowLeft, Plus, Printer, Trash2, Loader2, Sparkles, Check, Crown } from 'lucide-react';
 import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 
-const PackingPlanModal = () => {
+const PackingPlanModal = ({ plan, onClose, onCreateBox }: { plan: PackingPlan, onClose: () => void, onCreateBox: (group: GroupingSuggestion) => void }) => {
   return null;
 };
 
 interface MoveDetailProps {
-    move: Move;
-    items: InventoryItem[];
-    onBack: () => void;
-    onUpdateItems: () => void;
-    onPrintLabel: (box: Box, items: InventoryItem[]) => void;
-    onUpgradeReq: (feature: string) => void;
-    isLandscape: boolean;
+  move: Move;
+  items: InventoryItem[];
+  onBack: () => void;
+  onUpdateItems: () => void;
+  onPrintLabel: (box: Box, items: InventoryItem[]) => void;
+  onUpgradeReq: (feature: string) => void;
+  isLandscape: boolean;
 }
 
 const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgradeReq, isLandscape }: MoveDetailProps) => {
@@ -52,7 +52,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
     setNewBoxRoom('');
     setShowAddBox(false);
   };
-  
+
   const handleDeleteBox = (boxId: string) => {
     if (window.confirm("Delete this box? All items inside will be marked as unpacked.")) {
       deleteBox(boxId);
@@ -67,7 +67,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
     else newSet.add(itemId);
     setSelectedItemIds(newSet);
   };
-  
+
   const assignSelectedToBox = (boxId: string) => {
     if (selectedItemIds.size === 0) return;
     selectedItemIds.forEach(id => {
@@ -77,7 +77,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
     setSelectedItemIds(new Set());
     onUpdateItems();
   };
-  
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>, boxId: string) => {
     e.preventDefault();
     if (draggedItemId) {
@@ -90,7 +90,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
     }
     e.currentTarget.classList.remove('border-indigo-500', 'bg-indigo-50');
   };
-  
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.currentTarget.classList.add('border-indigo-500', 'bg-indigo-50');
@@ -101,9 +101,10 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
   };
 
   const handleGeneratePlan = async () => {
-    if (!checkPermission(user, PERMISSIONS.MOVE_AI)) {
-        onUpgradeReq('AI Move Planning');
-        return;
+    // Cast user to any to bypass type mismatch between Firebase User and Domain User for now
+    if (!checkPermission(user as any, PERMISSIONS.MOVE_AI)) {
+      onUpgradeReq('AI Move Planning');
+      return;
     }
 
     setIsGeneratingPlan(true);
@@ -112,9 +113,9 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
     setPackingPlan(plan);
     setIsGeneratingPlan(false);
   };
-  
+
   const createBoxFromSuggestion = (group: GroupingSuggestion) => {
-    const box = saveBox({ name: group.groupName, moveId: move.id });
+    const box = saveBox({ name: group.name, moveId: move.id });
     group.itemIds.forEach(id => {
       const item = items.find(i => i.id === id);
       if (item) updateItem({ ...item, boxId: box.id });
@@ -128,13 +129,13 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
     <div className="bg-white rounded-xl shadow-sm h-full flex flex-col overflow-hidden">
       {isGeneratingPlan && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-           <Loader2 size={40} className="text-white animate-spin mb-4" />
-           <p className="text-white font-bold text-lg">Generating Your AI Packing Plan...</p>
-           <p className="text-indigo-200">This may take a moment.</p>
+          <Loader2 size={40} className="text-white animate-spin mb-4" />
+          <p className="text-white font-bold text-lg">Generating Your AI Packing Plan...</p>
+          <p className="text-indigo-200">This may take a moment.</p>
         </div>
       )}
       {packingPlan && <PackingPlanModal plan={packingPlan} onClose={() => setPackingPlan(null)} onCreateBox={createBoxFromSuggestion} />}
-      
+
       <header className="p-4 border-b border-gray-100 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full text-gray-500"><ArrowLeft size={20} /></button>
@@ -144,8 +145,8 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
           </div>
         </div>
         <button onClick={handleGeneratePlan} className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-indigo-100 border border-indigo-100 relative overflow-hidden">
-           {!checkPermission(user, PERMISSIONS.MOVE_AI) && <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10"><Crown size={14} className="text-amber-500"/></div>}
-           <Sparkles size={16}/> Get AI Packing Plan
+          {!checkPermission(user as any, PERMISSIONS.MOVE_AI) && <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10"><Crown size={14} className="text-amber-500" /></div>}
+          <Sparkles size={16} /> Get AI Packing Plan
         </button>
       </header>
 
@@ -158,7 +159,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
           </div>
           <div className="flex-1 overflow-y-auto p-2 space-y-1">
             {unpackedItems.map(item => (
-              <div 
+              <div
                 key={item.id}
                 draggable
                 onDragStart={() => setDraggedItemId(item.id)}
@@ -219,12 +220,12 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
                     <div className="p-2 space-y-1">
                       {itemsInBox.map(item => (
                         <div key={item.id} className="text-xs text-gray-600 p-1 bg-white rounded flex items-center gap-2">
-                           <div className="w-4 h-4 rounded bg-gray-100 overflow-hidden flex-shrink-0">
-                             {item.imageUrl ? (
-                               <Image src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} width={16} height={16} unoptimized />
-                             ) : null}
-                           </div>
-                           <span className="truncate">{item.name}</span>
+                          <div className="w-4 h-4 rounded bg-gray-100 overflow-hidden flex-shrink-0">
+                            {item.imageUrl ? (
+                              <Image src={item.imageUrl} className="w-full h-full object-cover" alt={item.name} width={16} height={16} unoptimized />
+                            ) : null}
+                          </div>
+                          <span className="truncate">{item.name}</span>
                         </div>
                       ))}
                       {selectedItemIds.size > 0 && <button onClick={() => assignSelectedToBox(box.id)} className="w-full text-center text-xs py-2 bg-indigo-50 text-indigo-700 font-bold rounded-md hover:bg-indigo-100">Add {selectedItemIds.size} items here</button>}
@@ -244,7 +245,7 @@ export default function MovePlannerPage() {
   const [selectedMove, setSelectedMove] = useState<Move | null>(null);
 
   if (selectedMove) {
-    return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => {}} onPrintLabel={() => {}} onUpgradeReq={() => {}} isLandscape={false} />
+    return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => { }} onPrintLabel={() => { }} onUpgradeReq={() => { }} isLandscape={false} />
   }
 
   return (

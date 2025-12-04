@@ -24,7 +24,7 @@ export function PermissionsInitializer() {
                 if (userProfile.permissions?.location === 'prompt') {
                     permissionsToRequest.push('location');
                 }
-                
+
                 if (permissionsToRequest.length === 0) return;
 
                 // For simplicity, we request them sequentially.
@@ -32,37 +32,37 @@ export function PermissionsInitializer() {
 
                 try {
                     if (permissionsToRequest.includes('camera') || permissionsToRequest.includes('microphone')) {
-                        const stream = await navigator.mediaDevices.getUserMedia({ 
-                            video: permissionsToRequest.includes('camera'), 
+                        const stream = await navigator.mediaDevices.getUserMedia({
+                            video: permissionsToRequest.includes('camera'),
                             audio: permissionsToRequest.includes('microphone')
                         });
-                        
-                        if(permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'granted' });
-                        if(permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'granted' });
+
+                        if (permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'granted' } as any);
+                        if (permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'granted' } as any);
 
                         // Important: Stop the tracks immediately to turn off camera/mic light
                         stream.getTracks().forEach(track => track.stop());
                     }
                 } catch {
-                    if(permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'denied' });
-                    if(permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'denied' });
+                    if (permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'denied' } as any);
+                    if (permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'denied' } as any);
                     toast({
                         variant: 'destructive',
                         title: 'Permissions Denied',
                         description: 'Camera or microphone access was denied. Some features may not work.',
                     });
                 }
-                
+
                 try {
                     if (permissionsToRequest.includes('location')) {
                         await new Promise((resolve, reject) => {
                             navigator.geolocation.getCurrentPosition(
                                 async (position) => {
-                                    await updateUserProfile({ 'permissions.location': 'granted' });
+                                    await updateUserProfile({ 'permissions.location': 'granted' } as any);
                                     resolve(position);
                                 },
                                 async (error) => {
-                                    await updateUserProfile({ 'permissions.location': 'denied' });
+                                    await updateUserProfile({ 'permissions.location': 'denied' } as any);
                                     reject(error);
                                 }
                             );
