@@ -18,6 +18,11 @@ function getClientIp(req: NextRequest): string {
 }
 
 export function enforceRateLimit(req: NextRequest): NextResponse | null {
+  // NextRequest does not expose the IP directly; rely on proxy headers instead.
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip') ||
+    'unknown';
   const ip =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     req.headers.get('x-real-ip')?.trim() ||
