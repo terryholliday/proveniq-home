@@ -15,6 +15,7 @@ import {
   FileUp,
   Sparkles,
   AlertTriangle,
+  Scale,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
