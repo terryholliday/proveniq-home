@@ -8,7 +8,11 @@ const RATE_LIMIT = Number(process.env.VOICE_RATE_LIMIT || 60);
 const RATE_WINDOW_MS = Number(process.env.VOICE_RATE_WINDOW_MS || 60_000);
 
 export function enforceRateLimit(req: NextRequest): NextResponse | null {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.ip || 'unknown';
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip')?.trim() ||
+    req.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() ||
+    'unknown';
   const now = Date.now();
   const bucket = rateBuckets.get(ip);
   if (bucket && bucket.reset > now) {
