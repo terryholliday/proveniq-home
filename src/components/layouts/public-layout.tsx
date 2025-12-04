@@ -26,6 +26,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <div className="container py-8 flex items-center justify-between text-sm text-muted-foreground">
                     <span>© {new Date().getFullYear()} MyARK, Inc.</span>
                     <div className="flex gap-4">
+                        <Link href="/admin" className="hover:underline">Admin</Link>
                         <Link href="#" className="hover:underline">Privacy Policy</Link>
                         <Link href="#" className="hover:underline">Terms of Service</Link>
                     </div>
