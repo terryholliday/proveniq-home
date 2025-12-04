@@ -145,9 +145,9 @@ interface CreateAuctionInput {
  * - Verifies the itemPath belongs to the caller (same uid)
  * - Creates an auction doc linked to the golden record item
  */
-export const createAuctionListing = onCall(
+export const createAuctionListing = onCall<CreateAuctionInput>(
   { enforceAppCheck: true, consumeAppCheckToken: true },
-  async (request: any) => {
+  async (request) => {
     // Assert authentication
     const context = request as AuthedRequest;
     if (!context.auth) {
@@ -232,9 +232,9 @@ interface PlaceBidInput {
  *
  * NOTE: This is a skeleton; refine business rules (increments, reserve, etc.)
  */
-export const placeBid = onCall(
+export const placeBid = onCall<PlaceBidInput>(
   { enforceAppCheck: true, consumeAppCheckToken: true },
-  async (request: any) => {
+  async (request) => {
     // Assert authentication
     const context = request as AuthedRequest;
     if (!context.auth) {
@@ -258,8 +258,13 @@ export const placeBid = onCall(
       throw new HttpsError("not-found", "Auction not found.");
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const auction = auctionSnap.data() as any;
+    interface AuctionDoc {
+      status?: string;
+      currentBid?: number;
+      startingBid?: number;
+    }
+
+    const auction = auctionSnap.data() as AuctionDoc;
 
     if (auction.status !== "live") {
       throw new HttpsError("failed-precondition", "Auction is not live.");
@@ -294,8 +299,7 @@ export const placeBid = onCall(
       if (!freshSnap.exists) {
         throw new HttpsError("not-found", "Auction not found.");
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const fresh = freshSnap.data() as any;
+      const fresh = freshSnap.data() as AuctionDoc;
       const freshCurrent = typeof fresh.currentBid === "number" ?
         fresh.currentBid : fresh.startingBid;
 
@@ -331,7 +335,7 @@ interface ScanItemImageInput {
 
 export const scanItemImage = onCall(
     { enforceAppCheck: true, consumeAppCheckToken: true },
-    async (request: any) => {
+    async (request) => {
         const { itemId, imagePath } = request.data as ScanItemImageInput;
         const uid = request.auth.uid;
 
@@ -359,10 +363,11 @@ export const scanItemImage = onCall(
         const prompt = "Analyze this image of an item. Extract the item's name, suggest a category, and write a brief description. Also, extract any EXIF metadata you can find. Return the data as a JSON object with keys: name, category, description, exif.";
 
         try {
-            const resp = await generativeModel.generateContent([prompt, { fileData: image } as any]);
+            const imagePart: { fileData: { gcsUri: string } } = { fileData: image };
+            const resp = await generativeModel.generateContent([prompt, imagePart]);
             const content = resp.response.candidates[0].content;
-            
-            let data = JSON.parse(content.parts[0].text);
+
+            const data = JSON.parse(content.parts[0].text);
 
             await db.collection("users").doc(uid).collection("items").doc(itemId).set(data, { merge: true });
 
