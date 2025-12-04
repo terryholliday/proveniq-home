@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { CheckCircle, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,12 +22,12 @@ function CheckEmailContent() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            We've sent a verification link to:
+            We&apos;ve sent a verification link to:
           </p>
           {email && <p className="font-semibold text-lg text-gray-800">{email}</p>}
           <p className="text-muted-foreground">
             Please click the link in that email to activate your account.
-            If you don't see it, check your spam folder.
+            If you don&apos;t see it, check your spam folder.
           </p>
           <Link href="/login" passHref>
             <Button className="w-full">Back to Login</Button>

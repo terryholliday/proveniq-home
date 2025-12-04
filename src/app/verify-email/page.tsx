@@ -31,7 +31,7 @@ function VerifyEmail() {
       try {
         // You can check the action code to get user email, etc. before applying.
         await checkActionCode(auth, actionCode);
-        
+
         // Apply the action code to verify the email.
         await applyActionCode(auth, actionCode);
 
@@ -41,12 +41,17 @@ function VerifyEmail() {
         setTimeout(() => {
           router.push('/dashboard');
         }, 3000);
-      } catch (e: any) {
+      } catch (e: unknown) {
         console.error(e);
-        if (e.code === 'auth/invalid-action-code') {
+        const errorCode =
+          typeof e === 'object' && e && 'code' in e && typeof (e as { code?: unknown }).code === 'string'
+            ? (e as { code: string }).code
+            : null;
+        if (errorCode === 'auth/invalid-action-code') {
           setError('This verification link has expired or is invalid. Please sign up again to get a new link.');
         } else {
-          setError(e.message || 'An unknown error occurred.');
+          const message = e instanceof Error && e.message ? e.message : 'An unknown error occurred.';
+          setError(message);
         }
         setStatus('error');
       }
@@ -87,11 +92,11 @@ function VerifyEmail() {
 
 // Wrap with Suspense for useSearchParams
 export default function VerifyEmailPage() {
-    return (
-        <AuthWrapper>
-            <Suspense fallback={<Loader2 className="w-12 h-12 animate-spin" />}>
-                <VerifyEmail />
-            </Suspense>
-        </AuthWrapper>
-    )
+  return (
+    <AuthWrapper>
+      <Suspense fallback={<Loader2 className="w-12 h-12 animate-spin" />}>
+        <VerifyEmail />
+      </Suspense>
+    </AuthWrapper>
+  );
 }

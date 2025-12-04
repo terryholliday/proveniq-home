@@ -60,7 +60,7 @@ export function AuctionWizard({ item, onClose, onComplete }: AuctionWizardProps)
         exif: item.exif,
         authenticity: {
           photoVerified: Boolean(item.exif),
-          geoVerified: Boolean((item as any).exif?.GPSLatitude && (item as any).exif?.GPSLongitude),
+          geoVerified: Boolean(item.exif?.GPSLatitude && item.exif?.GPSLongitude),
         },
       };
       const res = await createAuctionListing(auth, payload);
