@@ -159,11 +159,35 @@ export type ExifData = {
   GPSLongitude?: number;
 };
 
+// --- PROVENANCE & OWNERSHIP ---
+
+export type ProvenanceEventType =
+  | 'acquisition'
+  | 'ownership_change'
+  | 'appraisal'
+  | 'repair'
+  | 'restoration'
+  | 'cleaning'
+  | 'market_valuation'
+  | 'other';
+
+export interface ProvenanceEvent {
+  id: string;
+  date: string; // ISO 8601
+  type: ProvenanceEventType;
+  description: string;
+  provider?: string; // e.g. "Sotheby's", "Local Jeweler"
+  cost?: number;
+  documentUrl?: string; // URL to proof/receipt
+  verified: boolean;
+}
+
 export type InventoryItem = {
   id: string;
   userId: string;
   name: string;
   category: string;
+  subcategory?: string;
   description: string;
   imageUrl?: string;
   imageHint?: string;
@@ -212,6 +236,24 @@ export type InventoryItem = {
   maintenanceNotes?: string;
   legacyNote?: string; // Kept for compatibility
   vin?: string;
+  // [VISION & DOCUMENT INTELLIGENCE]
+  dimensions?: {
+    width: number;
+    height: number;
+    depth: number;
+    unit: 'cm' | 'in' | 'mm' | 'm';
+  };
+  material?: string;
+  conditionDetails?: {
+    scratches?: boolean;
+    damage?: boolean;
+    wearLevel?: 'none' | 'low' | 'medium' | 'high';
+    notes?: string;
+  };
+  documents?: string[]; // IDs of linked documents
+  // [PROVENANCE]
+  provenance?: ProvenanceEvent[];
+  provenanceScore?: number; // 0-100
 };
 
 export type AuditLog = {

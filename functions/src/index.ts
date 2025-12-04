@@ -1,13 +1,13 @@
 
 // functions/src/index.ts
 import * as admin from "firebase-admin";
-import {getFirestore} from "firebase-admin/firestore";
-import {onDocumentWritten} from "firebase-functions/v2/firestore";
-import {onCall, HttpsError} from "firebase-functions/v2/https";
+import { getFirestore } from "firebase-admin/firestore";
+import { onDocumentWritten } from "firebase-functions/v2/firestore";
+import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import {initializeApp} from "firebase-admin/app";
-import {getStorage} from "firebase-admin/storage";
-import {getVertexAI, HarmBlockThreshold, HarmCategory} from "firebase-admin/vertex-ai";
+import { initializeApp } from "firebase-admin/app";
+import { getStorage } from "firebase-admin/storage";
+import { getVertexAI, HarmBlockThreshold, HarmCategory } from "firebase-admin/vertex-ai";
 
 if (!admin.apps.length) {
   initializeApp();
@@ -45,7 +45,7 @@ function nowISO(): string {
 export const auditItemWrites = onDocumentWritten(
   "users/{uid}/items/{itemId}",
   (event) => {
-    const {data, params} = event;
+    const { data, params } = event;
 
     const before = data?.before?.data() ?? null;
     const after = data?.after?.data() ?? null;
@@ -76,7 +76,7 @@ export const auditItemWrites = onDocumentWritten(
       eventTime: nowISO(),
     };
 
-    logger.info("Writing inventory audit log", {auditEntry});
+    logger.info("Writing inventory audit log", { auditEntry });
 
     return db.collection("audit_logs").add(auditEntry);
   }
@@ -89,7 +89,7 @@ export const auditItemWrites = onDocumentWritten(
 export const auditBidWrites = onDocumentWritten(
   "auctions/{auctionId}/bids/{bidId}",
   (event) => {
-    const {data, params} = event;
+    const { data, params } = event;
 
     const before = data?.before?.data() ?? null;
     const after = data?.after?.data() ?? null;
@@ -116,7 +116,7 @@ export const auditBidWrites = onDocumentWritten(
       eventTime: nowISO(),
     };
 
-    logger.info("Writing bid audit log", {auditEntry});
+    logger.info("Writing bid audit log", { auditEntry });
 
     return db.collection("audit_logs").add(auditEntry);
   }
@@ -329,52 +329,54 @@ export const placeBid = onCall<PlaceBidInput>(
  * ==========================================================================*/
 
 interface ScanItemImageInput {
-    itemId: string;
-    imagePath: string;
+  itemId: string;
+  imagePath: string;
 }
 
 export const scanItemImage = onCall(
-    { enforceAppCheck: true, consumeAppCheckToken: true },
-    async (request) => {
-        const { itemId, imagePath } = request.data as ScanItemImageInput;
-        const uid = request.auth.uid;
+  { enforceAppCheck: true, consumeAppCheckToken: true },
+  async (request) => {
+    const { itemId, imagePath } = request.data as ScanItemImageInput;
+    const uid = request.auth.uid;
 
-        if (!itemId || !imagePath) {
-            throw new HttpsError("invalid-argument", "Missing itemId or imagePath");
-        }
-
-        const file = getStorage().bucket().file(imagePath);
-        const [exists] = await file.exists();
-        if (!exists) {
-            throw new HttpsError("not-found", "Image file not found");
-        }
-
-        const vertexAI = getVertexAI();
-        const generativeModel = vertexAI.getGenerativeModel({
-            model: "gemini-1.0-pro-vision-001",
-            safetySettings: [
-                { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
-                { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
-                { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
-            ],
-        });
-
-        const image = { gcsUri: `gs://${file.bucket.name}/${file.name}` };
-        const prompt = "Analyze this image of an item. Extract the item's name, suggest a category, and write a brief description. Also, extract any EXIF metadata you can find. Return the data as a JSON object with keys: name, category, description, exif.";
-
-        try {
-            const imagePart: { fileData: { gcsUri: string } } = { fileData: image };
-            const resp = await generativeModel.generateContent([prompt, imagePart]);
-            const content = resp.response.candidates[0].content;
-
-            const data = JSON.parse(content.parts[0].text);
-
-            await db.collection("users").doc(uid).collection("items").doc(itemId).set(data, { merge: true });
-
-            return data;
-        } catch (error) {
-            logger.error("Error scanning image: ", error);
-            throw new HttpsError("internal", "Error processing image with AI");
-        }
+    if (!itemId || !imagePath) {
+      throw new HttpsError("invalid-argument", "Missing itemId or imagePath");
     }
+
+    const file = getStorage().bucket().file(imagePath);
+    const [exists] = await file.exists();
+    if (!exists) {
+      throw new HttpsError("not-found", "Image file not found");
+    }
+
+    const vertexAI = getVertexAI();
+    const generativeModel = vertexAI.getGenerativeModel({
+      model: "gemini-1.0-pro-vision-001",
+      safetySettings: [
+        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
+        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
+        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
+      ],
+    });
+
+    const image = { gcsUri: `gs://${file.bucket.name}/${file.name}` };
+    const prompt = "Analyze this image of an item. Extract the item's name, suggest a category, and write a brief description. Also, extract any EXIF metadata you can find. Return the data as a JSON object with keys: name, category, description, exif.";
+
+    try {
+      const imagePart: { fileData: { gcsUri: string } } = { fileData: image };
+      const resp = await generativeModel.generateContent([prompt, imagePart]);
+      const content = resp.response.candidates[0].content;
+
+      const data = JSON.parse(content.parts[0].text);
+
+      await db.collection("users").doc(uid).collection("items").doc(itemId).set(data, { merge: true });
+
+      return data;
+    } catch (error) {
+      logger.error("Error scanning image: ", error);
+      throw new HttpsError("internal", "Error processing image with AI");
+    }
+  }
 );
+
+export * from "./offboard_employee";

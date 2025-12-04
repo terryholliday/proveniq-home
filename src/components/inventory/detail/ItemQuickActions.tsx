@@ -7,6 +7,8 @@ import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 import ClaimModal from '@/components/claims/ClaimModal';
 import ServiceRequestModal from '@/components/service/ServiceRequestModal';
 import { LendModal } from './LendModal';
+import { ProvenanceModal } from '@/components/inventory/provenance/ProvenanceModal';
+import { History } from 'lucide-react';
 
 interface ItemQuickActionsProps {
   item: InventoryItem;
@@ -20,6 +22,7 @@ export function ItemQuickActions({ item, user, onDelete, onUpdate, onUpgradeReq 
   const [showLendModal, setShowLendModal] = useState(false);
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [showClaimModal, setShowClaimModal] = useState(false);
+  const [showProvenanceModal, setShowProvenanceModal] = useState(false);
   const [claimType, setClaimType] = useState<'warranty' | 'ho3' | 'auto' | null>(null);
 
   const handleOpenClaimModal = () => {
@@ -32,34 +35,41 @@ export function ItemQuickActions({ item, user, onDelete, onUpdate, onUpgradeReq 
     setClaimType(isVehicle ? 'auto' : 'ho3');
     setShowClaimModal(true);
   };
-  
+
   const handleReturnItem = () => {
-      if (window.confirm(`Mark item as returned from ${item.lentTo}?`)) {
-          onUpdate({ isLent: false, lentTo: undefined, lentDate: undefined, expectedReturnDate: undefined });
-      }
+    if (window.confirm(`Mark item as returned from ${item.lentTo}?`)) {
+      onUpdate({ isLent: false, lentTo: undefined, lentDate: undefined, expectedReturnDate: undefined });
+    }
   };
 
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm font-bold">
         {item.isLent ? (
-            <Button variant="outline" onClick={handleReturnItem} className="h-auto py-3 text-blue-600 border-blue-300">Mark as Returned</Button>
+          <Button variant="outline" onClick={handleReturnItem} className="h-auto py-3 text-blue-600 border-blue-300">Mark as Returned</Button>
         ) : (
-            <Button variant="outline" onClick={() => setShowLendModal(true)} className="h-auto py-3">Lend Item</Button>
+          <Button variant="outline" onClick={() => setShowLendModal(true)} className="h-auto py-3">Lend Item</Button>
         )}
         <Button variant="outline" onClick={() => setShowServiceModal(true)} className="h-auto py-3">Request Service</Button>
         <Button variant="outline" onClick={handleOpenClaimModal} className="h-auto py-3">File a Claim</Button>
+        <Button variant="outline" onClick={() => setShowProvenanceModal(true)} className="h-auto py-3">
+          <History className="w-4 h-4 mr-2" />
+          Provenance
+        </Button>
         <Button variant="destructive" onClick={onDelete} className="h-auto py-3">Delete Item</Button>
       </div>
 
       {showLendModal && <LendModal item={item} onClose={() => setShowLendModal(false)} onUpdate={onUpdate} />}
-      {showServiceModal && <ServiceRequestModal item={item} user={user} onClose={() => setShowServiceModal(false)} />}
+      {showServiceModal && <ServiceRequestModal item={item} onClose={() => setShowServiceModal(false)} />}
       {showClaimModal && claimType && (
-        <ClaimModal 
-          items={[item]} 
-          claimType={claimType} 
-          onClose={() => setShowClaimModal(false)} 
+        <ClaimModal
+          items={[item]}
+          claimType={claimType}
+          onClose={() => setShowClaimModal(false)}
         />
+      )}
+      {showProvenanceModal && (
+        <ProvenanceModal item={item} onClose={() => setShowProvenanceModal(false)} />
       )}
     </>
   );

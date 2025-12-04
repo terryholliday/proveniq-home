@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import QRCode from 'react-qr-code';
-// @ts-expect-error react-barcode has no types
+// @ts-ignore
 import Barcode from 'react-barcode';
 import { InventoryItem } from '@/lib/types';
 import { QrCode, ScanLine, Printer } from 'lucide-react';
@@ -94,22 +94,20 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ item }) => {
       <div className="flex bg-gray-100 p-1 rounded-lg w-full mb-6">
         <button
           onClick={() => setMode('qr')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${
-            mode === 'qr' 
-              ? 'bg-white text-indigo-600 shadow-sm' 
+          className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${mode === 'qr'
+              ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-gray-500 hover:text-gray-700'
-          }`}
+            }`}
         >
           <QrCode size={16} />
           QR Code
         </button>
         <button
           onClick={() => setMode('barcode')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${
-            mode === 'barcode' 
-              ? 'bg-white text-indigo-600 shadow-sm' 
+          className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${mode === 'barcode'
+              ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-gray-500 hover:text-gray-700'
-          }`}
+            }`}
         >
           <ScanLine size={16} />
           Barcode
@@ -117,7 +115,7 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ item }) => {
       </div>
 
       {/* Code Display Area */}
-      <div 
+      <div
         ref={codeContainerRef}
         onClick={handlePrint}
         title="Click to print tag"
@@ -127,11 +125,11 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ item }) => {
           <QRCode value={qrData} size={160} />
         ) : (
           <div className="flex items-center justify-center w-full overflow-x-auto">
-            <Barcode 
-              value={barcodeData} 
-              width={2} 
-              height={100} 
-              fontSize={16} 
+            <Barcode
+              value={barcodeData}
+              width={2}
+              height={100}
+              fontSize={16}
               background="transparent"
             />
           </div>
@@ -147,7 +145,7 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ item }) => {
         <p className="text-sm text-gray-500 font-mono">{item.id}</p>
       </div>
 
-      <button 
+      <button
         onClick={handlePrint}
         className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors px-4 py-2 rounded-lg hover:bg-indigo-50"
       >

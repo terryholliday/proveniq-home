@@ -1,6 +1,6 @@
-import {getFirestore} from "firebase-admin/firestore";
+import { getFirestore } from "firebase-admin/firestore";
 import * as admin from "firebase-admin";
-import {HttpsError, onCall} from "firebase-functions/v2/https";
+import { HttpsError, onCall } from "firebase-functions/v2/https";
 
 const db = getFirestore();
 
@@ -22,7 +22,7 @@ interface CreateAuctionInput {
  * - Creates an auction doc linked to the golden record item
  */
 export const createAuctionListing = onCall(
-  {enforceAppCheck: true, consumeAppCheckToken: true},
+  { enforceAppCheck: true, consumeAppCheckToken: true },
   async (request) => {
     // Assert authentication
     if (!request.auth) {
@@ -73,6 +73,9 @@ export const createAuctionListing = onCall(
       endsAt: data.endsAt ? new Date(data.endsAt) : null,
       createdAt: now,
       updatedAt: now,
+      // [COMPLIANCE] Tax Placeholder
+      estimatedTaxRate: 0.0, // TODO: Replace with Stripe Tax API call
+      taxJurisdiction: "US",
     };
 
     await auctionRef.set(auctionDoc);

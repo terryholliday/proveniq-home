@@ -21,10 +21,11 @@ export async function generateSalesAd(item: InventoryItem) {
   const headline = `${item.name} - ${item.condition}`;
   const body = `Selling ${item.name} (${item.category}). ${item.description?.slice(0, 160)}... Well cared for, stored in ${item.location}.`;
   const price = Math.round((item.currentValue ?? item.marketValue ?? item.purchasePrice ?? 100) * 0.95);
-  return `${headline}\n\n${body}\n\nAsking $${price.toLocaleString()} OBO. Pickup in ${item.location}.`;
+  return `${headline}\n\n${body}\n\nAsking $${price.toLocaleString()} OBO. Pickup in ${item.location}.\n\nDisclaimer: This description is AI-generated. Buyer should verify item condition.`;
 }
 
 export async function estimateValue(item: InventoryItem) {
+  // [COMPLIANCE] Disclaimer: Not a professional appraisal
   const base = item.marketValue || item.purchasePrice || 100;
   const factor = conditionFactor(item.condition);
   return Math.max(Math.round(base * factor), 10);
