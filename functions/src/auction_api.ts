@@ -1,8 +1,12 @@
 import { getFirestore } from "firebase-admin/firestore";
 import * as admin from "firebase-admin";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
+import Stripe from "stripe";
 
 const db = getFirestore();
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
+  // apiVersion: "2024-11-20", // Let it default or use latest
+});
 
 interface CreateAuctionInput {
   itemPath: string; // e.g. "users/<uid>/items/<itemId>"
@@ -57,6 +61,47 @@ export const createAuctionListing = onCall(
       throw new HttpsError("not-found", "Item not found.");
     }
 
+    // [COMPLIANCE] Calculate Tax via Stripe
+    let estimatedTaxRate = 0.0;
+    let taxJurisdiction = "US";
+
+    try {
+      // In a real scenario, we'd need the buyer's address. 
+      // For listing creation, we might estimate based on the seller's location or a default.
+      // Here we assume a default FL location for estimation purposes.
+      if (process.env.STRIPE_SECRET_KEY) {
+        const calculation = await stripe.tax.calculations.create({
+          currency: 'usd',
+          line_items: [{
+            amount: Math.round(data.startingBid * 100), // cents
+            reference: 'L-1',
+            tax_behavior: 'exclusive',
+            quantity: 1,
+          }],
+          customer_details: {
+            address: {
+              country: 'US',
+              state: 'FL', // Defaulting to FL for estimation
+              postal_code: '33101',
+            },
+            address_source: 'shipping',
+          },
+        });
+        // Calculate effective rate from the tax amount
+        const taxAmount = calculation.tax_amount_exclusive;
+        if (taxAmount > 0) {
+          estimatedTaxRate = taxAmount / (data.startingBid * 100);
+        }
+      } else {
+        console.warn("Stripe Secret Key not found. Using default tax rate.");
+        estimatedTaxRate = 0.07; // Fallback to 7%
+      }
+    } catch (e) {
+      console.error("Stripe Tax Calculation Failed:", e);
+      // Fallback or rethrow depending on strictness
+      estimatedTaxRate = 0.07;
+    }
+
     const auctionRef = db.collection("auctions").doc();
     const now = admin.firestore.Timestamp.now();
 
@@ -74,8 +119,8 @@ export const createAuctionListing = onCall(
       createdAt: now,
       updatedAt: now,
       // [COMPLIANCE] Tax Placeholder
-      estimatedTaxRate: 0.0, // TODO: Replace with Stripe Tax API call
-      taxJurisdiction: "US",
+      estimatedTaxRate: estimatedTaxRate,
+      taxJurisdiction: taxJurisdiction,
     };
 
     await auctionRef.set(auctionDoc);
@@ -86,3 +131,110 @@ export const createAuctionListing = onCall(
     };
   }
 );
+
+interface PlaceBidInput {
+  auctionId: string;
+  amount: number;
+}
+
+/**
+ * HTTPS callable: placeBid
+ *
+ * - Any authenticated user can bid
+ * - Enforces basic business rules:
+ *      - Auction exists and is 'live'
+ *      - Bid > currentBid
+ * - Writes a bid doc under /auctions/{auctionId}/bids
+ * - Updates auction.currentBid
+ */
+export const placeBid = onCall(
+  { enforceAppCheck: true, consumeAppCheckToken: true },
+  async (request) => {
+    // Assert authentication
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Authentication required.");
+    }
+
+    const bidderUid = request.auth.uid;
+    const data = request.data as Partial<PlaceBidInput>;
+
+    if (!data.auctionId || typeof data.auctionId !== "string") {
+      throw new HttpsError("invalid-argument", "auctionId is required.");
+    }
+    if (typeof data.amount !== "number" || data.amount <= 0) {
+      throw new HttpsError("invalid-argument", "amount must be positive.");
+    }
+
+    const auctionRef = db.collection("auctions").doc(data.auctionId);
+    const auctionSnap = await auctionRef.get();
+
+    if (!auctionSnap.exists) {
+      throw new HttpsError("not-found", "Auction not found.");
+    }
+
+    interface AuctionDoc {
+      status?: string;
+      currentBid?: number;
+      startingBid?: number;
+    }
+
+    const auction = auctionSnap.data() as AuctionDoc;
+
+    if (auction.status !== "live") {
+      throw new HttpsError("failed-precondition", "Auction is not live.");
+    }
+
+    const currentBid = typeof auction.currentBid === "number" ?
+      auction.currentBid : auction.startingBid;
+    if (data.amount <= (currentBid || 0)) {
+      throw new HttpsError(
+        "failed-precondition",
+        "Bid must be higher than current bid."
+      );
+    }
+
+    const now = admin.firestore.Timestamp.now();
+
+    // Create bid doc
+    const bidsCol = auctionRef.collection("bids");
+    const bidRef = bidsCol.doc();
+
+    const bidDoc = {
+      auctionId: auctionRef.id,
+      bidderUid,
+      amount: data.amount,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    // Use a transaction to update currentBid safely
+    await db.runTransaction(async (tx) => {
+      const freshSnap = await tx.get(auctionRef);
+      if (!freshSnap.exists) {
+        throw new HttpsError("not-found", "Auction not found.");
+      }
+      const fresh = freshSnap.data() as AuctionDoc;
+      const freshCurrent = typeof fresh.currentBid === "number" ?
+        fresh.currentBid : fresh.startingBid;
+
+      if (data.amount! <= (freshCurrent || 0)) {
+        throw new HttpsError(
+          "failed-precondition",
+          "Bid must be higher than current bid (race condition)."
+        );
+      }
+
+      tx.set(bidRef, bidDoc);
+      tx.update(auctionRef, {
+        currentBid: data.amount,
+        updatedAt: now,
+      });
+    });
+
+    return {
+      bidId: bidRef.id,
+      amount: data.amount,
+    };
+  }
+);
+

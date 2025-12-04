@@ -5,6 +5,7 @@ import { ProvenanceEngine } from '@/ai/provenance_engine';
 import { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import QRCode from "react-qr-code";
 
 interface ProvenanceCertificateProps {
     item: InventoryItem;
@@ -85,8 +86,13 @@ export function ProvenanceCertificate({ item }: ProvenanceCertificateProps) {
                 </div>
 
                 <div className="text-right">
-                    <div className="w-24 h-24 bg-gray-100 border border-gray-200 flex items-center justify-center mb-2 ml-auto">
-                        <span className="text-xs text-gray-400 text-center">QR Code<br />Placeholder</span>
+                    <div className="mb-2 ml-auto">
+                        <QRCode
+                            value={`${typeof window !== 'undefined' ? window.location.origin : ''}/verify/${item.id}`}
+                            size={96}
+                            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                            viewBox={`0 0 256 256`}
+                        />
                     </div>
                     <p className="text-[10px] text-gray-400 max-w-[200px]">
                         This certificate is a digital representation of records held in the MyARK secure registry.

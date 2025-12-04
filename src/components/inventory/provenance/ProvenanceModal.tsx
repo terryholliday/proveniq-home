@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ItemTimeline } from './ItemTimeline';
 import { ProvenanceCertificate } from './ProvenanceCertificate';
 import { Printer } from 'lucide-react';
+import { AddProvenanceForm } from './AddProvenanceForm';
 
 interface ProvenanceModalProps {
     item: InventoryItem;
@@ -33,6 +34,7 @@ export function ProvenanceModal({ item, onClose }: ProvenanceModalProps) {
                         <TabsList>
                             <TabsTrigger value="timeline">Timeline</TabsTrigger>
                             <TabsTrigger value="certificate">Certificate</TabsTrigger>
+                            <TabsTrigger value="add">Add Record</TabsTrigger>
                         </TabsList>
 
                         {activeTab === 'certificate' && (
@@ -51,6 +53,10 @@ export function ProvenanceModal({ item, onClose }: ProvenanceModalProps) {
                         <div className="print:block">
                             <ProvenanceCertificate item={item} />
                         </div>
+                    </TabsContent>
+
+                    <TabsContent value="add">
+                        <AddProvenanceForm item={item} onSuccess={() => setActiveTab('timeline')} />
                     </TabsContent>
                 </Tabs>
             </DialogContent>
