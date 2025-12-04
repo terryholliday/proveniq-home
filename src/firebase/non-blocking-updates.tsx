@@ -1,5 +1,5 @@
 'use client';
-    
+
 import {
   setDoc,
   addDoc,
@@ -13,7 +13,7 @@ import {
   UpdateData,
 } from 'firebase/firestore';
 import { errorEmitter } from '@/firebase/error-emitter';
-import {FirestorePermissionError} from '@/firebase/errors';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 /**
  * Initiates a setDoc operation for a document reference.
@@ -24,7 +24,8 @@ export function setDocumentNonBlocking<T extends DocumentData>(
   data: WithFieldValue<T>,
   options?: SetOptions
 ) {
-  setDoc(docRef, data, options).catch(() => {
+  const promise = options ? setDoc(docRef, data, options) : setDoc(docRef, data);
+  promise.catch(() => {
     errorEmitter.emit(
       'permission-error',
       new FirestorePermissionError({

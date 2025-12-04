@@ -10,7 +10,7 @@ import {
 import { MainNav } from "@/components/main-nav";
 import { UserNav } from "@/components/user-nav";
 import { Button } from "@/components/ui/button";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, ShieldCheck } from "lucide-react";
 import { Input } from "../ui/input";
 import { PermissionsInitializer } from "@/components/permissions-initializer";
 import { MyArkLogo } from "../onboarding/MyArkLogo";
@@ -31,6 +31,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </SidebarContent>
         <SidebarFooter className="p-4">
           {/* UserNav is moved from here */}
+          <div className="mt-auto pt-4 border-t border-sidebar-border">
+            <a href="/admin/compliance" className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors">
+              <ShieldCheck className="h-3 w-3" />
+              <span>Admin Access</span>
+            </a>
+          </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>

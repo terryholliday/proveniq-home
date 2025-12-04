@@ -37,3 +37,27 @@ type Query {
   getItem(id: ID!): Item
   listItems(limit: Int = 50, offset: Int = 0): [Item!]!
 }
+
+# --- Compliance & Legal ---
+
+type LegalDocument @table(name: "legal_documents", key: "id") {
+  id: ID! @col(name: "doc_id")
+  title: String!
+  content: String! @col(dataType: "text")
+  version: String!
+  status: String! # draft, published, archived
+  lastUpdated: Timestamp! @default(expr: "now()")
+  updatedBy: String
+}
+
+type ComplianceTask @table(name: "compliance_tasks", key: "id") {
+  id: ID! @col(name: "task_id") @default(expr: "uuidV4()")
+  title: String!
+  description: String
+  dueDate: Timestamp!
+  status: String! # pending, in_progress, completed, overdue
+  priority: String! # low, medium, high, critical
+  assignedTo: String
+  relatedDocId: ID
+  createdAt: Timestamp! @default(expr: "now()")
+}

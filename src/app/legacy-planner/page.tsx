@@ -101,10 +101,29 @@ export default function LegacyPlannerPage() {
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold">Create Your Will</h3>
-              <p className="mt-1 text-muted-foreground">
-                Our AI-powered wizard helps you generate a state-specific will
-                in minutes.
+              <p className="mt-1 text-muted-foreground mb-4">
+                Our wizard helps you draft a starting document.
               </p>
+
+              <div className="w-full max-w-xs space-y-4">
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Your State" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="FL">Florida</SelectItem>
+                    <SelectItem value="NY">New York</SelectItem>
+                    <SelectItem value="CA">California</SelectItem>
+                    <SelectItem value="TX">Texas</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button className="w-full">Start Draft</Button>
+
+                <p className="text-xs text-muted-foreground">
+                  *State-specific templates available for FL, NY, CA, TX.
+                </p>
+              </div>
             </Card>
             <Card>
               <CardHeader>
@@ -124,14 +143,22 @@ export default function LegacyPlannerPage() {
                   </SelectContent>
                 </Select>
                 <Input type="file" />
-                <Button className="w-full">
+                <Button className="w-full" variant="secondary">
                   <FileUp className="mr-2 h-4 w-4" />
                   Upload Document
                 </Button>
+
+                <div className="pt-4 border-t">
+                  <h4 className="font-semibold text-sm mb-2">Need Professional Review?</h4>
+                  <Button variant="outline" className="w-full">
+                    <Scale className="mr-2 h-4 w-4" />
+                    Request Attorney Review ($99)
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
-           <p className="text-center text-sm text-muted-foreground mt-4">
+          <p className="text-center text-sm text-muted-foreground mt-4">
             No legal documents uploaded yet.
           </p>
         </div>

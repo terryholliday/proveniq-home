@@ -2,3 +2,14 @@
 > nextn@0.1.0 typecheck
 > tsc --noEmit
 
+.next/types/app/inventory/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+src/components/inventory/detail/ItemQuickActions.tsx(56,61): error TS2322: Type '{ item: InventoryItem; user: User; onClose: () => void; }' is not assignable to type 'IntrinsicAttributes & ServiceRequestModalProps'.
+  Property 'user' does not exist on type 'IntrinsicAttributes & ServiceRequestModalProps'.
+src/components/packing-plan-modal.tsx(62,29): error TS18048: 'group.itemNames' is possibly 'undefined'.
+src/components/QRCodeDisplay.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/components/space/SpaceMapper.tsx(213,71): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/firebase/non-blocking-updates.tsx(27,24): error TS2345: Argument of type 'SetOptions | undefined' is not assignable to parameter of type 'SetOptions'.
+  Type 'undefined' is not assignable to type 'SetOptions'.

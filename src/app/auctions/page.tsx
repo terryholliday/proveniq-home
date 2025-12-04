@@ -101,22 +101,30 @@ export default function AuctionsPage() {
                   <span className="text-muted-foreground">Starts:</span>{' '}
                   <span>{auction.startsAt ? new Date(auction.startsAt).toLocaleString() : 'TBD'}</span>
                 </div>
-                <div>
-                  <span className="text-muted-foreground">Ends:</span>{' '}
-                  <span>{auction.endsAt ? new Date(auction.endsAt).toLocaleString() : 'TBD'}</span>
-                </div>
               </div>
-              {auction.id && (
-                <Button variant="link" asChild className="px-0">
-                  <Link href={`/auctions/${auction.id}`} target="_blank">
-                    View on myarkauctions
-                  </Link>
-                </Button>
-              )}
-            </CardContent>
+              <div>
+                <span className="text-muted-foreground">Ends:</span>{' '}
+                <span>{auction.endsAt ? new Date(auction.endsAt).toLocaleString() : 'TBD'}</span>
+              </div>
+            </div>
+
+            <div className="mt-2 p-2 bg-slate-50 rounded text-xs text-slate-500 flex justify-between items-center">
+              <span>Est. Tax (FL):</span>
+              <span className="font-mono">
+                ${((auction.currentBid ?? auction.startingBid) * 0.07).toFixed(2)}
+              </span>
+            </div>
+            {auction.id && (
+              <Button variant="link" asChild className="px-0">
+                <Link href={`/auctions/${auction.id}`} target="_blank">
+                  View on myarkauctions
+                </Link>
+              </Button>
+            )}
+          </CardContent>
           </Card>
         ))}
-      </div>
     </div>
+    </div >
   );
 }

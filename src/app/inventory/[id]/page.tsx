@@ -20,22 +20,28 @@ import UpgradeModal from '@/components/subscriptions/UpgradeModal';
 import { AuctionWizard } from '@/components/auctions/AuctionWizard';
 import { Button } from '@/components/ui/button';
 
-export default function ItemDetailPage({ params }: { params: { id: string } }) {
+export default function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const [unwrappedParams, setUnwrappedParams] = useState<{ id: string } | null>(null);
   const [item, setItem] = useState<InventoryItem | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const [upgradeModal, setUpgradeModal] = useState<{isOpen: boolean, feature: string}>({ isOpen: false, feature: '' });
+  const [upgradeModal, setUpgradeModal] = useState<{ isOpen: boolean, feature: string }>({ isOpen: false, feature: '' });
   const [showAuctionWizard, setShowAuctionWizard] = useState(false);
 
   useEffect(() => {
-    const foundItem = DUMMY_ITEMS.find(i => i.id === params.id);
+    params.then(setUnwrappedParams);
+  }, [params]);
+
+  useEffect(() => {
+    if (!unwrappedParams) return;
+    const foundItem = DUMMY_ITEMS.find(i => i.id === unwrappedParams.id);
     setItem(foundItem || null);
     setUser(DUMMY_USERS[0]); // Mock current user
     setBeneficiaries(DUMMY_BENEFICIARIES); // Mock beneficiaries
     setLoading(false);
-  }, [params.id]);
+  }, [unwrappedParams]);
 
   const handleUpdate = (updates: Partial<InventoryItem>) => {
     if (!item) return;
@@ -55,9 +61,9 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
       console.log("Item deleted");
     }
   };
-  
+
   const handleUpgradeRequest = (feature: string) => {
-      setUpgradeModal({ isOpen: true, feature });
+    setUpgradeModal({ isOpen: true, feature });
   }
 
   if (loading) {
@@ -72,13 +78,13 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <ItemHeader item={item} onUpdate={handleUpdate} />
-        
+
         <main className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-6">
             <ItemImageGallery item={item} onBack={() => window.history.back()} onUpdate={handleUpdate} />
             <LendingInfo item={item} onUpdate={handleUpdate} />
             <div className="md:hidden">
-                <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+              <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             </div>
             <div className="md:hidden">
               <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
@@ -104,10 +110,10 @@ export default function ItemDetailPage({ params }: { params: { id: string } }) {
         </main>
       </div>
       {upgradeModal.isOpen && (
-          <UpgradeModal 
-            feature={upgradeModal.feature} 
-            onClose={() => setUpgradeModal({isOpen: false, feature: ''})} 
-          />
+        <UpgradeModal
+          feature={upgradeModal.feature}
+          onClose={() => setUpgradeModal({ isOpen: false, feature: '' })}
+        />
       )}
       {showAuctionWizard && (
         <AuctionWizard

@@ -41,10 +41,9 @@ const PackingPlanModal: React.FC<PackingPlanModalProps> = ({ plan, onClose, onCr
               <div key={i} className="p-3 bg-gray-50 rounded-lg border">
                 <div className="flex justify-between items-start">
                   <p className="font-bold text-gray-900">{item.itemName}</p>
-                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${ 
-                    item.action === 'Sell' ? 'bg-green-100 text-green-800' :
-                    item.action === 'Donate' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
-                  }`}>{item.action}</span>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${item.action === 'Sell' ? 'bg-green-100 text-green-800' :
+                      item.action === 'Donate' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
+                    }`}>{item.action}</span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">{item.reasoning}</p>
               </div>
@@ -53,20 +52,20 @@ const PackingPlanModal: React.FC<PackingPlanModalProps> = ({ plan, onClose, onCr
         );
       case 'groups':
         return (
-            <div className="space-y-3">
-                {(plan.groups ?? []).length > 0 ? (plan.groups ?? []).map((group, i) => (
-                    <div key={i} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <h4 className="font-bold text-gray-900">{group.groupName}</h4>
-                        <p className="text-xs text-gray-500 italic mb-2">{group.reasoning}</p>
-                        <ul className="text-sm text-gray-700 list-disc list-inside space-y-1 mb-3">
-                           {group.itemNames.map((name, idx) => <li key={idx}>{name}</li>)}
-                        </ul>
-                        <button onClick={() => onCreateBox(group)} className="w-full py-2 bg-indigo-600 text-white font-bold text-sm rounded-lg hover:bg-indigo-700">
-                           Create this Box
-                        </button>
-                    </div>
-                )) : <p className="text-sm text-gray-400 italic text-center py-4">No grouping suggestions available.</p>}
-            </div>
+          <div className="space-y-3">
+            {(plan.groups ?? []).length > 0 ? (plan.groups ?? []).map((group, i) => (
+              <div key={i} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-gray-900">{group.groupName}</h4>
+                <p className="text-xs text-gray-500 italic mb-2">{group.reasoning}</p>
+                <ul className="text-sm text-gray-700 list-disc list-inside space-y-1 mb-3">
+                  {(group.itemNames || []).map((name, idx) => <li key={idx}>{name}</li>)}
+                </ul>
+                <button onClick={() => onCreateBox(group)} className="w-full py-2 bg-indigo-600 text-white font-bold text-sm rounded-lg hover:bg-indigo-700">
+                  Create this Box
+                </button>
+              </div>
+            )) : <p className="text-sm text-gray-400 italic text-center py-4">No grouping suggestions available.</p>}
+          </div>
         );
     }
   };
@@ -84,9 +83,9 @@ const PackingPlanModal: React.FC<PackingPlanModalProps> = ({ plan, onClose, onCr
 
         <div className="p-4 border-b border-gray-100 shrink-0">
           <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
-            <button onClick={() => setActiveTab('groups')} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'groups' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500'}`}><Package size={16}/> Grouping</button>
-            <button onClick={() => setActiveTab('priority')} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'priority' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500'}`}><Lightbulb size={16}/> Priority</button>
-            <button onClick={() => setActiveTab('declutter')} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'declutter' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500'}`}><Trash2 size={16}/> Declutter</button>
+            <button onClick={() => setActiveTab('groups')} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'groups' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500'}`}><Package size={16} /> Grouping</button>
+            <button onClick={() => setActiveTab('priority')} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'priority' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500'}`}><Lightbulb size={16} /> Priority</button>
+            <button onClick={() => setActiveTab('declutter')} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'declutter' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500'}`}><Trash2 size={16} /> Declutter</button>
           </div>
         </div>
 

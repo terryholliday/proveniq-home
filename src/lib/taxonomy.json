@@ -1,0 +1,280 @@
+{
+    "taxonomy": {
+        "Electronics": {
+            "subcategories": {
+                "Computers": [
+                    "Laptop",
+                    "Desktop",
+                    "Tablet",
+                    "Server",
+                    "Component"
+                ],
+                "Audio": [
+                    "Headphones",
+                    "Speakers",
+                    "Microphone",
+                    "Receiver",
+                    "Amplifier"
+                ],
+                "Cameras": [
+                    "DSLR",
+                    "Mirrorless",
+                    "Point & Shoot",
+                    "Lens",
+                    "Action Camera"
+                ],
+                "Mobile": [
+                    "Smartphone",
+                    "Smartwatch",
+                    "Accessory"
+                ],
+                "Gaming": [
+                    "Console",
+                    "Controller",
+                    "Video Game",
+                    "VR Headset"
+                ]
+            },
+            "attributes": [
+                "Brand",
+                "Model",
+                "Year",
+                "Condition",
+                "Serial Number",
+                "Specs"
+            ]
+        },
+        "Musical Instruments": {
+            "subcategories": {
+                "Guitars": [
+                    "Electric Guitar",
+                    "Acoustic Guitar",
+                    "Bass Guitar",
+                    "Classical Guitar"
+                ],
+                "Keyboards": [
+                    "Synthesizer",
+                    "Digital Piano",
+                    "MIDI Controller",
+                    "Organ"
+                ],
+                "Drums": [
+                    "Acoustic Kit",
+                    "Electronic Kit",
+                    "Snare",
+                    "Cymbal",
+                    "Hardware"
+                ],
+                "String": [
+                    "Violin",
+                    "Cello",
+                    "Viola",
+                    "Double Bass"
+                ],
+                "Wind": [
+                    "Saxophone",
+                    "Trumpet",
+                    "Flute",
+                    "Clarinet"
+                ]
+            },
+            "attributes": [
+                "Brand",
+                "Model",
+                "Year",
+                "Finish",
+                "Origin",
+                "Condition"
+            ]
+        },
+        "Furniture": {
+            "subcategories": {
+                "Seating": [
+                    "Sofa",
+                    "Armchair",
+                    "Dining Chair",
+                    "Office Chair",
+                    "Stool"
+                ],
+                "Tables": [
+                    "Dining Table",
+                    "Coffee Table",
+                    "Desk",
+                    "Side Table"
+                ],
+                "Storage": [
+                    "Bookshelf",
+                    "Cabinet",
+                    "Dresser",
+                    "Wardrobe"
+                ],
+                "Bedroom": [
+                    "Bed Frame",
+                    "Nightstand",
+                    "Mattress"
+                ]
+            },
+            "attributes": [
+                "Material",
+                "Style",
+                "Era",
+                "Dimensions",
+                "Condition",
+                "Brand"
+            ]
+        },
+        "Collectibles": {
+            "subcategories": {
+                "Trading Cards": [
+                    "Sports Card",
+                    "TCG Card",
+                    "Non-Sports Card"
+                ],
+                "Coins & Currency": [
+                    "Coin",
+                    "Banknote",
+                    "Bullion"
+                ],
+                "Comics": [
+                    "Comic Book",
+                    "Graphic Novel",
+                    "Manga"
+                ],
+                "Toys": [
+                    "Action Figure",
+                    "Doll",
+                    "Model Car",
+                    "LEGO"
+                ]
+            },
+            "attributes": [
+                "Graded",
+                "Grade",
+                "Year",
+                "Rarity",
+                "Autographed",
+                "Condition"
+            ]
+        },
+        "Fashion": {
+            "subcategories": {
+                "Apparel": [
+                    "Jacket",
+                    "Shirt",
+                    "Pants",
+                    "Dress",
+                    "Suit"
+                ],
+                "Footwear": [
+                    "Sneakers",
+                    "Boots",
+                    "Dress Shoes",
+                    "Sandals"
+                ],
+                "Accessories": [
+                    "Watch",
+                    "Jewelry",
+                    "Handbag",
+                    "Sunglasses",
+                    "Hat"
+                ]
+            },
+            "attributes": [
+                "Brand",
+                "Size",
+                "Material",
+                "Gender",
+                "Condition",
+                "Vintage"
+            ]
+        },
+        "Home & Garden": {
+            "subcategories": {
+                "Appliances": [
+                    "Refrigerator",
+                    "Washer",
+                    "Dryer",
+                    "Oven",
+                    "Small Appliance"
+                ],
+                "Tools": [
+                    "Power Tool",
+                    "Hand Tool",
+                    "Garden Tool"
+                ],
+                "Decor": [
+                    "Lighting",
+                    "Rug",
+                    "Art",
+                    "Mirror"
+                ]
+            },
+            "attributes": [
+                "Brand",
+                "Model",
+                "Power Source",
+                "Condition",
+                "Dimensions"
+            ]
+        },
+        "Sports & Outdoors": {
+            "subcategories": {
+                "Equipment": [
+                    "Golf Club",
+                    "Tennis Racket",
+                    "Bicycle",
+                    "Skis",
+                    "Snowboard"
+                ],
+                "Camping": [
+                    "Tent",
+                    "Sleeping Bag",
+                    "Backpack"
+                ],
+                "Fitness": [
+                    "Treadmill",
+                    "Weights",
+                    "Yoga Mat"
+                ]
+            },
+            "attributes": [
+                "Brand",
+                "Model",
+                "Size",
+                "Condition",
+                "Sport"
+            ]
+        },
+        "Vehicles": {
+            "subcategories": {
+                "Cars": [
+                    "Sedan",
+                    "SUV",
+                    "Truck",
+                    "Coupe",
+                    "Convertible"
+                ],
+                "Motorcycles": [
+                    "Cruiser",
+                    "Sport",
+                    "Touring",
+                    "Dirt"
+                ],
+                "Boats": [
+                    "Powerboat",
+                    "Sailboat",
+                    "PWC"
+                ]
+            },
+            "attributes": [
+                "Make",
+                "Model",
+                "Year",
+                "Mileage",
+                "VIN",
+                "Condition"
+            ]
+        }
+    },
+    "version": "1.0"
+}
