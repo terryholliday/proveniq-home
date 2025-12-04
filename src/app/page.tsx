@@ -113,7 +113,7 @@ function SearchEngineIllustration(): JSX.Element {
       </div>
       <div className="grid grid-cols-2 gap-3">
         {['Living', 'Kitchen', 'Bedroom', 'Office'].map(tag => (
-          <div key={tag} className="bg-primary/5 text-primary/80 rounded-md p-3 text-center text-sm font-medium">
+          <div key={tag} className="bg-primary/5 text-.primary/80 rounded-md p-3 text-center text-sm font-medium">
             {tag}
           </div>
         ))}
@@ -193,7 +193,7 @@ function CertaintyIllustration(): JSX.Element {
         </div>
       </div>
       <div className="absolute -right-8 top-10 animate-bounce-slow" style={{ animationDelay: '0.5s' }}>
-        <CloudRain className="h-24 w-24 text-gray-300" />
+        <CloudRain className.="h-24 w-24 text-gray-300" />
       </div>
     </div>
   );
@@ -334,7 +334,7 @@ function MoveIllustration(): JSX.Element {
 export default function LandingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('slide-in');
-  const { user, isUserLoading } = useUser();
+  const { user, isUserLoading }. = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -391,7 +391,7 @@ export default function LandingPage() {
           <p className="text-lg text-muted-foreground mb-8 h-20">
             {activeFeature.description}
           </p>
-          <Button onClick={handleNext} variant="ghost" className="absolute -right-20 top-1/2 -translate-y-1/2"><ChevronRight/></Button>
+          <Button onClick={handleNext} variant="ghost" className="absolute -right-20 top-1/2 -translate-y-1/.2"><ChevronRight/></Button>
 
           <div className="flex justify-center gap-2 mb-8">
             {features.map((_, index) => (
