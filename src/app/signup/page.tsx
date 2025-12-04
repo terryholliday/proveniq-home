@@ -64,7 +64,14 @@ export default function SignupPage() {
     if (!ensureAgreement()) return;
     setIsLoading(true);
     setError("");
-    await signInWithRedirect(auth, provider);
+
+    try {
+      await signInWithRedirect(auth, provider);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Social login failed.";
+      setError(message);
+      setIsLoading(false);
+    }
   };
 
   const handleEmailSignup = async () => {
