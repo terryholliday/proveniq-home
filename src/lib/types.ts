@@ -198,3 +198,9 @@ export type ServiceProvider = {
   specialty: string;
   rating: number;
 };
+
+export type ConsentRecord = {
+  accepted: boolean;
+  acceptedAt: any; // Using any to avoid import issues with Timestamp, or we can import it if needed. ideally generic or specific
+  policyVersion: string;
+};
