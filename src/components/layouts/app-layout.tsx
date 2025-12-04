@@ -32,9 +32,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <SidebarFooter className="p-4">
           {/* UserNav is moved from here */}
           <div className="mt-auto pt-4 border-t border-sidebar-border">
-            <a href="/admin/compliance" className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors">
+            <a href="/admin" className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors">
               <ShieldCheck className="h-3 w-3" />
-              <span>Admin Access</span>
+              <span>Admin</span>
             </a>
           </div>
         </SidebarFooter>
