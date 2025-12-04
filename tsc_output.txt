@@ -1,0 +1,56 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+src/lib/data-state.tsx(20,15): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(20,31): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(20,35): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(20,45): error TS1005: '}' expected.
+src/lib/data-state.tsx(20,57): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(21,17): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(21,54): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(21,58): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(21,68): error TS1005: '}' expected.
+src/lib/data-state.tsx(21,85): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(22,21): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(22,37): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(22,41): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(22,51): error TS1005: '}' expected.
+src/lib/data-state.tsx(22,61): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(23,27): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(23,50): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(23,54): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(23,64): error TS1005: '}' expected.
+src/lib/data-state.tsx(23,82): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(24,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(26,54): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(27,30): error TS1005: '}' expected.
+src/lib/data-state.tsx(27,42): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(28,17): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(32,24): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(33,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(38,63): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(45,1): error TS1109: Expression expected.
+src/lib/data-state.tsx(45,27): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(46,3): error TS1109: Expression expected.
+src/lib/data-state.tsx(47,5): error TS1109: Expression expected.
+src/lib/data-state.tsx(87,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(88,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(93,73): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(94,58): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(96,60): error TS1109: Expression expected.
+src/lib/data-state.tsx(96,79): error TS1109: Expression expected.
+src/lib/data-state.tsx(97,31): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/lib/data-state.tsx(98,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(99,56): error TS17008: JSX element 'DataState' has no corresponding closing tag.
+src/lib/data-state.tsx(100,3): error TS1109: Expression expected.
+src/lib/data-state.tsx(101,5): error TS1109: Expression expected.
+src/lib/data-state.tsx(106,7): error TS1109: Expression expected.
+src/lib/data-state.tsx(106,30): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(107,5): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(110,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(111,5): error TS1109: Expression expected.
+src/lib/data-state.tsx(113,76): error TS17008: JSX element 'T' has no corresponding closing tag.
+src/lib/data-state.tsx(114,3): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(115,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/lib/data-state.tsx(116,1): error TS1005: '</' expected.
