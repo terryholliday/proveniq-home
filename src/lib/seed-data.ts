@@ -13,6 +13,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
     status: 'pending',
     priority: 'critical',
     tags: ['corp-gov', 'tax', 'day-1'],
+    relatedDocId: 'rspa_template',
     createdAt: Timestamp.now()
   },
   {
@@ -22,6 +23,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
     status: 'pending',
     priority: 'critical',
     tags: ['corp-gov', 'ip', 'day-1'],
+    relatedDocId: 'tech_transfer',
     createdAt: Timestamp.now()
   },
   {
@@ -42,6 +44,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
     status: 'pending',
     priority: 'critical',
     tags: ['legal', 'privacy', 'remediation'],
+    relatedDocId: 'privacy',
     createdAt: Timestamp.now()
   },
   {
@@ -82,6 +85,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
     status: 'pending',
     priority: 'critical',
     tags: ['legal', 'marketing', 'upl'],
+    relatedDocId: 'upl_strategy_memo',
     createdAt: Timestamp.now()
   },
   {
@@ -102,6 +106,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
     priority: 'critical',
     status: 'pending',
     tags: ['security', 'soc2'],
+    relatedDocId: 'security_roadmap',
     createdAt: Timestamp.now()
   },
   {
@@ -131,6 +136,20 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     status: 'published',
     version: '2.0',
     content: `<h1>Terms of Service</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Marketplace Facilitator Role</h3><p>MyARK operates as a "Marketplace Facilitator" for auction transactions. We are responsible for calculating, collecting, and remitting applicable Sales Tax on items sold through our platform, as required by state law.</p>`
+  },
+  {
+    id: 'eula',
+    title: 'End User License Agreement (EULA)',
+    status: 'published',
+    version: '1.0',
+    content: `<h1>End User License Agreement</h1><p>This EULA governs your use of the MyARK software.</p>`
+  },
+  {
+    id: 'compliance_notice',
+    title: 'Annual Compliance Notice',
+    status: 'internal_only',
+    version: '2025.1',
+    content: `<h1>Annual Compliance Notice</h1><p>Summary of compliance obligations for the fiscal year.</p>`
   },
 
   // STRATEGY MEMOS
@@ -162,6 +181,20 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     version: '1.0',
     content: `<h1>TrueArk Technologies, Inc. Business Plan</h1><p><strong>Confidential & Proprietary</strong></p><h2>1.0 Executive Summary</h2><p>TrueArk is the "Trust & Liquidity Layer for the Physical World," unlocking the $8 Trillion "Dead Capital" reservoir of consumer durable goods.</p>`
   },
+  {
+    id: 'security_roadmap',
+    title: 'Security Roadmap (SOC 2 Type I)',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>Security Roadmap</h1><p>Plan for achieving SOC 2 Type I compliance.</p>`
+  },
+  {
+    id: 'trademark_strategy',
+    title: 'Trademark Strategy Memo',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>Trademark Strategy</h1><p>Strategy for protecting the MyARK brand and marks.</p>`
+  },
 
   // CORP GOVERNANCE & TEMPLATES
   {
@@ -172,11 +205,39 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     content: `<h1>BYLAWS OF TRUEARK TECHNOLOGIES, INC.</h1><p><strong>(A Delaware Corporation)</strong></p><h2>ARTICLE I: OFFICES</h2><p>1.1 Registered Office. The registered office of the corporation shall be located in the State of Delaware...</p>`
   },
   {
+    id: 'board_consent_initial',
+    title: 'Initial Board Consent',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>Action by Unanimous Written Consent</h1><p>The undersigned, being all the members of the Board of Directors, hereby consent to the following actions...</p>`
+  },
+  {
     id: 'piia_template',
     title: 'TEMPLATE: PIIA (Standard)',
     status: 'internal_only',
     version: '2025.1',
     content: `<h1>Proprietary Information and Inventions Assignment Agreement</h1><p>This Agreement is entered into by and between TrueArk Technologies, Inc. and [Recipient Name].</p><h3>2. Assignment of Inventions</h3><p>Recipient hereby assigns to the Company all right, title, and interest in and to any Inventions created during the Relationship.</p>`
+  },
+  {
+    id: 'piia_wfh_template',
+    title: 'TEMPLATE: PIIA (WFH/Remote)',
+    status: 'internal_only',
+    version: '2025.1',
+    content: `<h1>PIIA (Remote Work Addendum)</h1><p>Additional terms for remote employees regarding information security.</p>`
+  },
+  {
+    id: 'ica_template',
+    title: 'TEMPLATE: Independent Contractor Agreement',
+    status: 'internal_only',
+    version: '2025.1',
+    content: `<h1>Independent Contractor Agreement</h1><p>Agreement for contractor services.</p>`
+  },
+  {
+    id: 'rspa_template',
+    title: 'TEMPLATE: Restricted Stock Purchase Agreement',
+    status: 'internal_only',
+    version: '2025.1',
+    content: `<h1>Restricted Stock Purchase Agreement</h1><p>Agreement for the purchase of restricted stock.</p>`
   },
   {
     id: 'tech_transfer',
