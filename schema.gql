@@ -1,0 +1,39 @@
+# Inventory Item Schema
+# Maps to "items" table in PostgreSQL
+type Item @table(name: "items", key: "id") {
+  id: ID! @col(name: "item_id") @default(expr: "uuidV4()")
+  name: String! @col(dataType: "varchar(200)")
+  description: String @col(dataType: "text")
+  currentBid: Float! @col(name: "current_bid")
+  
+  # Audit Timestamps
+  createdAt: Timestamp! @default(expr: "now()")
+  updatedAt: Timestamp! @default(expr: "now()")
+}
+
+# --- Inputs for Mutations ---
+
+input CreateItemInput {
+  name: String!
+  description: String
+  currentBid: Float! # Logic layer should enforce > 0
+}
+
+input UpdateItemInput {
+  id: ID!
+  name: String
+  description: String
+  currentBid: Float
+}
+
+# --- Operations ---
+
+type Mutation {
+  createItem(input: CreateItemInput!): Item
+  updateItem(input: UpdateItemInput!): Item
+}
+
+type Query {
+  getItem(id: ID!): Item
+  listItems(limit: Int = 50, offset: Int = 0): [Item!]!
+}

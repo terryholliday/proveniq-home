@@ -1,17 +1,8 @@
 {
   "projects": {
-    "default": "studio-2235881373-5c755"
+    "default": "arkive-auctions-70102726-f9642",
+    "myark-prod": "studio-2016353273-627b9"
   },
-  "targets": {
-    "studio-2235881373-5c755": {
-      "hosting": {
-        "myarkapp-io": [
-          "myarkapp-io"
-        ],
-        "myarkapp-io-www": [
-          "myarkapp-io-www"
-        ]
-      }
-    }
-  }
+  "targets": {},
+  "etags": {}
 }
