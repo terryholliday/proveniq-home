@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import { ComplianceTask, LegalDocument, LegalDocType } from './types';
+import { ComplianceTask, LegalDocument } from './types';
 
 // Helper to create future dates
 const daysFromNow = (n: number) => Timestamp.fromDate(new Date(Date.now() + n * 86400000));
@@ -10,7 +10,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
   {
     title: "File 83(b) Election",
     description: "CRITICAL: Mail 83(b) form to IRS within 30 days of signing RSPA. Send via USPS Certified Mail. Missing this is irreversible.",
-    dueDate: daysFromNow(5), 
+    dueDate: daysFromNow(5),
     status: 'pending',
     priority: 'critical',
     tags: ['corp-gov', 'tax', 'day-1'],

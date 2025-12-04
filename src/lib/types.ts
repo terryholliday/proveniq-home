@@ -201,6 +201,28 @@ export type ServiceProvider = {
 
 export type ConsentRecord = {
   accepted: boolean;
-  acceptedAt: any; // Using any to avoid import issues with Timestamp, or we can import it if needed. ideally generic or specific
+  acceptedAt: { seconds: number; nanoseconds: number } | Date; // Firebase Timestamp compatible
   policyVersion: string;
+};
+
+export type LegalDocType = 'internal_only' | 'published' | 'archived';
+
+export type LegalDocument = {
+  id: string;
+  title: string;
+  status: 'draft' | 'pending' | 'notarized' | 'internal_only' | 'published' | 'archived';
+  version?: string;
+  content?: string;
+  name?: string;
+};
+
+export type ComplianceTask = {
+  id: string;
+  title: string;
+  description: string;
+  dueDate: { seconds: number; nanoseconds: number } | Date; // Firebase Timestamp compatible
+  status: 'pending' | 'completed' | 'overdue';
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  tags: string[];
+  createdAt: { seconds: number; nanoseconds: number } | Date; // Firebase Timestamp compatible
 };
