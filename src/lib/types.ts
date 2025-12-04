@@ -16,6 +16,8 @@ export type ExifData = {
   FocalLength?: number;
   ISO?: number;
   ShutterSpeedValue?: number;
+  GPSLatitude?: number;
+  GPSLongitude?: number;
 };
 
 export type Beneficiary = {

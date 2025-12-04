@@ -13,7 +13,7 @@ const db = getFirestore();
  */
 export const auditBidWrites = onDocumentWritten(
   "auctions/{auctionId}/bids/{bidId}",
-  async (event: any) => {
+  async (event) => {
     // 1. Extract Data
     // v2 events can have undefined data, so handle that safely
     const data = event.data;
@@ -76,7 +76,7 @@ export const auditBidWrites = onDocumentWritten(
  */
 export const auditItemWrites = onDocumentWritten(
   "users/{uid}/items/{itemId}",
-  async (event: any) => {
+  async (event) => {
     const {data, params} = event;
     if (!data) return; // Safe check for data
 

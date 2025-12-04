@@ -1,4 +1,3 @@
-import * as logger from "firebase-functions/logger";
 import {getFirestore} from "firebase-admin/firestore";
 import * as admin from "firebase-admin";
 import {HttpsError, onCall} from "firebase-functions/v2/https";
@@ -24,7 +23,7 @@ interface CreateAuctionInput {
  */
 export const createAuctionListing = onCall(
   {enforceAppCheck: true, consumeAppCheckToken: true},
-  async (request: any) => {
+  async (request) => {
     // Assert authentication
     if (!request.auth) {
       throw new HttpsError("unauthenticated", "Authentication required.");

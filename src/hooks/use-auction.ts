@@ -25,10 +25,10 @@ export function useAuction() {
     try {
       const response = await submitAuctionItem(data);
       return response;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Auction creation error:", err);
       // Try to extract a friendly message if it's an HttpsError
-      const message = err.message || "Failed to create auction.";
+      const message = err instanceof Error && err.message ? err.message : "Failed to create auction.";
       setError(message);
       return null;
     } finally {
@@ -47,9 +47,9 @@ export function useAuction() {
     try {
       const response = await placeBid(data);
       return response;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Bidding error:", err);
-      const message = err.message || "Failed to place bid.";
+      const message = err instanceof Error && err.message ? err.message : "Failed to place bid.";
       setError(message);
       return null;
     } finally {

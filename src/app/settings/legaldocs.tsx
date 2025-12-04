@@ -209,7 +209,7 @@ export const ArkiveAuctionTerms: React.FC<LegalProps> = ({ onBack }) => (
     <p>Use of myarkauctions requires an affirmative act of consent (e.g., checking the agreement box during sign-up or when prompted on re-entry). Material updates require renewed assent upon next login; passive notice is insufficient.</p>
 
     <h3>2. Role &amp; Agent-of-Payee</h3>
-    <p>For payments collected for sellers, myarkauctions acts as the seller's limited payment collection agent solely to receive funds from buyers. Receipt of funds by myarkauctions constitutes receipt by the seller for purposes of the "agent of payee" exemption under applicable money transmission laws. myarkauctions does not hold funds in trust and is not a money transmitter to the extent permitted by law.</p>
+    <p>For payments collected for sellers, myarkauctions acts as the seller&apos;s limited payment collection agent solely to receive funds from buyers. Receipt of funds by myarkauctions constitutes receipt by the seller for purposes of the &quot;agent of payee&quot; exemption under applicable money transmission laws. myarkauctions does not hold funds in trust and is not a money transmitter to the extent permitted by law.</p>
 
     <h3>3. Auctions &amp; Pricing</h3>
     <p>myarkauctions does not use non-public competitor or market data to set or suggest prices and does not coordinate pricing among sellers. Any pricing insights are optional, non-binding, and must be independently evaluated by the seller.</p>

@@ -3,7 +3,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import pluginJs from "@eslint/js";
 
-export default [
+const config = [
   {
     languageOptions: { globals: globals.node },
   },
@@ -13,3 +13,5 @@ export default [
     ignores: ["lib/"],
   }
 ];
+
+export default config;
