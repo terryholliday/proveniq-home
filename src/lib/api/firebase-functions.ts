@@ -1,6 +1,7 @@
 // src/lib/api/firebase-functions.ts
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getApp } from "firebase/app";
+import { AuctionListing, CreateAuctionInput, CreateAuctionResponse } from "../auction-types";
 
 // Initialize Functions (assuming app is already initialized in src/lib/firebase.ts)
 const functions = getFunctions(getApp(), "us-central1");
@@ -25,24 +26,8 @@ export interface AuctionResponse {
   itemId?: string;
   auctionId?: string;
   bidAmount?: number;
-  auction?: any; // For createAuctionListing response
+  auction?: AuctionListing; // For createAuctionListing response
   bidId?: string; // For placeBid response
-}
-
-// New Types (Phase 2-5 refined)
-export interface CreateAuctionInput {
-  itemPath: string;
-  title: string;
-  description?: string;
-  startingBid: number;
-  reservePrice?: number;
-  startsAt?: string | null;
-  endsAt?: string | null;
-}
-
-export interface CreateAuctionResponse {
-  auctionId: string;
-  auction: any;
 }
 
 // --- Hooks / API Calls ---
@@ -52,7 +37,7 @@ export const submitAuctionItem = async (data: SubmitAuctionItemInput): Promise<A
   try {
     const result = await submitFn(data);
     return result.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to submit item:", error);
     throw error;
   }
@@ -63,7 +48,7 @@ export const placeBid = async (data: PlaceBidInput): Promise<AuctionResponse> =>
   try {
     const result = await bidFn(data);
     return result.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to place bid:", error);
     throw error;
   }
@@ -74,7 +59,7 @@ export const createAuctionListing = async (data: CreateAuctionInput): Promise<Cr
   try {
     const result = await createFn(data);
     return result.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to create auction listing:", error);
     throw error;
   }
