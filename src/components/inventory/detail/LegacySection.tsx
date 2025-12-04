@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { InventoryItem, Beneficiary, User } from '@/lib/types';
+import { Timestamp } from 'firebase/firestore';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Section, Field } from './Section';
@@ -17,7 +18,22 @@ interface LegacySectionProps {
 }
 
 // Mock user for permission check
-const mockUser: User = { id: '1', name: 'Test User', email: 'test@user.com', tier: 'pro', subscriptionStatus: 'active' };
+const mockUser: User = {
+  id: '1',
+  uid: '1',
+  name: 'Test User',
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'test@user.com',
+  tier: 'pro',
+  subscriptionStatus: 'active',
+  createdAt: Timestamp.now(),
+  updatedAt: Timestamp.now(),
+  onboardingCompleted: true,
+  isPremium: true,
+  aiAccess: true,
+  trainingAccess: true,
+};
 
 export function LegacySection({ item, beneficiaries, onUpdate, onUpgradeReq }: LegacySectionProps) {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,10 +43,10 @@ export function LegacySection({ item, beneficiaries, onUpdate, onUpgradeReq }: L
 
   const handleSave = () => {
     if (!hasPermission) {
-        onUpgradeReq('Legacy Planning');
-        return;
+      onUpgradeReq('Legacy Planning');
+      return;
     }
-    onUpdate({ 
+    onUpdate({
       beneficiaryId: beneficiaryId || undefined,
       legacyNote: note || undefined
     });
@@ -38,24 +54,24 @@ export function LegacySection({ item, beneficiaries, onUpdate, onUpgradeReq }: L
   };
 
   const assignedBeneficiary = beneficiaries.find(b => b.id === item.beneficiaryId);
-  
+
   if (!hasPermission && !item.beneficiaryId && !item.legacyNote) {
-      return null; 
+    return null;
   }
 
   return (
-    <Section title="Legacy & Inheritance" icon={<Gift className="h-5 w-5"/>} isEditing={isEditing} onEditToggle={setIsEditing} onSave={handleSave} showEditButton={hasPermission}>
+    <Section title="Legacy & Inheritance" icon={<Gift className="h-5 w-5" />} isEditing={isEditing} onEditToggle={setIsEditing} onSave={handleSave} showEditButton={hasPermission}>
       {!hasPermission && <Badge variant="secondary" className="mb-2">PRO FEATURE</Badge>}
       <div className="grid md:grid-cols-2 gap-4">
         <Field label="Assigned Beneficiary">
           {isEditing && hasPermission ? (
             <Select value={beneficiaryId} onValueChange={setBeneficiaryId}>
               <SelectTrigger>
-                  <SelectValue placeholder="Select a beneficiary..." />
+                <SelectValue placeholder="Select a beneficiary..." />
               </SelectTrigger>
               <SelectContent>
-                  <SelectItem value="">None</SelectItem>
-                  {beneficiaries.map(b => <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>)}
+                <SelectItem value="">None</SelectItem>
+                {beneficiaries.map(b => <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>)}
               </SelectContent>
             </Select>
           ) : (
@@ -66,7 +82,7 @@ export function LegacySection({ item, beneficiaries, onUpdate, onUpgradeReq }: L
       <div className="mt-4">
         <Field label="Private Note for Beneficiary">
           {isEditing && hasPermission ? (
-            <Textarea value={note} onChange={e => setNote(e.target.value)} placeholder="This is a special gift because..."/>
+            <Textarea value={note} onChange={e => setNote(e.target.value)} placeholder="This is a special gift because..." />
           ) : (
             <p className="text-muted-foreground whitespace-pre-wrap italic">{item.legacyNote || 'No private note.'}</p>
           )}

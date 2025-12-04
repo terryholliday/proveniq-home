@@ -16,7 +16,7 @@ export const saveBox = (box: Partial<Box> & { moveId: string; name: string }) =>
     id: box.id || `box-${Date.now()}`,
     ...box
   } as Box;
-  
+
   if (box.id) {
     mockBoxes = mockBoxes.map(b => b.id === box.id ? newBox : b);
   } else {
@@ -30,20 +30,21 @@ export const deleteBox = (boxId: string) => {
   // Also update items to remove boxId
   // In a real app, this would be a DB transaction
   mockInventory.forEach(item => {
-      if (item.boxId === boxId) item.boxId = undefined;
+    if (item.boxId === boxId) item.boxId = undefined;
   });
 };
 
 export const updateItem = (item: InventoryItem) => {
-    const index = mockInventory.findIndex(i => i.id === item.id);
-    if (index !== -1) {
-        mockInventory[index] = item;
-    }
+  const index = mockInventory.findIndex(i => i.id === item.id);
+  if (index !== -1) {
+    mockInventory[index] = item;
+  }
 };
 
 export const mockInventory: InventoryItem[] = [
   {
     id: 'item-1',
+    userId: 'user-1',
     name: 'Vintage Leather Armchair',
     category: 'Furniture',
     description: 'A comfortable and stylish vintage leather armchair, perfect for any living room. Shows some signs of wear consistent with its age, adding to its character.',
@@ -59,6 +60,7 @@ export const mockInventory: InventoryItem[] = [
   },
   {
     id: 'item-2',
+    userId: 'user-1',
     name: 'MacBook Pro 16"',
     category: 'Electronics',
     description: '2021 MacBook Pro with M1 Max chip, 32GB RAM, 1TB SSD. In excellent condition with original packaging.',
@@ -74,6 +76,7 @@ export const mockInventory: InventoryItem[] = [
   },
   {
     id: 'item-3',
+    userId: 'user-1',
     name: 'Signed First Edition "Dune"',
     category: 'Books',
     description: 'A rare, signed first edition of Frank Herbert\'s masterpiece, "Dune". A true collector\'s item.',
@@ -98,6 +101,7 @@ export const mockInventory: InventoryItem[] = [
   },
   {
     id: 'item-4',
+    userId: 'user-1',
     name: 'Yamaha Acoustic Guitar',
     category: 'Musical Instruments',
     description: 'Model FG800. Great for beginners and experienced players alike. Comes with a soft case and a new set of strings.',
@@ -112,6 +116,7 @@ export const mockInventory: InventoryItem[] = [
   },
   {
     id: 'item-5',
+    userId: 'user-1',
     name: 'Le Creuset Dutch Oven',
     category: 'Kitchenware',
     description: '5.5-quart round Dutch oven in Cerise. Some minor scratches on the bottom, otherwise in perfect cooking condition.',
@@ -126,6 +131,7 @@ export const mockInventory: InventoryItem[] = [
   },
   {
     id: 'item-6',
+    userId: 'user-1',
     name: 'Trek Mountain Bike',
     category: 'Sporting Goods',
     description: 'Trek Marlin 5, size M/L. Ridden for one season. Has a few scuffs but is mechanically sound. Recently tuned up.',
@@ -138,8 +144,9 @@ export const mockInventory: InventoryItem[] = [
     location: 'Garage',
     addedDate: '2023-04-12',
   },
-    {
+  {
     id: 'item-7',
+    userId: 'user-1',
     name: 'Nikon D850 DSLR Camera',
     category: 'Electronics',
     description: 'Professional-grade DSLR camera body. Shutter count ~25,000. Includes two batteries and charger. Lens not included.',
@@ -164,6 +171,7 @@ export const mockInventory: InventoryItem[] = [
   },
   {
     id: 'item-8',
+    userId: 'user-1',
     name: 'Eames Lounge Chair Replica',
     category: 'Furniture',
     description: 'High-quality replica of the classic Eames Lounge Chair and Ottoman. Black leather and walnut veneer. Very comfortable.',

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { MyArkLogo } from '../onboarding/MyArkLogo';
 import { login, signup } from '../../services/authService';
 import { User, AppView } from '../../lib/types';
+import { Timestamp } from 'firebase/firestore';
 import { Loader2, ArrowRight, Mail, Lock, User as UserIcon } from 'lucide-react';
 
 // --- Social Icons ---
@@ -52,7 +53,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   // Form State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,18 +62,18 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
 
   const handleSuccess = (user: User) => {
     if (onLoginSuccess) {
-        onLoginSuccess(user);
+      onLoginSuccess(user);
     } else {
-        // Default behavior if no callback provided (e.g. when used as layout)
-        router.push('/dashboard');
+      // Default behavior if no callback provided (e.g. when used as layout)
+      router.push('/dashboard');
     }
   };
 
   const handleLegalNav = (view: AppView) => {
     if (onNavigateToLegal) {
-        onNavigateToLegal(view);
+      onNavigateToLegal(view);
     } else {
-        router.push(`/legal/${view}`);
+      router.push(`/legal/${view}`);
     }
   };
 
@@ -104,33 +105,40 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
     setError('');
     setIsLoading(true);
     try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const user: User = {
-            id: `${provider.toLowerCase()}_${Date.now()}`,
-            email: `user@${provider.toLowerCase()}.com`,
-            firstName: `${provider}`,
-            lastName: 'User',
-            tier: 'free',
-            subscriptionStatus: 'active'
-        };
-        // In a real app, we'd verify the token here
-        handleSuccess(user);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const user: User = {
+        id: `${provider.toLowerCase()}_${Date.now()}`,
+        uid: `${provider.toLowerCase()}_${Date.now()}`,
+        email: `user@${provider.toLowerCase()}.com`,
+        firstName: `${provider}`,
+        lastName: 'User',
+        tier: 'free',
+        subscriptionStatus: 'active',
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
+        onboardingCompleted: true,
+        isPremium: false,
+        aiAccess: true,
+        trainingAccess: true,
+      };
+      // In a real app, we'd verify the token here
+      handleSuccess(user);
     } catch (e) {
-        console.error(e);
-        setError("Social login failed. Please try again.");
-        setIsLoading(false);
+      console.error(e);
+      setError("Social login failed. Please try again.");
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 animate-fade-in">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-        
+
         <div className="text-center mb-8">
           <div className="mx-auto mb-4 flex justify-center">
-             <MyArkLogo size={64} />
+            <MyArkLogo size={64} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">
             {isLogin ? 'Welcome Back' : 'Create Account'}
@@ -152,7 +160,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
               <label className="text-xs font-bold text-gray-700 uppercase">Full Name</label>
               <div className="relative">
                 <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input 
+                <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -168,7 +176,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
             <label className="text-xs font-bold text-gray-700 uppercase">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-              <input 
+              <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -183,7 +191,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
             <label className="text-xs font-bold text-gray-700 uppercase">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-              <input 
+              <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -199,8 +207,8 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
             <div className="space-y-3 mt-2">
               {/* Legal Terms Checkbox */}
               <div className="flex items-start gap-3 px-1">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   id="terms"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
@@ -218,8 +226,8 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
             </div>
           )}
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isLoading}
             className="w-full py-3 bg-indigo-700 hover:bg-indigo-800 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 mt-6 disabled:opacity-70"
           >
@@ -241,9 +249,9 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-3">
-            <button onClick={() => handleSocialLogin('Google')} className="py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex justify-center"><GoogleIcon /></button>
-            <button onClick={() => handleSocialLogin('Facebook')} className="py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex justify-center"><FacebookIcon /></button>
-            <button onClick={() => handleSocialLogin('Apple')} className="py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex justify-center"><AppleIcon /></button>
+          <button onClick={() => handleSocialLogin('Google')} className="py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex justify-center"><GoogleIcon /></button>
+          <button onClick={() => handleSocialLogin('Facebook')} className="py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex justify-center"><FacebookIcon /></button>
+          <button onClick={() => handleSocialLogin('Apple')} className="py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 flex justify-center"><AppleIcon /></button>
         </div>
 
         <p className="text-center text-sm text-gray-500 mt-8">
@@ -256,9 +264,9 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
       </div>
 
       <div className="mt-6 flex items-center justify-center gap-4 text-xs text-gray-400">
-          <button onClick={() => handleLegalNav('legal-terms')} className="hover:text-gray-600">Terms</button>
-          <span>&bull;</span>
-          <button onClick={() => handleLegalNav('legal-privacy')} className="hover:text-gray-600">Privacy</button>
+        <button onClick={() => handleLegalNav('legal-terms')} className="hover:text-gray-600">Terms</button>
+        <span>&bull;</span>
+        <button onClick={() => handleLegalNav('legal-privacy')} className="hover:text-gray-600">Privacy</button>
       </div>
     </div>
   );

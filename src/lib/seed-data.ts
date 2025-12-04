@@ -1,12 +1,11 @@
 import { Timestamp } from 'firebase/firestore';
 import { ComplianceTask, LegalDocument } from './types';
 
-// Helper to create future dates
 const daysFromNow = (n: number) => Timestamp.fromDate(new Date(Date.now() + n * 86400000));
 
-// 1. EXTRACTED TASKS
+// --- 1. CRITICAL ACTION ITEMS ---
 export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
-  // ... (Keep existing tasks from previous steps: 83b, Tech Transfer, etc.) ...
+  // CORP GOVERNANCE
   {
     title: "File 83(b) Election",
     description: "CRITICAL: Mail 83(b) form to IRS within 30 days of signing RSPA. Send via USPS Certified Mail. Missing this is irreversible.",
@@ -16,13 +15,30 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
     tags: ['corp-gov', 'tax', 'day-1'],
     createdAt: Timestamp.now()
   },
-  // ... (Keep other existing tasks) ...
+  {
+    title: "Execute Tech Transfer Agreement",
+    description: "Sign Tech Transfer Agreement to assign pre-incorporation IP (VinoVision/MyARK code) to TrueArk Technologies, Inc.",
+    dueDate: daysFromNow(7),
+    status: 'pending',
+    priority: 'critical',
+    tags: ['corp-gov', 'ip', 'day-1'],
+    createdAt: Timestamp.now()
+  },
+  {
+    title: "Foreign Qualification (WV)",
+    description: "Register TrueArk Technologies (Delaware) as a foreign corp in West Virginia to enforce contracts in HQ state.",
+    dueDate: daysFromNow(14),
+    priority: 'critical',
+    status: 'pending',
+    tags: ['legal', 'corp-gov'],
+    createdAt: Timestamp.now()
+  },
 
-  // --- NEW: RETROACTIVE PRIVACY REMEDIATION TASKS ---
+  // PRIVACY REMEDIATION (The "Silent Synchronization" Fix)
   {
     title: "Update Privacy Policy (Cloud Disclosure)",
     description: "IMMEDIATE: Replace deceptive 'local storage' language with explicit disclosure of Google Cloud Firestore usage and data synchronization. Failure to do so invites FTC enforcement.",
-    dueDate: daysFromNow(1), // Immediate priority
+    dueDate: daysFromNow(1),
     status: 'pending',
     priority: 'critical',
     tags: ['legal', 'privacy', 'remediation'],
@@ -30,110 +46,143 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
   },
   {
     title: "Implement Just-in-Time Consent Modal",
-    description: "Build a blocking modal for all users (new & existing) to affirmatively agree to cloud storage and auction data processing on next launch.",
+    description: "Build a blocking modal for all users (new & existing) to affirmatively agree to cloud storage on next launch.",
     dueDate: daysFromNow(3),
     status: 'pending',
     priority: 'critical',
     tags: ['dev', 'privacy', 'ux'],
     createdAt: Timestamp.now()
   },
+
+  // TAX & MARKETPLACE LAWS
   {
-    title: "Send Corrective Notice Email",
-    description: "Send blast to all existing users: 'We are moving infrastructure to the cloud. Please accept new terms in-app.' Essential for FTC compliance.",
-    dueDate: daysFromNow(5),
-    status: 'pending',
-    priority: 'high',
-    tags: ['legal', 'communication'],
-    createdAt: Timestamp.now()
-  },
-  {
-    title: "Verify Consent Recording",
-    description: "Audit Firestore 'users' collection to ensure 'consents.cloudStorage' timestamp is being correctly recorded for new sign-ins.",
+    title: "Retroactive Nexus Assessment",
+    description: "Audit last 12 months of transactions. Did we hit $100k or 200 txns in any state (e.g. IL, UT)?",
     dueDate: daysFromNow(7),
+    priority: 'critical',
+    status: 'pending',
+    tags: ['tax', 'audit'],
+    createdAt: Timestamp.now()
+  },
+  {
+    title: "Integrate Stripe Tax / Avalara",
+    description: "Connect Stripe Tax API to auction_api.ts for real-time calculation on 'Win' events.",
+    dueDate: daysFromNow(30),
+    priority: 'high',
+    status: 'pending',
+    tags: ['dev', 'tax'],
+    createdAt: Timestamp.now()
+  },
+
+  // UNAUTHORIZED PRACTICE OF LAW (UPL)
+  {
+    title: "De-Risk AI Marketing Claims",
+    description: "Remove terms like 'AI Lawyer' or 'Guaranteed Valid'. Replace with 'Document Assembly Engine'.",
+    dueDate: daysFromNow(3),
+    status: 'pending',
+    priority: 'critical',
+    tags: ['legal', 'marketing', 'upl'],
+    createdAt: Timestamp.now()
+  },
+  {
+    title: "Implement 'Safe Harbor' UI Logic",
+    description: "Re-architect Wizard UI. AI cannot 'recommend' clauses. User must select defined options.",
+    dueDate: daysFromNow(21),
     status: 'pending',
     priority: 'high',
-    tags: ['audit', 'tech'],
+    tags: ['dev', 'ux', 'upl'],
+    createdAt: Timestamp.now()
+  },
+
+  // SECURITY (SOC 2)
+  {
+    title: "Enforce MFA for Admins",
+    description: "Mandatory Multi-Factor Authentication for all accounts with 'admin' claims.",
+    dueDate: daysFromNow(14),
+    priority: 'critical',
+    status: 'pending',
+    tags: ['security', 'soc2'],
     createdAt: Timestamp.now()
   },
   {
-    title: "Google Play Data Safety Update",
-    description: "URGENT: Update Data Safety form to declare collection of 'Photos/Videos' and 'Device IDs' (Firebase). Explicitly state 'Encrypted in transit'. Mismatch = Suspension.",
-    dueDate: daysFromNow(2), // Immediate priority
+    title: "Infrastructure Penetration Test",
+    description: "Hire third-party firm to pen-test API and storage rules before full public launch.",
+    dueDate: daysFromNow(45),
+    priority: 'high',
     status: 'pending',
-    priority: 'critical',
-    tags: ['app-store', 'privacy', 'blocker'],
-    createdAt: Timestamp.now()
-  },
-  {
-    title: "Apple App Privacy Update",
-    description: "Update App Store Connect 'App Privacy' section. Disclose 'User Content' and 'Identifiers' usage. Ensure Privacy Nutrition Label matches code.",
-    dueDate: daysFromNow(2),
-    status: 'pending',
-    priority: 'critical',
-    tags: ['app-store', 'privacy', 'blocker'],
+    tags: ['security', 'audit'],
     createdAt: Timestamp.now()
   }
 ];
 
-// 2. EXTRACTED DOCUMENTS
+// --- 2. DOCUMENT REPOSITORY ---
 export const SEED_DOCS: Partial<LegalDocument>[] = [
-  // ... (Keep existing internal docs: Bylaws, Board Consent, etc.) ...
-  {
-    id: 'corporate_bylaws',
-    title: 'BYLAWS OF TRUEARK TECHNOLOGIES, INC.',
-    status: 'internal_only',
-    version: '1.0',
-    content: `<h1>BYLAWS OF TRUEARK TECHNOLOGIES, INC.</h1><p><strong>(A Delaware Corporation)</strong></p><h2>ARTICLE I: OFFICES</h2><p>1.1 Registered Office. The registered office of the corporation shall be located in the State of Delaware...</p><h2>ARTICLE II: STOCKHOLDERS</h2><p>2.1 Annual Meeting. An annual meeting of stockholders shall be held for the election of directors...</p><p>2.5 Voting. Each stockholder shall be entitled to one vote for each share of capital stock held.</p><p><em>(Full text imported from 'BYLAWS OF TRUEARK TECHNOLOGIES, INC')</em></p>`
-  },
-  // ... (Keep existing Tax Strategy doc) ...
-
-  // --- UPDATED PUBLIC POLICIES (CORRECTIVE) ---
+  // PUBLIC POLICIES (Corrected for Cloud)
   {
     id: 'privacy',
     title: 'Privacy Policy (Cloud-Native Revised)',
     status: 'published',
     version: '2.0',
-    content: `<h1>Privacy Policy</h1>
-    <p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p>
-    
-    <h3>1. Introduction</h3>
-    <p>TrueArk Technologies, Inc. ("MyARK," "we," "us") values your privacy. This policy describes how we handle your personal inventory data, photos, and auction activity.</p>
-
-    <h3>2. Data Storage and Synchronization</h3>
-    <p><strong>Cloud-First Architecture:</strong> Unlike legacy applications that may store data solely on your device, MyARK uses <strong>Google Cloud Firestore</strong>, a secure cloud database provided by Google LLC, to store, synchronize, and backup your data. This allows you to access your inventory across multiple devices and participate in real-time auctions.</p>
-    <p><strong>What This Means:</strong> Your inventory items, photos, and bid history are transmitted to and stored on servers located in the United States. While a copy may be cached on your device for offline use, the authoritative record resides in the cloud.</p>
-
-    <h3>3. Information We Collect</h3>
-    <ul>
-      <li><strong>Inventory Data:</strong> Photos, descriptions, values, and receipts you upload.</li>
-      <li><strong>Auction Data:</strong> Bids, sales history, and shipping addresses.</li>
-      <li><strong>Device Data:</strong> IP addresses and unique device identifiers collected by the Firebase SDK to maintain server connections.</li>
-    </ul>
-
-    <h3>4. Third-Party Sharing</h3>
-    <p>We do not sell your personal data. We share data with the following infrastructure providers solely to operate the service:</p>
-    <ul>
-      <li><strong>Google Cloud (Firebase):</strong> Database, Authentication, and Storage.</li>
-      <li><strong>Stripe:</strong> Payment processing.</li>
-    </ul>
-    `
+    content: `<h1>Privacy Policy</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Data Storage and Synchronization</h3><p><strong>Cloud-First Architecture:</strong> Unlike legacy applications that may store data solely on your device, MyARK uses <strong>Google Cloud Firestore</strong>, a secure cloud database provided by Google LLC, to store, synchronize, and backup your data. This allows you to access your inventory across multiple devices and participate in real-time auctions.</p><h3>4. Third-Party Sharing</h3><p>We do not sell your personal data. We share data with infrastructure providers solely to operate the service: Google Cloud (Firebase), Stripe.</p>`
   },
   {
     id: 'tos',
     title: 'Terms of Service (Marketplace Facilitator Update)',
     status: 'published',
     version: '2.0',
-    content: `<h1>Terms of Service</h1>
-    <p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p>
+    content: `<h1>Terms of Service</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Marketplace Facilitator Role</h3><p>MyARK operates as a "Marketplace Facilitator" for auction transactions. We are responsible for calculating, collecting, and remitting applicable Sales Tax on items sold through our platform, as required by state law.</p>`
+  },
 
-    <h3>1. Acceptance of Terms</h3>
-    <p>By using MyARK, you agree to these Terms. You acknowledge that MyARK is a cloud-based service and that your data will be synchronized to our servers.</p>
+  // STRATEGY MEMOS
+  {
+    id: 'upl_strategy_memo',
+    title: 'UNAUTHORIZED PRACTICE OF LAW (UPL) RISK ASSESSMENT',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>Unauthorized Practice of Law in the Age of AI</h1><p><strong>Executive Summary:</strong> The "AI-powered wizard" risks being classified as UPL if it applies legal logic to user facts. We must pivot to a "Scrivener" model.</p><h3>Product Compliance Strategy</h3><ul><li><strong>User-Driven vs. System-Driven:</strong> The user must select the clauses. The AI cannot "auto-select".</li><li><strong>E-Wills:</strong> Recognize that states like FL require a "Qualified Custodian". Pure software e-wills are invalid there.</li></ul>`
+  },
+  {
+    id: 'tax_compliance_strategy',
+    title: 'MARKETPLACE FACILITATOR LAWS & TAX STRATEGY',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>Compliance Architecture for Digital Auction Platforms</h1><p><strong>Executive Summary:</strong> MyARK is likely a "Marketplace Facilitator" due to our role in listing items and processing payments (Stripe). This creates a mandatory obligation to collect/remit Sales Tax once thresholds (e.g., $100k or 200 txns) are met.</p>`
+  },
+  {
+    id: 'legacy_strategy',
+    title: 'WV RUFADAA COMPLIANCE REPORT',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>STRATEGIC COMPLIANCE REPORT: MyARK "LEGACY" FEATURE</h1><p><strong>Executive Summary:</strong> MyARK must not view the "Legacy" feature merely as a convenience, but as a robust legal instrument under WV Code §44-5B-1.</p><h3>The Privacy Paradox</h3><p>Federal statutes like the SCA criminalize unauthorized access. WV-UFADAA resolves this via the 'Online Tool'.</p>`
+  },
+  {
+    id: 'business_plan',
+    title: 'TRUEARK BUSINESS PLAN (FY 26-29)',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>TrueArk Technologies, Inc. Business Plan</h1><p><strong>Confidential & Proprietary</strong></p><h2>1.0 Executive Summary</h2><p>TrueArk is the "Trust & Liquidity Layer for the Physical World," unlocking the $8 Trillion "Dead Capital" reservoir of consumer durable goods.</p>`
+  },
 
-    <h3>2. Marketplace Facilitator Role</h3>
-    <p>MyARK operates as a "Marketplace Facilitator" for auction transactions. We are responsible for calculating, collecting, and remitting applicable Sales Tax on items sold through our platform, as required by state law.</p>
-
-    <h3>3. Auction Rules</h3>
-    <p>When you place a bid, you are entering a binding contract. You acknowledge that auction data is stored centrally to ensure fairness and transparency.</p>
-    `
+  // CORP GOVERNANCE & TEMPLATES
+  {
+    id: 'corporate_bylaws',
+    title: 'BYLAWS OF TRUEARK TECHNOLOGIES, INC.',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>BYLAWS OF TRUEARK TECHNOLOGIES, INC.</h1><p><strong>(A Delaware Corporation)</strong></p><h2>ARTICLE I: OFFICES</h2><p>1.1 Registered Office. The registered office of the corporation shall be located in the State of Delaware...</p>`
+  },
+  {
+    id: 'piia_template',
+    title: 'TEMPLATE: PIIA (Standard)',
+    status: 'internal_only',
+    version: '2025.1',
+    content: `<h1>Proprietary Information and Inventions Assignment Agreement</h1><p>This Agreement is entered into by and between TrueArk Technologies, Inc. and [Recipient Name].</p><h3>2. Assignment of Inventions</h3><p>Recipient hereby assigns to the Company all right, title, and interest in and to any Inventions created during the Relationship.</p>`
+  },
+  {
+    id: 'tech_transfer',
+    title: 'TECHNOLOGY TRANSFER AGREEMENT',
+    status: 'internal_only',
+    version: '1.0',
+    content: `<h1>Technology Transfer and Assignment Agreement</h1><p>This Agreement is made by and between Terry L. Holliday (“Assignor”) and TrueArk Technologies, Inc. (“Assignee”).</p><h3>1. Assignment</h3><p>Assignor hereby irrevocably sells, transfers, conveys, assigns, and delivers to the Company all right, title, and interest in and to the Technology (VinoVision, MyARK, TrueManifest, etc.).</p>`
   }
 ];
