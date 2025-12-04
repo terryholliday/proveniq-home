@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Link from 'next/link';
+import { LegacyWizard } from '@/components/legacy/LegacyWizard';
 
 const StatCard = ({
   icon,
@@ -97,35 +98,7 @@ export default function LegacyPlannerPage() {
           </Alert>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <Card className="flex flex-col items-center justify-center p-8 text-center bg-primary/5 hover:bg-primary/10 border-dashed border-primary/50 transition-colors">
-              <div className="mb-4 rounded-full bg-primary/10 p-4">
-                <Sparkles className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold">Create Your Will</h3>
-              <p className="mt-1 text-muted-foreground mb-4">
-                Our wizard helps you draft a starting document.
-              </p>
-
-              <div className="w-full max-w-xs space-y-4">
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Your State" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="FL">Florida</SelectItem>
-                    <SelectItem value="NY">New York</SelectItem>
-                    <SelectItem value="CA">California</SelectItem>
-                    <SelectItem value="TX">Texas</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Button className="w-full">Start Draft</Button>
-
-                <p className="text-xs text-muted-foreground">
-                  *State-specific templates available for FL, NY, CA, TX.
-                </p>
-              </div>
-            </Card>
+            <LegacyWizard />
             <Card>
               <CardHeader>
                 <CardTitle>Upload Your Own Documents</CardTitle>

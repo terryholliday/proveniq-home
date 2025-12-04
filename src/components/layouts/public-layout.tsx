@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MyArkLogo } from "../onboarding/MyArkLogo";
+import { AdminAccessTrigger } from "@/components/admin/AdminAccessTrigger";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -24,7 +25,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <main className="flex-1">{children}</main>
             <footer className="border-t">
                 <div className="container py-8 flex items-center justify-between text-sm text-muted-foreground">
-                    <span>© {new Date().getFullYear()} MyARK, Inc.</span>
+                    <AdminAccessTrigger>
+                        <span>© {new Date().getFullYear()} MyARK, Inc.</span>
+                    </AdminAccessTrigger>
                     <div className="flex gap-4">
                         <Link href="#" className="hover:underline">Privacy Policy</Link>
                         <Link href="#" className="hover:underline">Terms of Service</Link>
