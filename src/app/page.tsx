@@ -38,7 +38,7 @@ const features = [
     description: "Don't let history be lost. Record video stories for your heirlooms and assign beneficiaries instantly. Ensure your legacy is preserved, not just your assets.",
     illustration: <StoryIllustration />
   },
-   {
+  {
     id: 'certainty',
     title: "Certainty in the Chaos.",
     description: "Simulate floods, fires, or theft to see your financial risk in real-time. Ensure your insurance coverage is airtight before you need it.",
@@ -71,37 +71,37 @@ const features = [
 ];
 
 function CommandCenterIllustration(): JSX.Element {
-    const icons = [
-        { icon: <Gift className="h-8 w-8 text-pink-500" />, name: 'Legacy' },
-        { icon: <Gavel className="h-8 w-8 text-purple-500" />, name: 'Auctions' },
-        { icon: <ShieldCheck className="h-8 w-8 text-green-500" />, name: 'Insure' },
-        { icon: <TrendingUp className="h-8 w-8 text-blue-500" />, name: 'Value' },
-        { icon: <Truck className="h-8 w-8 text-orange-500" />, name: 'Logistics' },
-        { icon: <Wrench className="h-8 w-8 text-gray-700" />, name: 'Repair' },
-    ];
+  const icons = [
+    { icon: <Gift className="h-8 w-8 text-pink-500" />, name: 'Legacy' },
+    { icon: <Gavel className="h-8 w-8 text-purple-500" />, name: 'Auctions' },
+    { icon: <ShieldCheck className="h-8 w-8 text-green-500" />, name: 'Insure' },
+    { icon: <TrendingUp className="h-8 w-8 text-blue-500" />, name: 'Value' },
+    { icon: <Truck className="h-8 w-8 text-orange-500" />, name: 'Logistics' },
+    { icon: <Wrench className="h-8 w-8 text-gray-700" />, name: 'Repair' },
+  ];
 
-    return (
-        <div className="relative w-80 h-80 flex items-center justify-center">
-            <div className="absolute w-full h-full animate-rotate">
-                {icons.map((item, index) => {
-                    const angle = (index / icons.length) * 360;
-                    const x = 50 + 40 * Math.cos((angle - 90) * (Math.PI / 180));
-                    const y = 50 + 40 * Math.sin((angle - 90) * (Math.PI / 180));
-                    return (
-                        <div key={item.name} className="absolute flex flex-col items-center" style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}>
-                            <div className="bg-white rounded-lg shadow-md p-3 flex flex-col items-center animate-rotate-reverse">
-                                {item.icon}
-                                <span className="text-xs mt-1">{item.name}</span>
-                            </div>
-                        </div>
-                    );
-                })}
+  return (
+    <div className="relative w-80 h-80 flex items-center justify-center">
+      <div className="absolute w-full h-full animate-rotate">
+        {icons.map((item, index) => {
+          const angle = (index / icons.length) * 360;
+          const x = 50 + 40 * Math.cos((angle - 90) * (Math.PI / 180));
+          const y = 50 + 40 * Math.sin((angle - 90) * (Math.PI / 180));
+          return (
+            <div key={item.name} className="absolute flex flex-col items-center" style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}>
+              <div className="bg-white rounded-lg shadow-md p-3 flex flex-col items-center animate-rotate-reverse">
+                {item.icon}
+                <span className="text-xs mt-1">{item.name}</span>
+              </div>
             </div>
-            <div className="bg-white rounded-full shadow-2xl p-4 pulse-grow">
-                <MyArkLogo size={64} />
-            </div>
-        </div>
-    );
+          );
+        })}
+      </div>
+      <div className="bg-white rounded-full shadow-2xl p-4 pulse-grow">
+        <MyArkLogo size={64} />
+      </div>
+    </div>
+  );
 }
 
 function SearchEngineIllustration(): JSX.Element {
@@ -148,33 +148,33 @@ function AskYourArkIllustration(): JSX.Element {
 }
 
 function StoryIllustration(): JSX.Element {
-    const beneficiaryAvatar = PlaceHolderImages.find(img => img.id === 'user-avatar-1');
-    return (
-        <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-xs">
-            <div className="flex flex-col items-center">
-                <div className="bg-pink-100 rounded-full p-4 mb-4">
-                    <Heart className="h-8 w-8 text-pink-500" />
-                </div>
-                <h2 className="font-bold text-lg">Grandma&apos;s Bracelet</h2>
-                <p className="text-sm text-muted-foreground mb-4">Acquired: 1978</p>
-                <div className="bg-gray-50 rounded-lg p-3 w-full flex items-center gap-3 mb-3 border">
-                    {beneficiaryAvatar && (
-                        <Avatar className="h-10 w-10">
-                            <AvatarImage src={beneficiaryAvatar.imageUrl} alt="Sarah" />
-                            <AvatarFallback>S</AvatarFallback>
-                        </Avatar>
-                    )}
-                    <div>
-                        <p className="text-xs text-muted-foreground text-left">BENEFICIARY</p>
-                        <p className="font-semibold text-sm text-left">Sarah (Granddaughter)</p>
-                    </div>
-                </div>
-                <Button variant="secondary" className="w-full bg-blue-50 hover:bg-blue-100 text-primary">
-                    <PlayCircle className="mr-2 text-blue-500" /> LEGACY STORY
-                </Button>
-            </div>
+  const beneficiaryAvatar = PlaceHolderImages.find(img => img.id === 'user-avatar-1');
+  return (
+    <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-xs">
+      <div className="flex flex-col items-center">
+        <div className="bg-pink-100 rounded-full p-4 mb-4">
+          <Heart className="h-8 w-8 text-pink-500" />
         </div>
-    );
+        <h2 className="font-bold text-lg">Grandma&apos;s Bracelet</h2>
+        <p className="text-sm text-muted-foreground mb-4">Acquired: 1978</p>
+        <div className="bg-gray-50 rounded-lg p-3 w-full flex items-center gap-3 mb-3 border">
+          {beneficiaryAvatar && (
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={beneficiaryAvatar.imageUrl} alt="Sarah" />
+              <AvatarFallback>S</AvatarFallback>
+            </Avatar>
+          )}
+          <div>
+            <p className="text-xs text-muted-foreground text-left">BENEFICIARY</p>
+            <p className="font-semibold text-sm text-left">Sarah (Granddaughter)</p>
+          </div>
+        </div>
+        <Button variant="secondary" className="w-full bg-blue-50 hover:bg-blue-100 text-primary">
+          <PlayCircle className="mr-2 text-blue-500" /> LEGACY STORY
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 function CertaintyIllustration(): JSX.Element {
@@ -193,148 +193,148 @@ function CertaintyIllustration(): JSX.Element {
         </div>
       </div>
       <div className="absolute -right-8 top-10 animate-bounce-slow" style={{ animationDelay: '0.5s' }}>
-        <CloudRain className.="h-24 w-24 text-gray-300" />
+        <CloudRain className="h-24 w-24 text-gray-300" />
       </div>
     </div>
   );
 }
 
 function ValueIllustration(): JSX.Element {
-    return (
-        <div className="flex items-center justify-center gap-4 md:gap-8 p-4">
-            {/* Item Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 w-40 text-center">
-                <div className="bg-gray-100 rounded-lg w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                    <Camera className="h-8 w-8 text-gray-400" />
-                </div>
-                <p className="font-bold text-sm">Vintage Camera</p>
-                <p className="text-xs text-gray-500 mt-1">$150 Value</p>
-            </div>
-
-            <ArrowRight className="text-gray-300 h-6 w-6 shrink-0" />
-
-            {/* Marketplace Card */}
-            <div className="relative bg-white rounded-2xl shadow-lg p-4 w-64">
-                <div className="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md transform rotate-12">
-                    SOLD!
-                </div>
-                <div className="flex items-center gap-2 mb-2">
-                    <div className="bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center">
-                       <Facebook className="h-4 w-4 text-white" fill="white"/>
-                    </div>
-                    <p className="font-bold text-sm">Marketplace</p>
-                </div>
-                <div className="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs text-gray-600 mb-3">
-                    &quot;Selling my classic film camera. Great condition, works perfectly...&quot;
-                </div>
-                <div className="flex justify-between items-center">
-                    <p className="font-bold text-blue-600 text-sm">$175 OBO</p>
-                    <div className="flex items-center gap-1 text-green-600 text-xs font-semibold">
-                        <GanttChartSquare className="h-3 w-3" />
-                        <span>Bids Active</span>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="flex items-center justify-center gap-4 md:gap-8 p-4">
+      {/* Item Card */}
+      <div className="bg-white rounded-2xl shadow-lg p-6 w-40 text-center">
+        <div className="bg-gray-100 rounded-lg w-16 h-16 flex items-center justify-center mx-auto mb-3">
+          <Camera className="h-8 w-8 text-gray-400" />
         </div>
-    );
+        <p className="font-bold text-sm">Vintage Camera</p>
+        <p className="text-xs text-gray-500 mt-1">$150 Value</p>
+      </div>
+
+      <ArrowRight className="text-gray-300 h-6 w-6 shrink-0" />
+
+      {/* Marketplace Card */}
+      <div className="relative bg-white rounded-2xl shadow-lg p-4 w-64">
+        <div className="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md transform rotate-12">
+          SOLD!
+        </div>
+        <div className="flex items-center gap-2 mb-2">
+          <div className="bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center">
+            <Facebook className="h-4 w-4 text-white" fill="white" />
+          </div>
+          <p className="font-bold text-sm">Marketplace</p>
+        </div>
+        <div className="bg-gray-50 border border-gray-200 rounded-md p-2 text-xs text-gray-600 mb-3">
+          &quot;Selling my classic film camera. Great condition, works perfectly...&quot;
+        </div>
+        <div className="flex justify-between items-center">
+          <p className="font-bold text-blue-600 text-sm">$175 OBO</p>
+          <div className="flex items-center gap-1 text-green-600 text-xs font-semibold">
+            <GanttChartSquare className="h-3 w-3" />
+            <span>Bids Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 
 function ClaimsIllustration(): JSX.Element {
-    return (
-        <div className="flex items-center justify-center gap-4 md:gap-8 p-4">
-            {/* Damaged Item Card */}
-            <div className="relative bg-white rounded-2xl shadow-lg p-6 w-40 text-center border-2 border-red-200">
-                <div className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md">
-                    <AlertTriangle className="h-4 w-4" />
-                </div>
-                <div className="bg-gray-100 rounded-lg w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                    <Tv2 className="h-8 w-8 text-gray-400" />
-                </div>
-                <p className="font-bold text-sm">Smart TV</p>
-                <p className="text-xs text-red-600 mt-1">Screen Cracked</p>
-            </div>
-
-            <ArrowRight className="text-gray-300 h-6 w-6 shrink-0" />
-
-            {/* Claim Filed Card */}
-            <div className="relative bg-white rounded-2xl shadow-lg p-6 w-48 text-center border-2 border-green-200">
-                <div className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md">
-                    <Check className="h-4 w-4" />
-                </div>
-                <div className="bg-gray-100 rounded-lg w-16 h-16 flex items-center justify-center mx-auto mb-3">
-                    <FileText className="h-8 w-8 text-gray-400" />
-                </div>
-                <p className="font-bold text-sm">Claim Filed</p>
-                <p className="text-xs text-gray-500 mt-1">Ref: W-1A2B3C</p>
-            </div>
+  return (
+    <div className="flex items-center justify-center gap-4 md:gap-8 p-4">
+      {/* Damaged Item Card */}
+      <div className="relative bg-white rounded-2xl shadow-lg p-6 w-40 text-center border-2 border-red-200">
+        <div className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md">
+          <AlertTriangle className="h-4 w-4" />
         </div>
-    );
+        <div className="bg-gray-100 rounded-lg w-16 h-16 flex items-center justify-center mx-auto mb-3">
+          <Tv2 className="h-8 w-8 text-gray-400" />
+        </div>
+        <p className="font-bold text-sm">Smart TV</p>
+        <p className="text-xs text-red-600 mt-1">Screen Cracked</p>
+      </div>
+
+      <ArrowRight className="text-gray-300 h-6 w-6 shrink-0" />
+
+      {/* Claim Filed Card */}
+      <div className="relative bg-white rounded-2xl shadow-lg p-6 w-48 text-center border-2 border-green-200">
+        <div className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md">
+          <Check className="h-4 w-4" />
+        </div>
+        <div className="bg-gray-100 rounded-lg w-16 h-16 flex items-center justify-center mx-auto mb-3">
+          <FileText className="h-8 w-8 text-gray-400" />
+        </div>
+        <p className="font-bold text-sm">Claim Filed</p>
+        <p className="text-xs text-gray-500 mt-1">Ref: W-1A2B3C</p>
+      </div>
+    </div>
+  );
 }
 
 function AutopilotIllustration(): JSX.Element {
-    return (
-        <div className="relative h-80 w-80 flex flex-col items-center justify-center gap-8">
-            <svg width="120" height="180" viewBox="0 0 120 180" className="absolute" style={{top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
-                <path d="M60 40 v-20" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" className="animate-dash-in" />
-                <path d="M60 140 v20" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" className="animate-dash-out" />
-            </svg>
-            <div className="z-10 flex items-center gap-4 bg-white p-4 rounded-xl shadow-lg border border-gray-100 w-64">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                    <Mail className="h-6 w-6 text-blue-500" />
-                </div>
-                <div>
-                    <p className="font-bold">Purchase Found!</p>
-                    <p className="text-sm text-gray-500">Sony Headphones - $349.99</p>
-                </div>
-            </div>
-            <div className="z-10 bg-white rounded-full shadow-2xl p-4 pulse-grow">
-                <MyArkLogo size={48} />
-            </div>
-            <div className="z-10 flex items-center gap-4 bg-white p-4 rounded-xl shadow-lg border border-gray-100 w-64">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                    <MapPin className="h-6 w-6 text-orange-500" />
-                </div>
-                <div>
-                    <p className="font-bold">Near Home Depot?</p>
-                    <p className="text-sm text-gray-500">Don&apos;t forget to scan new items.</p>
-                </div>
-            </div>
+  return (
+    <div className="relative h-80 w-80 flex flex-col items-center justify-center gap-8">
+      <svg width="120" height="180" viewBox="0 0 120 180" className="absolute" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+        <path d="M60 40 v-20" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" className="animate-dash-in" />
+        <path d="M60 140 v20" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4 4" className="animate-dash-out" />
+      </svg>
+      <div className="z-10 flex items-center gap-4 bg-white p-4 rounded-xl shadow-lg border border-gray-100 w-64">
+        <div className="p-2 bg-blue-100 rounded-lg">
+          <Mail className="h-6 w-6 text-blue-500" />
         </div>
-    );
+        <div>
+          <p className="font-bold">Purchase Found!</p>
+          <p className="text-sm text-gray-500">Sony Headphones - $349.99</p>
+        </div>
+      </div>
+      <div className="z-10 bg-white rounded-full shadow-2xl p-4 pulse-grow">
+        <MyArkLogo size={48} />
+      </div>
+      <div className="z-10 flex items-center gap-4 bg-white p-4 rounded-xl shadow-lg border border-gray-100 w-64">
+        <div className="p-2 bg-orange-100 rounded-lg">
+          <MapPin className="h-6 w-6 text-orange-500" />
+        </div>
+        <div>
+          <p className="font-bold">Near Home Depot?</p>
+          <p className="text-sm text-gray-500">Don&apos;t forget to scan new items.</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 
 function MoveIllustration(): JSX.Element {
-    return (
-        <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
-            <h3 className="font-bold text-lg mb-3">Kitchen Box #3</h3>
-            <div className="space-y-2">
-                <div className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
-                    <span className="text-sm">Le Creuset Dutch Oven</span>
-                    <span className="text-xs font-mono text-gray-400">...a4b1</span>
-                </div>
-                <div className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
-                    <span className="text-sm">Vitamix Blender</span>
-                    <span className="text-xs font-mono text-gray-400">...c8d2</span>
-                </div>
-                 <div className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
-                    <span className="text-sm">Dinner Plate Set</span>
-                    <span className="text-xs font-mono text-gray-400">...e3f4</span>
-                </div>
-            </div>
-             <div className="mt-4 pt-4 border-t border-dashed flex items-center justify-center">
-                <p className="text-sm text-gray-500">Scan QR to see all 24 items</p>
-             </div>
+  return (
+    <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
+      <h3 className="font-bold text-lg mb-3">Kitchen Box #3</h3>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+          <span className="text-sm">Le Creuset Dutch Oven</span>
+          <span className="text-xs font-mono text-gray-400">...a4b1</span>
         </div>
-    );
+        <div className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+          <span className="text-sm">Vitamix Blender</span>
+          <span className="text-xs font-mono text-gray-400">...c8d2</span>
+        </div>
+        <div className="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+          <span className="text-sm">Dinner Plate Set</span>
+          <span className="text-xs font-mono text-gray-400">...e3f4</span>
+        </div>
+      </div>
+      <div className="mt-4 pt-4 border-t border-dashed flex items-center justify-center">
+        <p className="text-sm text-gray-500">Scan QR to see all 24 items</p>
+      </div>
+    </div>
+  );
 }
 
 
 export default function LandingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('slide-in');
-  const { user, isUserLoading }. = useUser();
+  const { user, isUserLoading } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -367,7 +367,7 @@ export default function LandingPage() {
   }, [handleNext]);
 
   const userAvatars = PlaceHolderImages.filter(img => ['user-avatar-1', 'user-avatar-2', 'user-avatar-3'].includes(img.id));
-  
+
   if (isUserLoading || user) {
     return <div className="flex h-screen items-center justify-center">Loading...</div>;
   }
@@ -379,28 +379,27 @@ export default function LandingPage() {
       <div className="flex flex-col items-center justify-center text-center py-20 px-4 overflow-hidden">
         <div className="relative w-full max-w-sm mx-auto mb-16 h-96 flex items-center justify-center">
           <div className={`${slideDirection} w-full flex items-center justify-center`}>
-              {activeFeature.illustration}
+            {activeFeature.illustration}
           </div>
         </div>
 
         <div className="max-w-2xl relative">
-          <Button onClick={handlePrev} variant="ghost" className="absolute -left-20 top-1/2 -translate-y-1/2"><ChevronLeft/></Button>
+          <Button onClick={handlePrev} variant="ghost" className="absolute -left-20 top-1/2 -translate-y-1/2"><ChevronLeft /></Button>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 h-24 flex items-center justify-center">
             {activeFeature.title}
           </h1>
           <p className="text-lg text-muted-foreground mb-8 h-20">
             {activeFeature.description}
           </p>
-          <Button onClick={handleNext} variant="ghost" className="absolute -right-20 top-1/2 -translate-y-1/.2"><ChevronRight/></Button>
+          <Button onClick={handleNext} variant="ghost" className="absolute -right-20 top-1/2 -translate-y-1/2"><ChevronRight /></Button>
 
           <div className="flex justify-center gap-2 mb-8">
             {features.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  activeIndex === index ? 'bg-primary' : 'bg-gray-300'
-                }`}
+                className={`w-2 h-2 rounded-full transition-colors ${activeIndex === index ? 'bg-primary' : 'bg-gray-300'
+                  }`}
               />
             ))}
           </div>
