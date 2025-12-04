@@ -7,12 +7,28 @@ const rateBuckets = new Map<string, { count: number; reset: number }>();
 const RATE_LIMIT = Number(process.env.VOICE_RATE_LIMIT || 60);
 const RATE_WINDOW_MS = Number(process.env.VOICE_RATE_WINDOW_MS || 60_000);
 
+function getClientIp(req: NextRequest): string {
+  return (
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip')?.trim() ||
+    req.headers.get('cf-connecting-ip')?.trim() ||
+    req.headers.get('x-client-ip')?.trim() ||
+    'unknown'
+  );
+}
+
 export function enforceRateLimit(req: NextRequest): NextResponse | null {
   // NextRequest does not expose the IP directly; rely on proxy headers instead.
   const ip =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     req.headers.get('x-real-ip') ||
     'unknown';
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip')?.trim() ||
+    req.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() ||
+    'unknown';
+  const ip = getClientIp(req);
   const now = Date.now();
   const bucket = rateBuckets.get(ip);
   if (bucket && bucket.reset > now) {
