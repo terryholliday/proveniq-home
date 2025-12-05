@@ -6,12 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CheckCircle, ChevronRight, ChevronLeft, FileText } from 'lucide-react';
+import { CheckCircle, ChevronRight, ChevronLeft, FileText, Loader2 } from 'lucide-react';
+import { useFirestore, useUser } from '@/firebase/provider';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 type WizardStep = 'intro' | 'state' | 'type' | 'details' | 'review' | 'success';
 
 export function LegacyWizard() {
     const [step, setStep] = useState<WizardStep>('intro');
+    const [isSaving, setIsSaving] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const firestore = useFirestore();
+    const { user } = useUser();
+
     const [formData, setFormData] = useState({
         state: '',
         docType: '',
@@ -24,6 +31,32 @@ export function LegacyWizard() {
     };
 
     const nextStep = (next: WizardStep) => setStep(next);
+
+    const handleGenerate = async () => {
+        if (!user) {
+            setError('You must be signed in to save documents.');
+            return;
+        }
+
+        setIsSaving(true);
+        setError(null);
+
+        try {
+            await addDoc(collection(firestore, 'legacy_documents'), {
+                userId: user.uid,
+                ...formData,
+                createdAt: serverTimestamp(),
+                status: 'draft',
+                version: 1
+            });
+            nextStep('success');
+        } catch (err) {
+            console.error('Error saving document:', err);
+            setError('Failed to save document. Please try again.');
+        } finally {
+            setIsSaving(false);
+        }
+    };
 
     const renderIntro = () => (
         <Card className="border-dashed border-primary/50 bg-primary/5">
@@ -169,14 +202,23 @@ export function LegacyWizard() {
                         <span className="font-medium">{formData.beneficiary}</span>
                     </div>
                 </div>
+                {error && <div className="text-red-500 text-sm text-center">{error}</div>}
                 <div className="text-xs text-muted-foreground text-center">
                     By clicking Generate, you acknowledge that this is a draft and not a substitute for legal advice.
                 </div>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button variant="ghost" onClick={() => nextStep('details')}><ChevronLeft className="mr-2 h-4 w-4" /> Back</Button>
-                <Button onClick={() => nextStep('success')} className="w-full ml-4">
-                    Generate Document
+                <Button variant="ghost" onClick={() => nextStep('details')} disabled={isSaving}>
+                    <ChevronLeft className="mr-2 h-4 w-4" /> Back
+                </Button>
+                <Button onClick={handleGenerate} className="w-full ml-4" disabled={isSaving}>
+                    {isSaving ? (
+                        <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
+                        </>
+                    ) : (
+                        'Generate Document'
+                    )}
                 </Button>
             </CardFooter>
         </Card>
@@ -194,7 +236,10 @@ export function LegacyWizard() {
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <Button className="w-full" variant="outline" onClick={() => nextStep('intro')}>
+                <Button className="w-full" variant="outline" onClick={() => {
+                    setFormData({ state: '', docType: '', fullName: '', beneficiary: '' });
+                    nextStep('intro');
+                }}>
                     Create Another
                 </Button>
             </CardContent>
