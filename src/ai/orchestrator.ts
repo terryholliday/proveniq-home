@@ -1,5 +1,7 @@
 import { logAIEvent } from '@/lib/ai-events';
 import { SANDBOX_CONFIG } from './sandbox-config';
+import { AIProcessingResult, AIImageAnalysis, AIMetadata, AIValuation, AIProvenance } from './types';
+import { MetadataNormalizer } from './metadata_normalizer';
 
 type StepFunction<T = any> = (input: any) => Promise<T>;
 
@@ -42,12 +44,14 @@ class CircuitBreaker {
 
 export class AIOrchestrator {
     private circuitBreaker: CircuitBreaker;
+    private normalizer: MetadataNormalizer;
 
     constructor() {
         this.circuitBreaker = new CircuitBreaker({
             failureThreshold: 3,
             resetTimeout: 30000, // 30 seconds
         });
+        this.normalizer = new MetadataNormalizer();
     }
 
     private async withTimeout<T>(fn: () => Promise<T>, timeoutMs: number): Promise<T> {
@@ -84,10 +88,9 @@ export class AIOrchestrator {
         if (SANDBOX_CONFIG.enabled && itemId && SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs]) {
             // @ts-ignore
             const mockData = SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs];
-            // Simulate step-specific return if needed, for now just return the whole mock object or relevant part
-            // In a real scenario, we'd map stepName to specific parts of the mock data
-            if (stepName === 'attributes') return mockData.attributes as unknown as T;
-            if (stepName === 'description') return mockData.description as unknown as T;
+            // Simulate step-specific return if needed
+            if (stepName === 'image_analysis') return mockData.attributes as unknown as T; // Mapping old attributes to image analysis for now
+            if (stepName === 'metadata_normalization') return mockData.attributes as unknown as T;
             if (stepName === 'valuation') return mockData.valuation as unknown as T;
             if (stepName === 'provenance') return mockData.provenance as unknown as T;
         }
@@ -139,44 +142,78 @@ export class AIOrchestrator {
         }
     }
 
-    async executeChain(itemId: string, image: string) {
+    async executeChain(itemId: string, image: string): Promise<AIProcessingResult> {
         const workflowId = crypto.randomUUID();
+        const timestamp = new Date().toISOString();
 
         try {
-            // Step 1: Attributes
-            const attributes = await this.executeStep('attributes', async (img) => {
-                // Placeholder for actual AI call
-                return { brand: 'Unknown', model: 'Unknown' };
+            // Step 1: Image Analysis (Vision)
+            const imageAnalysis = await this.executeStep<AIImageAnalysis>('image_analysis', async (img) => {
+                // Placeholder for Vision Intelligence
+                return {
+                    description: 'Analyzed Image',
+                    objects: [],
+                    quality: { score: 80, issues: [] }
+                };
             }, image, workflowId, itemId);
 
-            // Step 2: Description
-            const description = await this.executeStep('description', async (attrs) => {
-                // Placeholder
-                return `A ${attrs.brand} item.`;
-            }, attributes, workflowId, itemId);
+            // Step 2: Metadata Normalization
+            const metadata = await this.executeStep<AIMetadata>('metadata_normalization', async (analysis) => {
+                // Use the normalizer
+                return this.normalizer.normalize(
+                    analysis.description,
+                    '', // No extra description yet
+                    {}, // No detected attributes yet
+                    {}  // No user overrides yet
+                );
+            }, imageAnalysis, workflowId, itemId);
 
             // Step 3: Valuation
-            const valuation = await this.executeStep('valuation', async (desc) => {
-                // Placeholder
-                return { value: 100, currency: 'USD' };
-            }, description, workflowId, itemId);
+            const valuation = await this.executeStep<AIValuation>('valuation', async (meta) => {
+                // Placeholder for Valuation Engine
+                return {
+                    estimatedValue: { min: 0, max: 0, currency: 'USD' },
+                    confidenceScore: 0,
+                    factors: { brand: 0, condition: 0, age: 0, materials: 0, market: 0 },
+                    explanation: 'Pending valuation',
+                    modelBreakdown: {}
+                };
+            }, metadata, workflowId, itemId);
 
             // Step 4: Provenance
-            const provenance = await this.executeStep('provenance', async (item) => {
-                // Placeholder
-                return { history: [] };
-            }, { itemId, attributes }, workflowId, itemId);
+            const provenance = await this.executeStep<AIProvenance>('provenance', async (val) => {
+                // Placeholder for Provenance Engine
+                return {
+                    timeline: [],
+                    confidenceScore: 0,
+                    gapDetected: false,
+                    narrative: 'No provenance data'
+                };
+            }, valuation, workflowId, itemId);
 
             return {
-                attributes,
-                description,
+                itemId,
+                workflowId,
+                timestamp,
+                imageAnalysis,
+                metadata,
                 valuation,
-                provenance
+                provenance,
+                status: 'success'
             };
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Chain execution failed:', error);
-            throw error;
+            return {
+                itemId,
+                workflowId,
+                timestamp,
+                metadata: { category: 'Unknown', subcategory: 'Unknown', attributes: {}, confidence: 0, sources: [] },
+                valuation: { estimatedValue: { min: 0, max: 0, currency: 'USD' }, confidenceScore: 0, factors: { brand: 0, condition: 0, age: 0, materials: 0, market: 0 }, explanation: 'Error', modelBreakdown: {} },
+                provenance: { timeline: [], confidenceScore: 0, gapDetected: false, narrative: 'Error' },
+                status: 'failed',
+                errors: [error.message]
+            };
         }
     }
 }
