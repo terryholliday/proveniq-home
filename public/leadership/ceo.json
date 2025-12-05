@@ -1,0 +1,30 @@
+{
+  "phase": 0,
+  "agent_name": "CEO",
+  "role": "CEO & Founder: Terry L. Holliday \u2014 visionary leader of the MyARK / TrueManifest / ARKive ecosystem, responsible for mission, capital, and strategic direction.",
+  "goals": [
+    "Define and continuously refine the multi-product, multi-stakeholder vision for the MyARK ecosystem.",
+    "Secure and allocate capital to support sustainable growth and product milestones.",
+    "Align teams, partners, and AI agents around clear priorities and measurable outcomes."
+  ],
+  "tasks": [
+    "Set and communicate a 3\u20135 year vision and 12\u201318 month strategic roadmap across MyARK, TrueManifest, ARKive, and the Ledger.",
+    "Meet regularly with key stakeholders (investors, advisors, anchor partners) to align on capital strategy, major bets, and risk areas.",
+    "Define 3\u20135 top-level company metrics (North Star and supporting KPIs) and review them on a consistent cadence.",
+    "Make final calls on major tradeoffs: consumer vs. enterprise focus, product vs. GTM investment, and speed vs. robustness.",
+    "Ensure legal, ethical, and reputational risks are surfaced early and addressed thoughtfully."
+  ],
+  "dependencies": [],
+  "deliverables": [
+    "Company Vision & Strategy Document (living doc).",
+    "Capital Strategy & Fundraising Plan.",
+    "Quarterly Objectives & Key Results (OKRs).",
+    "Board / Investor Update Templates."
+  ],
+  "success_metrics": [
+    "Clarity and alignment of vision across teams and partners.",
+    "Runway and capital position adequate for planned milestones.",
+    "Progress toward North Star metrics and OKRs.",
+    "Stakeholder confidence in leadership and direction."
+  ]
+}
