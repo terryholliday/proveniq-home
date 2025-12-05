@@ -84,4 +84,20 @@ export const SEED_COMPLIANCE_TASKS: Partial<ComplianceTask>[] = [
         dueDate: Timestamp.fromMillis(Date.now() + 14 * 24 * 60 * 60 * 1000), // +14 days
         createdAt: Timestamp.now(),
     },
+    {
+        title: 'Deploy Consent Modal',
+        description: 'Implement and verify the Just-in-Time consent modal for v2.0 policies.',
+        priority: 'critical',
+        status: 'pending',
+        dueDate: Timestamp.fromMillis(Date.now() + 3 * 24 * 60 * 60 * 1000), // +3 days
+        createdAt: Timestamp.now(),
+    },
+    {
+        title: 'Verify Firestore Sync',
+        description: 'Ensure legal documents are correctly syncing from Admin Dashboard to Firestore.',
+        priority: 'high',
+        status: 'pending',
+        dueDate: Timestamp.fromMillis(Date.now() + 5 * 24 * 60 * 60 * 1000), // +5 days
+        createdAt: Timestamp.now(),
+    },
 ];

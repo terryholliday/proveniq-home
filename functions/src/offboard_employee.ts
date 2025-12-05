@@ -27,9 +27,10 @@ export const offboardEmployee = onCall<OffboardEmployeeInput>(
             throw new HttpsError("unauthenticated", "Authentication required.");
         }
 
-        // TODO: Add Admin Role Check here
-        // const callerUid = request.auth.uid;
-        // if (!isAdmin(callerUid)) throw new HttpsError("permission-denied", "Admin only.");
+        // Admin Role Check
+        if (request.auth.token.admin !== true) {
+            throw new HttpsError("permission-denied", "Admin only.");
+        }
 
         const { targetUid, reason, immediateDelete } = request.data;
 

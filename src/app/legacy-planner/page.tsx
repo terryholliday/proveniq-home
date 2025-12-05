@@ -30,6 +30,7 @@ import {
 import Link from 'next/link';
 import { LegacyWizard } from '@/components/legacy/LegacyWizard';
 
+
 const StatCard = ({
   icon,
   title,
@@ -53,7 +54,14 @@ const StatCard = ({
   );
 };
 
+import { useEffect } from 'react';
+import { logPlannerStarted } from '@/lib/analytics';
+
 export default function LegacyPlannerPage() {
+  useEffect(() => {
+    logPlannerStarted();
+  }, []);
+
   return (
     <>
       <PageHeader
@@ -97,37 +105,62 @@ export default function LegacyPlannerPage() {
             </AlertDescription>
           </Alert>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <LegacyWizard />
-            <Card>
+          <div className="grid grid-cols-1 gap-8">
+            <Card className="border-2 border-primary/10">
               <CardHeader>
-                <CardTitle>Upload Your Own Documents</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <FileUp className="h-5 w-5 text-primary" />
+                  Upload Legacy Document
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <Input placeholder="Document Name" />
-                <Select defaultValue="will">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="will">Last Will & Testament</SelectItem>
-                    <SelectItem value="trust">Living Trust</SelectItem>
-                    <SelectItem value="poa">Power of Attorney</SelectItem>
-                    <SelectItem value="other">Other Document</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Input type="file" />
-                <Button className="w-full" variant="secondary">
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Document Type</label>
+                  <Select defaultValue="will">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="will">Last Will & Testament</SelectItem>
+                      <SelectItem value="trust">Living Trust</SelectItem>
+                      <SelectItem value="poa">Power of Attorney</SelectItem>
+                      <SelectItem value="health">Advance Healthcare Directive</SelectItem>
+                      <SelectItem value="other">Other Document</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Select the type of legal document you are storing.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Document Name</label>
+                  <Input placeholder="e.g., My Last Will 2024" />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">File Upload</label>
+                  <Input type="file" className="cursor-pointer" />
+                </div>
+
+                <Button className="w-full" size="lg">
                   <FileUp className="mr-2 h-4 w-4" />
-                  Upload Document
+                  Securely Upload to Vault
                 </Button>
 
-                <div className="pt-4 border-t">
-                  <h4 className="font-semibold text-sm mb-2">Need Professional Review?</h4>
-                  <Button variant="outline" className="w-full">
-                    <Scale className="mr-2 h-4 w-4" />
-                    Request Attorney Review ($99)
-                  </Button>
+                <div className="pt-6 border-t mt-6">
+                  <div className="rounded-lg bg-slate-50 p-4 flex items-start gap-3">
+                    <Scale className="h-5 w-5 text-muted-foreground mt-0.5" />
+                    <div className="space-y-1">
+                      <h4 className="font-semibold text-sm">Professional Review Available</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Need an attorney to review your documents? Request a professional review starting at $99.
+                      </p>
+                      <Button variant="link" className="p-0 h-auto font-semibold text-primary">
+                        Request Attorney Review &rarr;
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -139,18 +172,9 @@ export default function LegacyPlannerPage() {
 
         <div>
           <h2 className="text-2xl font-bold tracking-tight mb-4">
-            Assigned by Beneficiary
+            Create New Legacy Document
           </h2>
-          <Card className="flex items-center justify-center p-12 border-dashed">
-            <div className="text-center">
-              <p className="text-muted-foreground">
-                No items have been assigned yet.{' '}
-                <Link href="#" className="text-primary underline">
-                  Add a beneficiary to get started.
-                </Link>
-              </p>
-            </div>
-          </Card>
+          <LegacyWizard />
         </div>
       </div>
     </>

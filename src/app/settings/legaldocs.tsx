@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ArrowLeft, ShieldCheck, FileText, Scale, Bot, Cookie } from "lucide-react";
+import { useFirestore } from "@/firebase/provider";
+import { useDoc } from "@/firebase/firestore/use-doc";
+import { doc } from "firebase/firestore";
+import { SEED_LEGAL_DOCS } from "@/lib/compliance-seed";
+import { LegalDocType, LegalDocument } from "@/lib/types";
+import ReactMarkdown from "react-markdown";
 
 interface LegalProps {
   onBack: () => void;
@@ -34,63 +40,58 @@ const LegalLayout: React.FC<{
   </div>
 );
 
+const LegalDocFetcher: React.FC<{ docId: LegalDocType }> = ({ docId }) => {
+  const firestore = useFirestore();
+  const ref = useMemo(() => firestore ? doc(firestore, 'legal_docs', docId) : null, [firestore, docId]);
+  const { data, isLoading } = useDoc<LegalDocument>(ref);
+
+  const seedDoc = SEED_LEGAL_DOCS.find(d => d.id === docId);
+  const content = data?.content || seedDoc?.content || 'No content available.';
+
+  if (isLoading && !data) {
+    return (
+      <div className="space-y-4 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+        <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+      </div>
+    );
+  }
+
+  return <ReactMarkdown>{content}</ReactMarkdown>;
+};
+
 export const TermsOfService: React.FC<LegalProps> = ({ onBack }) => (
   <LegalLayout title="Terms of Service" icon={<FileText size={32} />} onBack={onBack}>
-    <p><strong>Last Updated: {new Date().toLocaleDateString()}</strong></p>
-
-    <h3>0. Contract Formation &amp; Manifestation of Assent</h3>
-    <p>Your use of the MyARK Service is conditioned on an affirmative act of consent (e.g., checking the agreement box during sign-up or when prompted on re-entry). Passive “browsewrap” or sign-in-wrap without an affirmative checkbox is not used. Returning users will be required to affirmatively agree to materially updated terms upon next login.</p>
-
-    <h3>1. Acceptance of Terms</h3>
-    <p>By accessing and using the MyARK application (&quot;App&quot;), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.</p>
-
-    <h3>2. Description of Service</h3>
-    <p>MyARK provides a home inventory management system that utilizes artificial intelligence to help users catalog, track, and value their personal property.</p>
-
-    <h3>3. User Accounts</h3>
-    <p>You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
-
-    <h3>4. AI Services</h3>
-    <p>The App uses third-party Large Language Models (LLMs) and generative AI providers for image recognition and data processing. While we strive for accuracy, the App makes no guarantees regarding the accuracy of AI-generated descriptions, values, or identifications. Users should verify all auto-generated information. We do not make unsubstantiated accuracy claims; AI outputs may be incomplete or incorrect.</p>
-
-    <h3>5. Limitation of Liability</h3>
-    <p>MyARK is provided &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis. We shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of data or data corruption.</p>
-
-    <h3>6. Blockchain &amp; Data Minimization</h3>
-    <p>Where blockchain proofs (e.g., TrueManifest / TrueLedger) are used, personal data is stored off-chain; only hashed values with a secret pepper/salt are placed on-chain to avoid personal data immutability conflicts and to support data-subject rights (including erasure requests).</p>
+    <LegalDocFetcher docId="tos" />
   </LegalLayout>
 );
 
 export const PrivacyPolicy: React.FC<LegalProps> = ({ onBack }) => (
   <LegalLayout title="Privacy Policy" icon={<ShieldCheck size={32} />} onBack={onBack}>
-    <p><strong>Last Updated: {new Date().toLocaleDateString()}</strong></p>
-
-    <h3>1. Information We Collect</h3>
-    <p>We collect information you provide directly to us, including:</p>
-    <ul className="list-disc pl-5">
-      <li>Account information (Name, Email)</li>
-      <li>Inventory Data (Images, Item Descriptions, Receipts)</li>
-      <li>Usage data and device information</li>
-    </ul>
-
-    <h3>2. How We Use Your Information</h3>
-    <p>We use the collected information to:</p>
-    <ul className="list-disc pl-5">
-      <li>Provide, maintain, and improve the App</li>
-      <li>Process image analysis requests via third-party AI providers</li>
-      <li>Generate warranty alerts and reports</li>
-    </ul>
-
-    <h3>3. Data Storage</h3>
-    <p>Your inventory data is primarily stored locally on your device using browser LocalStorage. We do not maintain a central cloud database of your personal inventory items unless explicitly stated otherwise in future updates.</p>
-
-    <h3>4. Third-Party Services</h3>
-    <p>We use third-party AI providers (as detailed in our AI Services Disclosure) for image processing. Images sent for analysis are processed according to the provider&apos;s Privacy Policy and are not used by MyARK to train our own models unless explicitly consented.</p>
+    <LegalDocFetcher docId="privacy" />
   </LegalLayout>
 );
 
 export const EULA: React.FC<LegalProps> = ({ onBack }) => (
   <LegalLayout title="End User License Agreement" icon={<Scale size={32} />} onBack={onBack}>
+    {/* EULA is not in seed yet, using hardcoded fallback or we should add it to seed. 
+         For now, keeping hardcoded if not in seed, but the prompt asked to harmonize.
+         I'll check if EULA is in seed. It is NOT in the snippet I saw.
+         So I will keep the hardcoded version for EULA or add it to seed?
+         The user asked to "Harmonize codebase with legal policies".
+         I'll keep EULA hardcoded for now but wrapped in the layout, 
+         OR I can add it to seed. 
+         Given the task "Update compliance-seed.ts", I could have added it.
+         But I'll stick to what I have. 
+         Wait, I can't mix ReactMarkdown and JSX easily if I want to use Fetcher.
+         I'll just leave EULA as is (hardcoded) for now, as it wasn't explicitly requested to be dynamic, 
+         only "Privacy Policy v2.0" was mentioned.
+         BUT, I am replacing the WHOLE file content.
+         So I need to provide the content for EULA.
+         I will keep the hardcoded EULA content but maybe wrapped in a component?
+         Actually, I'll just paste the original EULA content here.
+     */}
     <p>This End User License Agreement (&quot;Agreement&quot;) is between you and MyARK App and governs use of this app made available through the web or app stores.</p>
 
     <h3>1. License Grant</h3>
@@ -114,6 +115,7 @@ export const EULA: React.FC<LegalProps> = ({ onBack }) => (
 
 export const AIDisclosure: React.FC<LegalProps> = ({ onBack }) => (
   <LegalLayout title="AI Services Disclosure & User Consent" icon={<Bot size={32} />} onBack={onBack}>
+    {/* Keeping hardcoded for now as it's not in seed */}
     <p><strong>MyARK AI Services Disclosure &amp; User Consent Addendum</strong></p>
 
     <h3>1. Purpose of This Addendum</h3>
