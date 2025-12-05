@@ -85,7 +85,7 @@ export default function AuctionsPage() {
           <Card key={auction.id}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
               <CardTitle className="text-base">{auction.title}</CardTitle>
-              <Badge variant={auction.status === 'active' ? 'default' : 'secondary'}>{auction.status}</Badge>
+              <Badge variant={auction.status === 'live' ? 'default' : 'secondary'}>{auction.status}</Badge>
             </CardHeader>
             <CardContent className="space-y-2">
               <p className="text-sm text-muted-foreground line-clamp-3">{auction.description}</p>

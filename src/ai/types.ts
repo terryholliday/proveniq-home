@@ -60,17 +60,20 @@ export interface AIValuation {
     }[];
 }
 
+import { ProvenanceEventType } from '@/lib/types';
+
 export interface AIProvenance {
     timeline: {
         date: string;
         title: string;
-        type: 'acquisition' | 'valuation' | 'repair' | 'transfer' | 'other';
+        type: ProvenanceEventType;
         description: string;
         verified: boolean;
     }[];
     confidenceScore: number;
     gapDetected: boolean;
     narrative: string;
+    merkleRoot?: string;
 }
 
 export interface AIProcessingResult {
