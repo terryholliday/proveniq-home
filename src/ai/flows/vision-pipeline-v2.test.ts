@@ -2,12 +2,11 @@ import { visionPipelineV2 } from './vision-pipeline-v2';
 
 // Mock the ai instance from @/ai/genkit
 jest.mock('@/ai/genkit', () => {
-    const mockPrompt = jest.fn();
     return {
         ai: {
             definePrompt: jest.fn((config) => {
                 // Return a mock function that simulates the prompt execution
-                return jest.fn(async (input) => {
+                return jest.fn(async () => {
                     if (config.name === 'visionQualityPrompt') {
                         return { output: { isAcceptable: true, sharpness: 0.9, lighting: 0.8, issues: [] } };
                     }
@@ -44,7 +43,7 @@ describe('visionPipelineV2', () => {
         };
 
         // Since we mocked defineFlow to return the handler, visionPipelineV2 is the handler function
-        // @ts-ignore
+        // @ts-expect-error
         const result = await visionPipelineV2(input);
 
         expect(result.quality).toHaveLength(2);

@@ -30,7 +30,7 @@ export class ProvenanceEngine {
         const events: ProvenanceEvent[] = item.provenance || [];
 
         // 1. Convert explicit events to timeline items
-        let timeline: ProvenanceTimelineItem[] = events.map(e => ({
+        const timeline: ProvenanceTimelineItem[] = events.map(e => ({
             date: e.date,
             title: this.formatTitle(e.type),
             description: e.description,
@@ -116,7 +116,6 @@ export class ProvenanceEngine {
             return `No provenance history recorded for ${item.name}.`;
         }
 
-        const newest = timeline.find(t => !t.gap);
         const oldest = timeline[timeline.length - 1]; // Last one since sorted descending
         const verifiedCount = timeline.filter(t => t.verified).length;
 
