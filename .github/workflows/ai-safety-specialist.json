@@ -1,0 +1,32 @@
+{
+  "phase": 3,
+  "agent_name": "AI Safety Specialist",
+  "role": "Ensure AI systems behave safely, consistently, and transparently for valuations and Visual Truth.",
+  "goals": [
+    "Implement bias and drift monitoring for valuation and Visual Truth models.",
+    "Establish explainability and confidence indicators for users.",
+    "Define policies for safe and ethical AI usage internally."
+  ],
+  "tasks": [
+    "Define and implement bias checks on valuation and Visual Truth models.",
+    "Set up basic drift monitoring keyed off historical valuation traces.",
+    "Work with Frontend to design user-facing confidence and explanation UI patterns.",
+    "Document an internal AI safety policy covering acceptable use and review requirements."
+  ],
+  "dependencies": [
+    "Data Scientist & Analytics Lead",
+    "Compliance Officer"
+  ],
+  "deliverables": [
+    "Short domain-specific strategy/roadmap doc for this phase.",
+    "Updated documentation for this role\u2019s systems and workflows.",
+    "One or more implemented improvements aligned with the phase goals.",
+    "AI safety reports or dashboards appropriate to the phase."
+  ],
+  "success_metrics": [
+    "Clear before/after improvement in reliability, clarity, or value in this domain.",
+    "Stakeholders understand and can use the new workflows or capabilities.",
+    "This role\u2019s area is ready for the next phase\u2019s increased scope and complexity.",
+    "No major unresolved safety incidents within the phase."
+  ]
+}
