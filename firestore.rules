@@ -16,36 +16,85 @@ service cloud.firestore {
       return isSignedIn() && request.auth.token.admin == true;
     }
 
+    // PHASE 4: Multi-Tenancy Enforcement
+    function getTenantId() {
+      // Extract tenantId from JWT custom claims (defaults to 'consumer')
+      return isSignedIn() ? request.auth.token.get('tenantId', 'consumer') : 'consumer';
+    }
+
+    function isSameTenant(resourceTenantId) {
+      return getTenantId() == resourceTenantId;
+    }
+
+    function isSystemOrAdmin() {
+      return isAdmin() || (isSignedIn() && request.auth.token.get('tenantId', '') == 'system');
+    }
+
     // --- Collection Rules ---
 
     // Users:
-    // - Users can read/write their own profile.
-    // - Admins can read/write ALL profiles (required for offboarding/management).
-    // - No listing allowed for standard users.
+    // - Users can read/write their own profile within their tenant.
+    // - Admins can read/write ALL profiles.
     match /users/{userId} {
       allow get: if isOwner(userId) || isAdmin();
       allow list: if isAdmin();
       allow create: if (isOwner(userId) || isAdmin()) && request.resource.data.uid == userId;
       allow update: if isOwner(userId) || isAdmin();
-      allow delete: if isAdmin(); // Only admins can delete users
-    }
-
-    // Compliance Tasks:
-    // - Users can read/update tasks assigned to them.
-    // - Admins can do everything.
-    match /compliance_tasks/{taskId} {
-      allow read: if isAdmin() || (isSignedIn() && resource.data.assignedTo == request.auth.uid);
-      allow create: if isAdmin();
-      allow update: if isAdmin() || (isSignedIn() && resource.data.assignedTo == request.auth.uid);
       allow delete: if isAdmin();
     }
 
+    // Inventory Items (Multi-Tenant):
+    // - Users can only access items in their tenant.
+    // - Must validate tenantId on write.
+    match /items/{itemId} {
+      allow read: if isSignedIn() && (isSameTenant(resource.data.tenantId) || isSystemOrAdmin());
+      allow create: if isSignedIn() && 
+                       request.resource.data.tenantId == getTenantId() &&
+                       request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && 
+                       isSameTenant(resource.data.tenantId) && 
+                       resource.data.userId == request.auth.uid;
+      allow delete: if isSignedIn() && 
+                       isSameTenant(resource.data.tenantId) && 
+                       (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // Households (Multi-Tenant):
+    match /households/{householdId} {
+      allow read: if isSignedIn() && (isSameTenant(resource.data.tenantId) || isSystemOrAdmin());
+      allow write: if isSignedIn() && 
+                      request.resource.data.tenantId == getTenantId() &&
+                      request.resource.data.ownerId == request.auth.uid;
+    }
+
+    // Compliance Tasks:
+    // - Multi-tenant aware.
+    match /compliance_tasks/{taskId} {
+      allow read: if isSystemOrAdmin() || (isSignedIn() && 
+                     isSameTenant(resource.data.tenantId) &&
+                     resource.data.assignedTo == request.auth.uid);
+      allow create: if isSystemOrAdmin();
+      allow update: if isSystemOrAdmin() || (isSignedIn() && 
+                       isSameTenant(resource.data.tenantId) &&
+                       resource.data.assignedTo == request.auth.uid);
+      allow delete: if isSystemOrAdmin();
+    }
+
     // Legal Documents:
-    // - Public read (or authenticated read, depending on strictness - going with public for now as per plan "Publicly readable").
+    // - Public read.
     // - Admin write only.
-    match /legal_documents/{docId} {
+    match /legal_docs/{docId} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+
+    // Audit Logs (System Only):
+    // - Write-only for authenticated users (via cloud functions).
+    // - Read-only for system/admin.
+    match /audit_logs/{logId} {
+      allow read: if isSystemOrAdmin();
+      allow create: if isSignedIn(); // Functions write here
+      allow update, delete: if false; // Immutable
     }
   }
 }
