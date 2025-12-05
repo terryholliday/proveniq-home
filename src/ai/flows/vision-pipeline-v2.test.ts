@@ -55,6 +55,9 @@ describe('visionPipelineV2', () => {
 
         expect(result.smartCrops).toHaveLength(2);
 
+        expect(result.hashes).toHaveLength(2);
+        expect(result.hashes[0].hash).toBeDefined();
+
         expect(result.details.brand).toBe('TestBrand');
         expect(result.condition.overallScore).toBe(90);
     });

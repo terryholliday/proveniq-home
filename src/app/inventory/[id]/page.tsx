@@ -19,6 +19,8 @@ import { useToast } from '@/components/ui/use-toast';
 import UpgradeModal from '@/components/subscriptions/UpgradeModal';
 import { AuctionWizard } from '@/components/auctions/AuctionWizard';
 import { Button } from '@/components/ui/button';
+import { ProvenanceTimeline } from '@/components/inventory/ProvenanceTimeline';
+import { ProvenanceEngine, ProvenanceSummary } from '@/ai/provenance_engine';
 
 export default function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [unwrappedParams, setUnwrappedParams] = useState<{ id: string } | null>(null);
@@ -42,6 +44,16 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
     setBeneficiaries(DUMMY_BENEFICIARIES); // Mock beneficiaries
     setLoading(false);
   }, [unwrappedParams]);
+
+  const [provenanceSummary, setProvenanceSummary] = useState<ProvenanceSummary | null>(null);
+
+  useEffect(() => {
+    if (item) {
+      const engine = new ProvenanceEngine();
+      const summary = engine.analyze(item);
+      setProvenanceSummary(summary);
+    }
+  }, [item]);
 
   const handleUpdate = (updates: Partial<InventoryItem>) => {
     if (!item) return;
@@ -95,6 +107,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
             <FinancialsSection item={item} onUpdate={handleUpdate} />
             <LocationSection item={item} onUpdate={handleUpdate} />
             <MaintenanceSection item={item} user={user} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+            {provenanceSummary && <ProvenanceTimeline summary={provenanceSummary} />}
             <SalesTools item={item} user={user} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             <LegacySection item={item} beneficiaries={beneficiaries} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             <QRCodeSection item={item} />

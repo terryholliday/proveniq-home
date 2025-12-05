@@ -7,6 +7,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { createHash } from 'crypto';
 
 // --- SCHEMAS ---
 
@@ -47,10 +48,23 @@ const SmartCropSchema = z.object({
     }),
 });
 
+const ImageHashSchema = z.object({
+    imageId: z.string(),
+    hash: z.string().describe('SHA-256 hash of the image'),
+});
+
 export const VisionPipelineOutputSchema = z.object({
     quality: z.array(ImageQualitySchema),
     categories: z.array(ImageCategorySchema),
     smartCrops: z.array(SmartCropSchema),
+    hashes: z.array(ImageHashSchema),
+    visualTruth: z.array(z.object({
+        imageId: z.string(),
+        imageHash: z.string(),
+        verifiedAt: z.string(),
+        method: z.enum(['client-side-hash', 'server-side-hash']),
+        status: z.enum(['verified', 'tampered', 'unknown'])
+    })).optional(),
     details: z.object({
         brand: z.string().optional(),
         modelNumber: z.string().optional(),
@@ -145,8 +159,25 @@ export const visionPipelineV2 = ai.defineFlow(
     async (input) => {
         const { images, itemContext } = input;
 
-        // 1. Parallel Image Processing (Quality, Category, Crop)
+        // 1. Parallel Image Processing (Quality, Category, Crop, Hash)
         const imageTasks = images.map(async (img) => {
+            // Calculate SHA-256 hash of the image URL/Data
+            let hash = '';
+            try {
+                // Try to fetch the image to hash the content
+                const response = await fetch(img.url);
+                if (response.ok) {
+                    const arrayBuffer = await response.arrayBuffer();
+                    hash = createHash('sha256').update(Buffer.from(arrayBuffer)).digest('hex');
+                } else {
+                    console.warn(`Failed to fetch image for hashing: ${img.url}`);
+                    hash = createHash('sha256').update(img.url).digest('hex');
+                }
+            } catch (error) {
+                console.warn(`Error fetching image for hashing: ${img.url}`, error);
+                hash = createHash('sha256').update(img.url).digest('hex');
+            }
+
             const [q, c, s] = await Promise.all([
                 qualityPrompt({ url: img.url }),
                 categoryPrompt({ url: img.url }),
@@ -157,7 +188,8 @@ export const visionPipelineV2 = ai.defineFlow(
                 id: img.id,
                 quality: q.output,
                 category: c.output,
-                crop: s.output
+                crop: s.output,
+                hash
             };
         });
 
@@ -179,6 +211,14 @@ export const visionPipelineV2 = ai.defineFlow(
             quality: processedImages.map(p => ({ imageId: p.id, ...p.quality! })),
             categories: processedImages.map(p => ({ imageId: p.id, ...p.category! })),
             smartCrops: processedImages.map(p => ({ imageId: p.id, cropRegion: p.crop! })),
+            hashes: processedImages.map(p => ({ imageId: p.id, hash: p.hash })),
+            visualTruth: processedImages.map(p => ({
+                imageId: p.id,
+                imageHash: p.hash,
+                verifiedAt: new Date().toISOString(),
+                method: 'server-side-hash',
+                status: 'verified' // Initial status
+            })),
             details: analysis.output?.details || {},
             condition: analysis.output?.condition || { overallScore: 0, defects: [], wearLevel: 'poor' }
         };

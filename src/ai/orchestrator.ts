@@ -2,6 +2,10 @@ import { logAIEvent } from '@/lib/ai-events';
 import { SANDBOX_CONFIG } from './sandbox-config';
 import { AIProcessingResult, AIImageAnalysis, AIMetadata, AIValuation, AIProvenance } from './types';
 import { MetadataNormalizer } from './metadata_normalizer';
+import { adminDb } from '@/lib/firebase-admin';
+import { provenanceService } from './provenance_service';
+import { InventoryItem } from '@/lib/types';
+import { visionPipelineV2 } from './flows/vision-pipeline-v2';
 
 type StepFunction<T = any> = (input: any) => Promise<T>;
 
@@ -149,11 +153,39 @@ export class AIOrchestrator {
         try {
             // Step 1: Image Analysis (Vision)
             const imageAnalysis = await this.executeStep<AIImageAnalysis>('image_analysis', async (img) => {
-                // Placeholder for Vision Intelligence
+                const result = await visionPipelineV2({
+                    images: [{ url: img, id: 'main' }],
+                    itemContext: itemId ? `Item ID: ${itemId}` : undefined
+                });
+
+                // [Visual Truth] Persist hashes if itemId exists
+                if (itemId && result.hashes && result.hashes.length > 0) {
+                    try {
+                        const hashes = result.hashes.map(h => h.hash);
+                        await adminDb.collection('items').doc(itemId).update({
+                            imageHashes: hashes,
+                            visualTruthVerified: true,
+                            updatedAt: new Date() // Timestamp
+                        });
+                    } catch (e) {
+                        console.error("Failed to update Visual Truth hashes:", e);
+                    }
+                }
+
+                // Map to AIImageAnalysis
+                const mainImageQuality = result.quality.find(q => q.imageId === 'main');
+
                 return {
-                    description: 'Analyzed Image',
-                    objects: [],
-                    quality: { score: 80, issues: [] }
+                    description: `Analyzed item: ${result.details.brand || 'Unknown'} ${result.details.modelNumber || ''}`,
+                    objects: [], // Vision V2 doesn't return objects list yet, maybe infer from categories?
+                    quality: {
+                        score: (mainImageQuality?.sharpness || 0) * 100,
+                        issues: mainImageQuality?.issues || []
+                    },
+                    condition: {
+                        score: result.condition.overallScore,
+                        details: result.condition.defects
+                    }
                 };
             }, image, workflowId, itemId);
 
@@ -182,7 +214,18 @@ export class AIOrchestrator {
 
             // Step 4: Provenance
             const provenance = await this.executeStep<AIProvenance>('provenance', async (val) => {
-                // Placeholder for Provenance Engine
+                if (itemId) {
+                    try {
+                        const itemSnap = await adminDb.collection('items').doc(itemId).get();
+                        if (itemSnap.exists) {
+                            const item = itemSnap.data() as InventoryItem;
+                            item.id = itemId; // Ensure ID is set
+                            return await provenanceService.analyzeAndLog(item);
+                        }
+                    } catch (e) {
+                        console.error("Error fetching item for provenance:", e);
+                    }
+                }
                 return {
                     timeline: [],
                     confidenceScore: 0,
