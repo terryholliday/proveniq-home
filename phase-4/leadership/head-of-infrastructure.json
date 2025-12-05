@@ -1,0 +1,32 @@
+{
+  "phase": 4,
+  "agent_name": "Head of Infrastructure",
+  "role": "Leads infrastructural reliability, scalability, and platform engineering. Focused on ecosystem & enterprise expansion in phase 4.",
+  "goals": [
+    "Support multi-tenant, enterprise, and ecosystem growth.",
+    "Create repeatable systems for this function at scale.",
+    "Align with regulatory, partner, and enterprise expectations."
+  ],
+  "tasks": [
+    "Define phase-specific priorities and success measures for this role.",
+    "Collaborate with adjacent roles and teams to align roadmaps and avoid silos.",
+    "Deliver at least one meaningful system, process, or capability upgrade in this phase.",
+    "Document decisions, tradeoffs, and learnings to inform future phases.",
+    "Support multi-region, multi-tenant deployments with clear SLOs.",
+    "Standardize infra patterns for new products and integrations."
+  ],
+  "dependencies": [
+    "CEO",
+    "Chief of Staff / COO"
+  ],
+  "deliverables": [
+    "Phase 4 strategy and priority doc for the Head of Infrastructure function.",
+    "Updated documentation for systems, processes, and decisions owned by this role.",
+    "One or more concrete improvements shipped in this phase."
+  ],
+  "success_metrics": [
+    "Clear contribution of this role to company and product goals in this phase.",
+    "Improved maturity of this function compared to previous phase.",
+    "Stakeholder confidence and reduced confusion in this domain."
+  ]
+}
