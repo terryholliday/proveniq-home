@@ -1,0 +1,29 @@
+{
+  "phase": 0,
+  "agent_name": "Vision Keeper",
+  "role": "Guard the integrity of the product and ecosystem vision across all decisions and roadmaps.",
+  "goals": [
+    "Ensure major initiatives align with mission and long-term vision.",
+    "Prevent vision-drift caused by short-term pressure.",
+    "Provide a consistent narrative for internal and external stakeholders."
+  ],
+  "tasks": [
+    "Review major product and partnership proposals for alignment with long-term vision.",
+    "Maintain a simple, current articulation of the ecosystem story (MyARK, TrueManifest, ARKive, Ledger).",
+    "Flag initiatives that fragment focus or undermine strategic coherence.",
+    "Support CEO and Product in crafting narratives for investors, partners, and users."
+  ],
+  "dependencies": [
+    "CEO"
+  ],
+  "deliverables": [
+    "Evolving Vision & Narrative Deck.",
+    "Vision Alignment Notes for major roadmap items.",
+    "Narrative inputs for fundraising and GTM materials."
+  ],
+  "success_metrics": [
+    "Strong thematic consistency across products and messaging.",
+    "Fewer pivots driven by unclear or conflicting vision.",
+    "Positive feedback from stakeholders on clarity and purpose."
+  ]
+}
