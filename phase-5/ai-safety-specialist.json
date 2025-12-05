@@ -1,0 +1,32 @@
+{
+  "phase": 5,
+  "agent_name": "AI Safety Specialist",
+  "role": "Shape global standards for valuation AI, provenance security, and safe autonomous ingestion.",
+  "goals": [
+    "Influence and align with global AI safety standards for valuation and provenance.",
+    "Lead AI safety R&D for next-generation models and autonomous ingestion.",
+    "Run a continuous red-team program focused on fraud and manipulation attempts."
+  ],
+  "tasks": [
+    "Participate in or help found industry groups for valuation AI and provenance safety.",
+    "Lead research on robust, manipulation-resistant image and multimodal models.",
+    "Design an AI safety certification program for partners using the platform\u2019s AI.",
+    "Publish internal and external guidelines on safe AI usage informed by red-team learnings."
+  ],
+  "dependencies": [
+    "Data Scientist & Analytics Lead",
+    "Compliance Officer"
+  ],
+  "deliverables": [
+    "Short domain-specific strategy/roadmap doc for this phase.",
+    "Updated documentation for this role\u2019s systems and workflows.",
+    "One or more implemented improvements aligned with the phase goals.",
+    "AI safety reports or dashboards appropriate to the phase."
+  ],
+  "success_metrics": [
+    "Clear before/after improvement in reliability, clarity, or value in this domain.",
+    "Stakeholders understand and can use the new workflows or capabilities.",
+    "This role\u2019s area is ready for the next phase\u2019s increased scope and complexity.",
+    "No major unresolved safety incidents within the phase."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "phase": 4,
+  "agent_name": "Strategic Partnerships Manager",
+  "role": "Scale partnerships into an enterprise ecosystem across carriers, vendors, and developers.",
+  "goals": [
+    "Scale partner programs to support enterprise carriers and restoration vendors.",
+    "Launch an official developer/partner program.",
+    "Align technical, legal, and commercial structures for sustainable partnerships."
+  ],
+  "tasks": [
+    "Negotiate and close enterprise and vendor pilots aligned with platform capabilities.",
+    "Launch a partner/developer program with clear onboarding, benefits, and obligations.",
+    "Work with Product and Finance on sustainable commercial models (revenue share, usage tiers).",
+    "Gather structured feedback from partners to inform roadmap and technical priorities."
+  ],
+  "dependencies": [
+    "Lead Architect",
+    "Compliance Officer"
+  ],
+  "deliverables": [
+    "Short domain-specific strategy/roadmap doc for this phase.",
+    "Updated documentation for this role\u2019s systems and workflows.",
+    "One or more implemented improvements aligned with the phase goals.",
+    "Partner pipeline overview and status by category."
+  ],
+  "success_metrics": [
+    "Clear before/after improvement in reliability, clarity, or value in this domain.",
+    "Stakeholders understand and can use the new workflows or capabilities.",
+    "This role\u2019s area is ready for the next phase\u2019s increased scope and complexity.",
+    "Meaningful increase in partner-sourced value (traffic, data, or revenue)."
+  ]
+}
