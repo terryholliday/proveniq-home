@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Sparkles,
   Wallet,
+  Settings,
 } from 'lucide-react'
 import {
   SidebarMenu,
@@ -55,7 +56,7 @@ export function MainNav() {
           </Link>
         </SidebarMenuItem>
         <SidebarMenuItem>
-           <Link href="/lending" passHref>
+          <Link href="/lending" passHref>
             <SidebarMenuButton asChild isActive={isActive('/lending')} tooltip={{ children: 'Lending Tracker' }}>
               <HeartHandshake />
               <span>Lending Tracker</span>
@@ -70,16 +71,16 @@ export function MainNav() {
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
               <SidebarMenuButton>
-                <Sparkles/>
+                <Sparkles />
                 <span>AI Suite</span>
               </SidebarMenuButton>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                 <SidebarMenuSub>
-                    <SidebarMenuSubItem><SidebarMenuSubButton>AI Scanner</SidebarMenuSubButton></SidebarMenuSubItem>
-                    <SidebarMenuSubItem><SidebarMenuSubButton>Space Mapper</SidebarMenuSubButton></SidebarMenuSubItem>
-                    <SidebarMenuSubItem><SidebarMenuSubButton>Sales Ad Generator</SidebarMenuSubButton></SidebarMenuSubItem>
-                 </SidebarMenuSub>
+              <SidebarMenuSub>
+                <SidebarMenuSubItem><SidebarMenuSubButton>AI Scanner</SidebarMenuSubButton></SidebarMenuSubItem>
+                <SidebarMenuSubItem><SidebarMenuSubButton>Space Mapper</SidebarMenuSubButton></SidebarMenuSubItem>
+                <SidebarMenuSubItem><SidebarMenuSubButton>Sales Ad Generator</SidebarMenuSubButton></SidebarMenuSubItem>
+              </SidebarMenuSub>
             </CollapsibleContent>
           </SidebarMenuItem>
         </Collapsible>
@@ -92,48 +93,60 @@ export function MainNav() {
           </Link>
         </SidebarMenuItem>
         <SidebarMenuItem>
-            <SidebarMenuButton tooltip={{ children: 'ARKive Auctions' }}>
-              <GanttChartSquare />
-              <span>ARKive Auctions</span>
-            </SidebarMenuButton>
+          <SidebarMenuButton tooltip={{ children: 'ARKive Auctions' }}>
+            <GanttChartSquare />
+            <span>ARKive Auctions</span>
+          </SidebarMenuButton>
         </SidebarMenuItem>
         <Collapsible asChild open={insuranceOpen} onOpenChange={setInsuranceOpen}>
-            <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                        <ShieldCheck/>
-                        <span>Insurance</span>
-                    </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                     <SidebarMenuSub>
-                        <SidebarMenuSubItem><SidebarMenuSubButton>Risk Simulator</SidebarMenuSubButton></SidebarMenuSubItem>
-                        <SidebarMenuSubItem><SidebarMenuSubButton>Claim Generation</SidebarMenuSubButton></SidebarMenuSubItem>
-                     </SidebarMenuSub>
-                </CollapsibleContent>
-            </SidebarMenuItem>
-        </Collapsible>
-         <SidebarMenuItem>
-            <Link href="/legacy-planner" passHref>
-              <SidebarMenuButton asChild isActive={isActive('/legacy-planner')} tooltip={{ children: 'Legacy Planner' }}>
-                <Wallet />
-                <span>Legacy Planner</span>
+          <SidebarMenuItem>
+            <CollapsibleTrigger asChild>
+              <SidebarMenuButton>
+                <ShieldCheck />
+                <span>Insurance</span>
               </SidebarMenuButton>
-            </Link>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                <SidebarMenuSubItem><SidebarMenuSubButton>Risk Simulator</SidebarMenuSubButton></SidebarMenuSubItem>
+                <SidebarMenuSubItem><SidebarMenuSubButton>Claim Generation</SidebarMenuSubButton></SidebarMenuSubItem>
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </SidebarMenuItem>
+        </Collapsible>
+        <SidebarMenuItem>
+          <Link href="/legacy-planner" passHref>
+            <SidebarMenuButton asChild isActive={isActive('/legacy-planner')} tooltip={{ children: 'Legacy Planner' }}>
+              <Wallet />
+              <span>Legacy Planner</span>
+            </SidebarMenuButton>
+          </Link>
         </SidebarMenuItem>
       </SidebarGroup>
-      
+
       <SidebarGroup>
         <SidebarGroupLabel>Support</SidebarGroupLabel>
-          <SidebarMenuItem>
-            <Link href="/user-guide" passHref>
-              <SidebarMenuButton asChild isActive={isActive('/user-guide')} tooltip={{ children: 'User Guide' }}>
-                <HelpCircle />
-                <span>User Guide</span>
-              </SidebarMenuButton>
-            </Link>
-          </SidebarMenuItem>
-        </SidebarGroup>
+        <SidebarMenuItem>
+          <Link href="/user-guide" passHref>
+            <SidebarMenuButton asChild isActive={isActive('/user-guide')} tooltip={{ children: 'User Guide' }}>
+              <HelpCircle />
+              <span>User Guide</span>
+            </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
+      </SidebarGroup>
+
+      <SidebarGroup>
+        <SidebarGroupLabel>System</SidebarGroupLabel>
+        <SidebarMenuItem>
+          <Link href="/settings" passHref>
+            <SidebarMenuButton asChild isActive={isActive('/settings')} tooltip={{ children: 'Settings' }}>
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
+      </SidebarGroup>
 
     </SidebarMenu>
   )
