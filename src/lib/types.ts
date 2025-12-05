@@ -254,6 +254,9 @@ export type InventoryItem = {
   // [PROVENANCE]
   provenance?: ProvenanceEvent[];
   provenanceScore?: number; // 0-100
+  // [VISUAL TRUTH]
+  imageHashes?: string[]; // SHA-256 hashes of images
+  visualTruthVerified?: boolean;
 };
 
 export type AuditLog = {

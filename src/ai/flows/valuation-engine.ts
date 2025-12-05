@@ -55,7 +55,7 @@ export class ValuationEngine {
         const subcategory = item.subcategory || "default";
 
         // 1. Determine Rate
-        let rate = DEPRECIATION_RATES[subcategory] ?? DEPRECIATION_RATES[category] ?? DEPRECIATION_RATES["default"];
+        const rate = DEPRECIATION_RATES[subcategory] ?? DEPRECIATION_RATES[category] ?? DEPRECIATION_RATES["default"];
 
         // 2. Apply Depreciation: Value = Price * (1 - rate)^age
         // If rate is negative (appreciation), we use (1 + abs(rate))

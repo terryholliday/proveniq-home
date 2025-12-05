@@ -2,7 +2,12 @@ import { logAIEvent } from '@/lib/ai-events';
 import { SANDBOX_CONFIG } from './sandbox-config';
 import { AIProcessingResult, AIImageAnalysis, AIMetadata, AIValuation, AIProvenance } from './types';
 import { MetadataNormalizer } from './metadata_normalizer';
+import { adminDb } from '@/lib/firebase-admin';
+import { provenanceService } from './provenance_service';
+import { InventoryItem } from '@/lib/types';
+import { visionPipelineV2 } from './flows/vision-pipeline-v2';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StepFunction<T = any> = (input: any) => Promise<T>;
 
 interface CircuitBreakerConfig {
@@ -64,12 +69,12 @@ export class AIOrchestrator {
     }
 
     private async withRetry<T>(fn: () => Promise<T>, retries: number): Promise<T> {
-        let lastError: any;
+        let lastError: Error | undefined;
         for (let i = 0; i <= retries; i++) {
             try {
                 return await fn();
             } catch (error) {
-                lastError = error;
+                lastError = error as Error;
                 if (i < retries) {
                     await new Promise((resolve) => setTimeout(resolve, 1000 * Math.pow(2, i))); // Exponential backoff
                 }
@@ -81,12 +86,12 @@ export class AIOrchestrator {
     async executeStep<T>(
         stepName: string,
         fn: StepFunction<T>,
-        input: any,
+        input: unknown,
         workflowId: string,
         itemId?: string
     ): Promise<T> {
         if (SANDBOX_CONFIG.enabled && itemId && SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs]) {
-            // @ts-ignore
+            // @ts-expect-error
             const mockData = SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs];
             // Simulate step-specific return if needed
             if (stepName === 'image_analysis') return mockData.attributes as unknown as T; // Mapping old attributes to image analysis for now
@@ -117,25 +122,26 @@ export class AIOrchestrator {
             });
 
             return result;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
             await logAIEvent({
                 eventType: 'failure',
                 workflowId,
                 stepName,
                 itemId,
-                error: error.message,
+                error: errorMessage,
             });
 
             // Graceful fallback logic
-            if (error.message === 'Circuit Breaker is OPEN' || error.message === 'Operation timed out') {
+            if (errorMessage === 'Circuit Breaker is OPEN' || errorMessage === 'Operation timed out') {
                 await logAIEvent({
                     eventType: 'fallback',
                     workflowId,
                     stepName,
                     itemId,
-                    metadata: { reason: error.message }
+                    metadata: { reason: errorMessage }
                 });
-                throw new Error(`AI Service Unavailable: ${error.message}. Please try manual entry.`);
+                throw new Error(`AI Service Unavailable: ${errorMessage}. Please try manual entry.`);
             }
 
             throw error;
@@ -149,47 +155,86 @@ export class AIOrchestrator {
         try {
             // Step 1: Image Analysis (Vision)
             const imageAnalysis = await this.executeStep<AIImageAnalysis>('image_analysis', async (img) => {
-                // Placeholder for Vision Intelligence
+                const result = await visionPipelineV2({
+                    images: [{ url: img as string, id: 'main' }],
+                    itemContext: itemId ? `Item ID: ${itemId}` : undefined
+                });
+
+                // [Visual Truth] Persist hashes if itemId exists
+                if (itemId && result.hashes && result.hashes.length > 0) {
+                    try {
+                        const hashes = result.hashes.map(h => h.hash);
+                        await adminDb.collection('items').doc(itemId).update({
+                            imageHashes: hashes,
+                            visualTruthVerified: true,
+                            updatedAt: new Date() // Timestamp
+                        });
+                    } catch (e) {
+                        console.error("Failed to update Visual Truth hashes:", e);
+                    }
+                }
+
+                // Map to AIImageAnalysis
+                const mainImageQuality = result.quality.find(q => q.imageId === 'main');
+
                 return {
-                    description: 'Analyzed Image',
-                    objects: [],
-                    quality: { score: 80, issues: [] }
+                    description: `Analyzed item: ${result.details.brand || 'Unknown'} ${result.details.modelNumber || ''}`,
+                    objects: [], // Vision V2 doesn't return objects list yet, maybe infer from categories?
+                    quality: {
+                        score: (mainImageQuality?.sharpness || 0) * 100,
+                        issues: mainImageQuality?.issues || []
+                    },
+                    condition: {
+                        score: result.condition.overallScore,
+                        details: result.condition.defects
+                    }
                 };
             }, image, workflowId, itemId);
 
             // Step 2: Metadata Normalization
-            const metadata = await this.executeStep<AIMetadata>('metadata_normalization', async (analysis) => {
+            const metadata = await this.executeStep<AIMetadata>('metadata_normalization', (analysis) => {
                 // Use the normalizer
-                return this.normalizer.normalize(
-                    analysis.description,
+                return Promise.resolve(this.normalizer.normalize(
+                    (analysis as AIImageAnalysis).description,
                     '', // No extra description yet
                     {}, // No detected attributes yet
                     {}  // No user overrides yet
-                );
+                ));
             }, imageAnalysis, workflowId, itemId);
 
             // Step 3: Valuation
-            const valuation = await this.executeStep<AIValuation>('valuation', async (meta) => {
+            await this.executeStep<AIValuation>('valuation', () => {
                 // Placeholder for Valuation Engine
-                return {
+                return Promise.resolve({
                     estimatedValue: { min: 0, max: 0, currency: 'USD' },
                     confidenceScore: 0,
                     factors: { brand: 0, condition: 0, age: 0, materials: 0, market: 0 },
                     explanation: 'Pending valuation',
                     modelBreakdown: {}
-                };
+                });
             }, metadata, workflowId, itemId);
 
             // Step 4: Provenance
-            const provenance = await this.executeStep<AIProvenance>('provenance', async (val) => {
-                // Placeholder for Provenance Engine
+            const provenance = await this.executeStep<AIProvenance>('provenance', async () => {
+                if (itemId) {
+                    try {
+                        const itemSnap = await adminDb.collection('items').doc(itemId).get();
+                        if (itemSnap.exists) {
+                            const item = itemSnap.data() as InventoryItem;
+                            item.id = itemId; // Ensure ID is set
+                            return await provenanceService.analyzeAndLog(item);
+                        }
+                    } catch (e) {
+                        console.error("Error fetching item for provenance:", e);
+                    }
+                }
                 return {
                     timeline: [],
                     confidenceScore: 0,
                     gapDetected: false,
                     narrative: 'No provenance data'
                 };
-            }, valuation, workflowId, itemId);
+            }, null, workflowId, itemId);
 
             return {
                 itemId,
@@ -197,12 +242,13 @@ export class AIOrchestrator {
                 timestamp,
                 imageAnalysis,
                 metadata,
-                valuation,
+                valuation: { estimatedValue: { min: 0, max: 0, currency: 'USD' }, confidenceScore: 0, factors: { brand: 0, condition: 0, age: 0, materials: 0, market: 0 }, explanation: 'Pending valuation', modelBreakdown: {} },
                 provenance,
                 status: 'success'
             };
 
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
             console.error('Chain execution failed:', error);
             return {
                 itemId,
@@ -212,7 +258,7 @@ export class AIOrchestrator {
                 valuation: { estimatedValue: { min: 0, max: 0, currency: 'USD' }, confidenceScore: 0, factors: { brand: 0, condition: 0, age: 0, materials: 0, market: 0 }, explanation: 'Error', modelBreakdown: {} },
                 provenance: { timeline: [], confidenceScore: 0, gapDetected: false, narrative: 'Error' },
                 status: 'failed',
-                errors: [error.message]
+                errors: [errorMessage]
             };
         }
     }

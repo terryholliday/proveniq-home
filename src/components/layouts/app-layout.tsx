@@ -22,7 +22,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-4">
           <div className="flex items-center gap-2">
-            <MyArkLogo size={32} />
+            <MyArkLogo size={32} priority />
             <span className="text-lg font-semibold text-sidebar-primary">MyARK</span>
           </div>
         </SidebarHeader>

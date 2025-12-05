@@ -1,0 +1,30 @@
+{
+  "phase": 4,
+  "agent_name": "Compliance Officer",
+  "role": "Elevate compliance posture to support enterprise and international expansion.",
+  "goals": [
+    "Support enterprise needs, multi-tenancy, and partner integrations.",
+    "Provide observability and governance suitable for carriers and large partners.",
+    "Turn the platform into a reusable ecosystem for multiple products."
+  ],
+  "tasks": [
+    "Design and implement changes that enable multi-tenant, enterprise, and partner use-cases.",
+    "Define SLIs/SLOs or KPIs that describe success for this role\u2019s domain.",
+    "Work with Compliance and AI Safety where relevant to align on enterprise expectations.",
+    "Create internal documentation and runbooks to support higher operational maturity."
+  ],
+  "dependencies": [
+    "Lead Architect",
+    "AI Safety Specialist"
+  ],
+  "deliverables": [
+    "Short domain-specific strategy/roadmap doc for this phase.",
+    "Updated documentation for this role\u2019s systems and workflows.",
+    "One or more implemented improvements aligned with the phase goals."
+  ],
+  "success_metrics": [
+    "Clear before/after improvement in reliability, clarity, or value in this domain.",
+    "Stakeholders understand and can use the new workflows or capabilities.",
+    "This role\u2019s area is ready for the next phase\u2019s increased scope and complexity."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "phase": 5,
+  "agent_name": "Strategic Partnerships Manager",
+  "role": "Drive global expansion, ecosystem dominance, and long-term alliances for MyARK and TrueManifest.",
+  "goals": [
+    "Drive global expansion across regions and verticals.",
+    "Establish MyARK as a de facto standard for asset provenance and valuation data.",
+    "Build long-term alliances for shared R&D and standard setting."
+  ],
+  "tasks": [
+    "Pursue regional expansion with partners that can accelerate market penetration.",
+    "Co-create standards and R&D partnerships with carriers, vendors, and academic institutions.",
+    "Identify opportunities for co-branded offerings and long-term strategic alliances.",
+    "Track and report ecosystem health and partner portfolio performance."
+  ],
+  "dependencies": [
+    "Lead Architect",
+    "Compliance Officer"
+  ],
+  "deliverables": [
+    "Short domain-specific strategy/roadmap doc for this phase.",
+    "Updated documentation for this role\u2019s systems and workflows.",
+    "One or more implemented improvements aligned with the phase goals.",
+    "Partner pipeline overview and status by category."
+  ],
+  "success_metrics": [
+    "Clear before/after improvement in reliability, clarity, or value in this domain.",
+    "Stakeholders understand and can use the new workflows or capabilities.",
+    "This role\u2019s area is ready for the next phase\u2019s increased scope and complexity.",
+    "Meaningful increase in partner-sourced value (traffic, data, or revenue)."
+  ]
+}

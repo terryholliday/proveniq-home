@@ -52,7 +52,7 @@ export interface InternalQuery extends Query<DocumentData> {
  * @returns {UseCollectionResult<T>} Object with data, isLoading, error.
  */
 export function useCollection<T = DocumentData>(
-    memoizedTargetRefOrQuery: ((CollectionReference<DocumentData> | Query<DocumentData>) & {__memo?: boolean})  | null | undefined,
+  memoizedTargetRefOrQuery: ((CollectionReference<DocumentData> | Query<DocumentData>) & { __memo?: boolean }) | null | undefined,
 ): UseCollectionResult<T> {
   type ResultItemType = WithId<T>;
   type StateDataType = ResultItemType[] | null;
@@ -67,6 +67,42 @@ export function useCollection<T = DocumentData>(
       setIsLoading(false);
       setError(null);
       return;
+    }
+
+    // E2E Test Hook: Mock Firestore Data
+    if (typeof window !== 'undefined' && (window as any).__MOCK_FIRESTORE_DATA__) {
+      const mockData = (window as any).__MOCK_FIRESTORE_DATA__;
+      // Simple mock: if any data is provided, use it. 
+      // In a real scenario, we might match the collection path.
+      // For now, we assume the test sets the data for the specific view.
+      // We try to find a key that matches the query path if possible, or just use 'default'.
+
+      let path = '';
+      try {
+        path = memoizedTargetRefOrQuery.type === 'collection'
+          ? (memoizedTargetRefOrQuery as CollectionReference).path
+          : (memoizedTargetRefOrQuery as unknown as InternalQuery)._query.path.canonicalString();
+      } catch (e) {
+        // ignore
+      }
+
+      // If mock data has a key for this path, use it.
+      // Otherwise if it has 'auctions' and we are querying auctions, use it.
+      // For simplicity, if mockData is an array, return it.
+
+      if (Array.isArray(mockData)) {
+        setData(mockData as any);
+        setIsLoading(false);
+        return;
+      } else if (path && mockData[path]) {
+        setData(mockData[path]);
+        setIsLoading(false);
+        return;
+      } else if (mockData['default']) {
+        setData(mockData['default']);
+        setIsLoading(false);
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -107,7 +143,7 @@ export function useCollection<T = DocumentData>(
 
     return () => unsubscribe();
   }, [memoizedTargetRefOrQuery]); // Re-run if the target query/reference changes.
-  if(memoizedTargetRefOrQuery && !memoizedTargetRefOrQuery.__memo) {
+  if (memoizedTargetRefOrQuery && !memoizedTargetRefOrQuery.__memo) {
     throw new Error(memoizedTargetRefOrQuery + ' was not properly memoized using useMemoFirebase');
   }
   return { data, isLoading, error };

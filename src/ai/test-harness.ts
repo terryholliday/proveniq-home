@@ -32,9 +32,10 @@ async function runStressTest() {
                 results.failure++;
             }
 
-        } catch (error: any) {
-            console.error(`Exception for ${item.id}:`, error.message);
-            if (error.message.includes('AI Service Unavailable')) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+            console.error(`Exception for ${item.id}:`, errorMessage);
+            if (errorMessage.includes('AI Service Unavailable')) {
                 results.fallback++;
             } else {
                 results.failure++;
