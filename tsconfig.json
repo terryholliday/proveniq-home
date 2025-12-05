@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,11 +23,30 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "firebase-functions/logger": ["./types/firebase-functions-logger.d.ts"]
+      "@/*": [
+        "./src/*"
+      ],
+      "firebase-functions/logger": [
+        "./types/firebase-functions-logger.d.ts"
+      ]
     },
-    "typeRoots": ["./types", "./src/types", "./node_modules/@types"]
+    "typeRoots": [
+      "./types",
+      "./src/types",
+      "./node_modules/@types"
+    ]
   },
-  "include": ["next-env.d.ts", "src/**/*", "types/**/*.d.ts", ".next/types/**/*.ts", "../shared/**/*.ts"],
-  "exclude": ["node_modules", "functions", "functions/**/*"]
+  "include": [
+    "next-env.d.ts",
+    "src/**/*",
+    "types/**/*.d.ts",
+    ".next/types/**/*.ts",
+    "../shared/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "functions",
+    "functions/**/*"
+  ]
 }

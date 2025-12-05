@@ -13,12 +13,26 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const [checkedConsent, setCheckedConsent] = useState(false);
 
     useEffect(() => {
+        // E2E Test Hook: Mock User and Firestore Snapshot
+        if (typeof window !== 'undefined' && (window as any).__MOCK_USER__) {
+            const mockConsent = (window as any).__MOCK_CONSENT_STATE__;
+            const hasConsented = mockConsent?.accepted;
+            setShowConsentModal(!hasConsented);
+            setCheckedConsent(true);
+            return;
+        }
+
         if (!user || !firestore) return;
 
         const unsubscribe = onSnapshot(doc(firestore, 'users', user.uid), (snapshot) => {
             const data = snapshot.data();
             // Check if consent is missing or false
-            const hasConsented = data?.consents?.cloudStorage?.accepted;
+            let hasConsented = data?.consents?.cloudStorage?.accepted;
+
+            // E2E Test Hook: Allow overriding consent state for testing without Firestore
+            if (typeof window !== 'undefined' && (window as any).__MOCK_CONSENT_STATE__) {
+                hasConsented = (window as any).__MOCK_CONSENT_STATE__.accepted;
+            }
             setShowConsentModal(!hasConsented);
             setCheckedConsent(true);
         });

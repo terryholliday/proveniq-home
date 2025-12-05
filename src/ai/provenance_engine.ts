@@ -1,4 +1,6 @@
 import { InventoryItem, ProvenanceEvent, ProvenanceEventType } from '@/lib/types';
+import { MerkleTree } from '@/lib/merkle_tree';
+import { createHash } from 'crypto';
 
 export interface ProvenanceTimelineItem {
     date: string;
@@ -15,15 +17,20 @@ export interface ProvenanceSummary {
     confidenceScore: number;
     gapDetected: boolean;
     narrative: string;
+    merkleRoot?: string;
 }
 
 export class ProvenanceEngine {
+
+    generateProvenanceHash(data: string): string {
+        return createHash('sha256').update(data).digest('hex');
+    }
 
     generateTimeline(item: InventoryItem): ProvenanceTimelineItem[] {
         const events: ProvenanceEvent[] = item.provenance || [];
 
         // 1. Convert explicit events to timeline items
-        let timeline: ProvenanceTimelineItem[] = events.map(e => ({
+        const timeline: ProvenanceTimelineItem[] = events.map(e => ({
             date: e.date,
             title: this.formatTitle(e.type),
             description: e.description,
@@ -109,7 +116,6 @@ export class ProvenanceEngine {
             return `No provenance history recorded for ${item.name}.`;
         }
 
-        const newest = timeline.find(t => !t.gap);
         const oldest = timeline[timeline.length - 1]; // Last one since sorted descending
         const verifiedCount = timeline.filter(t => t.verified).length;
 
@@ -132,11 +138,17 @@ export class ProvenanceEngine {
         const confidenceScore = this.calculateConfidence(item, timeline);
         const narrative = this.generateNarrative(item, timeline);
 
+        // Generate Merkle Root for the timeline events
+        const eventStrings = timeline.map(t => `${t.date}:${t.type}:${t.title}:${t.description}`);
+        const merkleTree = new MerkleTree(eventStrings);
+        const merkleRoot = merkleTree.getRoot();
+
         return {
             timeline,
             confidenceScore,
             gapDetected: timeline.some(t => t.gap),
-            narrative
+            narrative,
+            merkleRoot
         };
     }
 
