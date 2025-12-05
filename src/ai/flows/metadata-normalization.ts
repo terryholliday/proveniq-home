@@ -18,6 +18,14 @@ export interface NormalizedItemMetadata {
     };
 }
 
+// Type for the taxonomy data structure
+interface TaxonomyNode {
+    subcategories: Record<string, string[]>;
+}
+
+type Taxonomy = Record<string, TaxonomyNode>;
+
+
 // Confidence scores based on source (aligned with conflict rules)
 const SOURCE_CONFIDENCE = {
     user: 1.0,
@@ -41,10 +49,10 @@ const VARIANT_MAPPINGS: Record<string, string> = {
 };
 
 export class MetadataNormalizer {
-    private taxonomy: any;
+    private taxonomy: Taxonomy;
 
     constructor() {
-        this.taxonomy = taxonomyData.taxonomy;
+        this.taxonomy = (taxonomyData as { taxonomy: Taxonomy }).taxonomy;
     }
 
     /**
@@ -63,18 +71,16 @@ export class MetadataNormalizer {
         const lowerText = text.toLowerCase();
         let bestMatch = { category: "Unknown", subcategory: "Unknown", confidence: 0.0 };
 
-        for (const [catName, catData] of Object.entries(this.taxonomy)) {
-            const category = catData as any;
+        for (const [catName, category] of Object.entries(this.taxonomy)) {
             // Check subcategories
             for (const [subName, keywords] of Object.entries(category.subcategories)) {
-                const keywordList = keywords as string[];
                 // Check if subcategory name itself is in text
                 if (lowerText.includes(subName.toLowerCase())) {
                     // Boost if specific keywords are also found
                     bestMatch = { category: catName, subcategory: subName, confidence: 0.8 };
                 }
 
-                for (const keyword of keywordList) {
+                for (const keyword of keywords) {
                     if (lowerText.includes(keyword.toLowerCase())) {
                         // Found a keyword match
                         if (0.7 > bestMatch.confidence) {
@@ -100,7 +106,7 @@ export class MetadataNormalizer {
     /**
      * Creates a standardized attribute object.
      */
-    createAttribute(value: any, source: keyof typeof SOURCE_CONFIDENCE): AttributeValue {
+    createAttribute(value: string | number | boolean, source: keyof typeof SOURCE_CONFIDENCE): AttributeValue {
         return {
             value,
             source,
@@ -115,8 +121,8 @@ export class MetadataNormalizer {
     normalizeItem(
         rawTitle: string,
         rawDescription: string,
-        detectedAttributes: Record<string, any> = {}, // from Vision/OCR
-        userOverrides: Record<string, any> = {}
+        detectedAttributes: Record<string, string | number | boolean> = {}, // from Vision/OCR
+        userOverrides: Record<string, string | number | boolean> = {}
     ): NormalizedItemMetadata {
 
         // 1. Detect Category
@@ -131,7 +137,7 @@ export class MetadataNormalizer {
 
         // 2. Normalize Model Name
         // Check if model is in detected attributes or title
-        let modelName = detectedAttributes['model'] || rawTitle;
+        const modelName = (detectedAttributes['model'] as string) || rawTitle;
         const canonicalModel = this.normalizeModelName(modelName);
 
         const attributes: Record<string, AttributeValue> = {};

@@ -1,6 +1,13 @@
 import taxonomyData from './taxonomy.json';
 import { AIMetadata } from './types';
 
+// Types for the taxonomy data structure
+interface TaxonomyNode {
+    subcategories: Record<string, string[]>;
+}
+type Taxonomy = Record<string, TaxonomyNode>;
+
+
 // Variant Model Mapping Dictionary
 const VARIANT_MAPPINGS: Record<string, string> = {
     "fender strat": "Fender Stratocaster",
@@ -14,10 +21,10 @@ const VARIANT_MAPPINGS: Record<string, string> = {
 };
 
 export class MetadataNormalizer {
-    private taxonomy: any;
+    private taxonomy: Taxonomy;
 
     constructor() {
-        this.taxonomy = taxonomyData.taxonomy;
+        this.taxonomy = (taxonomyData as { taxonomy: Taxonomy }).taxonomy;
     }
 
     /**
@@ -37,17 +44,15 @@ export class MetadataNormalizer {
         let bestMatch = { category: "Unknown", subcategory: "Unknown", confidence: 0.0 };
 
         for (const [catName, catData] of Object.entries(this.taxonomy)) {
-            const category = catData as any;
             // Check subcategories
-            for (const [subName, keywords] of Object.entries(category.subcategories)) {
-                const keywordList = keywords as string[];
+            for (const [subName, keywords] of Object.entries(catData.subcategories)) {
                 // Check if subcategory name itself is in text
                 if (lowerText.includes(subName.toLowerCase())) {
                     // Boost if specific keywords are also found
                     bestMatch = { category: catName, subcategory: subName, confidence: 0.8 };
                 }
 
-                for (const keyword of keywordList) {
+                for (const keyword of keywords) {
                     if (lowerText.includes(keyword.toLowerCase())) {
                         // Found a keyword match
                         if (0.7 > bestMatch.confidence) {
@@ -66,19 +71,19 @@ export class MetadataNormalizer {
     normalize(
         rawTitle: string,
         rawDescription: string,
-        detectedAttributes: Record<string, any> = {},
-        userOverrides: Record<string, any> = {}
+        detectedAttributes: Record<string, string | number | boolean> = {},
+        userOverrides: Record<string, string | number | boolean> = {}
     ): AIMetadata {
         // 1. Detect Category
         const detection = this.detectCategory(rawTitle + " " + rawDescription);
 
         // 2. Normalize Model Name
-        let modelName = userOverrides['model'] || detectedAttributes['model'] || rawTitle;
+        const modelName = (userOverrides['model'] as string) || (detectedAttributes['model'] as string) || rawTitle;
         const canonicalModel = this.normalizeModelName(modelName);
 
         // 3. Merge Attributes
         // Priority: User > Vision/Doc (detected)
-        const attributes: Record<string, any> = { ...detectedAttributes, ...userOverrides };
+        const attributes: Record<string, string | number | boolean> = { ...detectedAttributes, ...userOverrides };
 
         // Ensure canonical model is used
         if (canonicalModel) {
@@ -94,7 +99,7 @@ export class MetadataNormalizer {
         return {
             category: detection.category,
             subcategory: detection.subcategory,
-            brand: attributes['brand'] || attributes['Brand'],
+            brand: (attributes['brand'] as string) || (attributes['Brand'] as string),
             model: canonicalModel,
             attributes: attributes,
             confidence: detection.confidence * 100, // Scale to 0-100
