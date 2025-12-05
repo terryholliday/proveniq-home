@@ -1,3 +1,4 @@
+process.env.AI_TEST_MODE = 'true';
 import { orchestrator } from './orchestrator';
 
 const REAL_WORLD_ITEMS = [
@@ -20,10 +21,19 @@ async function runStressTest() {
         console.log(`Processing item: ${item.id}`);
         try {
             const result = await orchestrator.executeChain(item.id, item.image);
-            console.log(`Success for ${item.id}:`, result);
-            results.success++;
+
+            if (result.status === 'success') {
+                console.log(`Success for ${item.id}:`);
+                console.log(`  Category: ${result.metadata.category}`);
+                console.log(`  Valuation: ${result.valuation.estimatedValue.min}-${result.valuation.estimatedValue.max} ${result.valuation.estimatedValue.currency}`);
+                results.success++;
+            } else {
+                console.error(`Failed for ${item.id}:`, result.errors);
+                results.failure++;
+            }
+
         } catch (error: any) {
-            console.error(`Failed for ${item.id}:`, error.message);
+            console.error(`Exception for ${item.id}:`, error.message);
             if (error.message.includes('AI Service Unavailable')) {
                 results.fallback++;
             } else {

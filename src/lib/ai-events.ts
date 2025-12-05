@@ -15,6 +15,11 @@ const EVENTS_COLLECTION = 'ai_events';
 
 export async function logAIEvent(event: Omit<AIEvent, 'timestamp'>) {
     try {
+        if (process.env.AI_TEST_MODE) {
+            console.log(`[TEST MODE] AI Event: ${event.eventType} - ${event.stepName}`);
+            return;
+        }
+
         // Ensure no PII is logged - strictly metadata and IDs
         const safeMetadata = event.metadata ? JSON.parse(JSON.stringify(event.metadata)) : {};
 
