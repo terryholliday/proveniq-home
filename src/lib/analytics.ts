@@ -39,6 +39,14 @@ export const logConsentAccepted = (version: string) => {
     });
 };
 
+export const logConsentViewed = (version: string) => {
+    event({
+        action: 'consent_viewed',
+        category: 'compliance',
+        label: version,
+    });
+};
+
 export const logBidPlaced = (auctionId: string, amount: number) => {
     event({
         action: 'bid_placed',
@@ -48,10 +56,40 @@ export const logBidPlaced = (auctionId: string, amount: number) => {
     });
 };
 
+
 export const logTaxViewed = (auctionId: string) => {
     event({
         action: 'tax_viewed',
         category: 'auction',
         label: auctionId,
+    });
+};
+
+export const logPlannerStarted = () => {
+    event({
+        action: 'planner_started',
+        category: 'legacy_planner',
+    });
+};
+
+export const logPlannerStepCompleted = (stepName: string) => {
+    event({
+        action: 'step_completed',
+        category: 'legacy_planner',
+        label: stepName,
+    });
+};
+
+export const logPlannerFinished = () => {
+    event({
+        action: 'planner_finished',
+        category: 'legacy_planner',
+    });
+};
+
+export const logAuctionListViewed = () => {
+    event({
+        action: 'auction_list_viewed',
+        category: 'auction',
     });
 };

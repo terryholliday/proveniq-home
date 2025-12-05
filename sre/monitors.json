@@ -1,0 +1,37 @@
+{
+    "monitors": [
+        {
+            "name": "[SLO] High API Error Rate",
+            "type": "metric alert",
+            "query": "sum(last_5m):sum:trace.http.request.errors{service:myark-api} / sum:trace.http.request.hits{service:myark-api} > 0.01",
+            "message": "Error rate is > 1%. Investigate immediately. @pagerduty-sre",
+            "tags": [
+                "env:production",
+                "service:api",
+                "severity:1"
+            ]
+        },
+        {
+            "name": "[SLO] Valuation Latency Spike",
+            "type": "metric alert",
+            "query": "avg(last_5m):avg:trace.valuation.duration{service:valuation-engine} > 3000",
+            "message": "Valuation latency > 3s. Check AI provider health. @slack-team-ai",
+            "tags": [
+                "env:production",
+                "service:ai",
+                "severity:2"
+            ]
+        },
+        {
+            "name": "[Security] Tenancy Violation Detect",
+            "type": "log alert",
+            "query": "service:identity status:error \"Tenancy enforcement failed\"",
+            "message": "Possible cross-tenant access attempt. Security team investigation required.",
+            "tags": [
+                "env:production",
+                "domain:security",
+                "severity:1"
+            ]
+        }
+    ]
+}

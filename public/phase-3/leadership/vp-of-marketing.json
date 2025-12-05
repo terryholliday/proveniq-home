@@ -1,0 +1,32 @@
+{
+  "phase": 3,
+  "agent_name": "VP of Marketing",
+  "role": "Owns brand, positioning, and pipeline generation across segments. Focused on early scale and proof of value in phase 3.",
+  "goals": [
+    "Prove core value in the market while preserving runway.",
+    "Lay foundations (process, tools, signals) for later scale.",
+    "Support the transition from prototype to reliable product."
+  ],
+  "tasks": [
+    "Define phase-specific priorities and success measures for this role.",
+    "Collaborate with adjacent roles and teams to align roadmaps and avoid silos.",
+    "Deliver at least one meaningful system, process, or capability upgrade in this phase.",
+    "Document decisions, tradeoffs, and learnings to inform future phases.",
+    "Clarify positioning and early messaging for consumers and enterprise.",
+    "Test a few high-leverage channels (content, partnerships, PLG)."
+  ],
+  "dependencies": [
+    "CEO",
+    "VP of Product"
+  ],
+  "deliverables": [
+    "Phase 3 strategy and priority doc for the VP of Marketing function.",
+    "Updated documentation for systems, processes, and decisions owned by this role.",
+    "One or more concrete improvements shipped in this phase."
+  ],
+  "success_metrics": [
+    "Clear contribution of this role to company and product goals in this phase.",
+    "Improved maturity of this function compared to previous phase.",
+    "Stakeholder confidence and reduced confusion in this domain."
+  ]
+}

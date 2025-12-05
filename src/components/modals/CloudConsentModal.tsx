@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/button';
 import { ShieldCheck, Cloud, Gavel } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ConsentRecord } from '@/lib/types';
+import { logConsentAccepted, logConsentViewed } from '@/lib/analytics';
+import { useEffect } from 'react';
 
 interface CloudConsentModalProps {
     isOpen: boolean;
@@ -26,6 +28,12 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
     const { toast } = useToast();
     const auth = getAuth();
     const db = getFirestore();
+
+    useEffect(() => {
+        if (isOpen) {
+            logConsentViewed('2.0-cloud-migration');
+        }
+    }, [isOpen]);
 
     const handleAccept = async () => {
         if (!auth.currentUser) return;
@@ -51,6 +59,12 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
                 description: "Thank you for accepting the new privacy terms.",
             });
 
+            toast({
+                title: "Preferences Updated",
+                description: "Thank you for accepting the new privacy terms.",
+            });
+
+            logConsentAccepted('2.0-cloud-migration');
             onConsentComplete();
         } catch (error) {
             console.error("Consent Error:", error);
@@ -66,7 +80,7 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent className="sm:max-w-[600px] [&>button]:hidden"> {/* Hides the close X button to make it blocking */}
+            <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-y-auto [&>button]:hidden"> {/* Hides the close X button to make it blocking */}
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-xl text-indigo-700">
                         <ShieldCheck className="h-6 w-6" />
