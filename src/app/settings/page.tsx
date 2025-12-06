@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Download, Upload, Trash2, LogOut, Link as LinkIcon, Cloud, AlertTriangle, Mail, Facebook, Store, ShoppingBag, BookText } from "lucide-react";
 import Link from "next/link";
-import { TermsOfService, PrivacyPolicy, EULA } from './legaldocs';
+import { TermsOfService, PrivacyPolicy, EULA, AIDisclosure } from './legaldocs';
 
 import { useSearchParams } from 'next/navigation';
 
@@ -42,8 +42,8 @@ const IntegrationCard = ({ icon, title, description }: { icon: React.ElementType
 export default function SettingsPage() {
     const searchParams = useSearchParams();
     const docParam = searchParams.get('doc');
-    const [legalView, setLegalView] = useState<'tos' | 'privacy' | 'eula' | null>(
-        (docParam === 'tos' || docParam === 'privacy' || docParam === 'eula') ? docParam : null
+    const [legalView, setLegalView] = useState<'tos' | 'privacy' | 'eula' | 'ai' | null>(
+        (docParam === 'tos' || docParam === 'privacy' || docParam === 'eula' || docParam === 'ai') ? docParam : null
     );
 
     const handleBack = () => setLegalView(null);
@@ -52,6 +52,7 @@ export default function SettingsPage() {
         if (legalView === 'tos') return <TermsOfService onBack={handleBack} />;
         if (legalView === 'privacy') return <PrivacyPolicy onBack={handleBack} />;
         if (legalView === 'eula') return <EULA onBack={handleBack} />;
+        if (legalView === 'ai') return <AIDisclosure onBack={handleBack} />;
     }
 
     return (
