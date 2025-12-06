@@ -95,6 +95,13 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // Legal Documents (alternate collection name used by ConsentModal):
+    match /legal_documents/{docId} {
+      allow get: if docId in ['privacy', 'tos', 'eula'];
+      allow read: if resource != null && resource.data.status == 'published';
+      allow read, write: if isAdmin();
+    }
+
     // Audit Logs (System Only):
     // - Write-only for authenticated users (via cloud functions).
     // - Read-only for system/admin.
@@ -102,7 +109,6 @@ service cloud.firestore {
       allow read: if isSystemOrAdmin();
       allow create: if isSignedIn(); // Functions write here
       allow update, delete: if false; // Immutable
-    }
     }
   }
 }
