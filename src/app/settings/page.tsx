@@ -9,6 +9,8 @@ import { Download, Upload, Trash2, LogOut, Link as LinkIcon, Cloud, AlertTriangl
 import Link from "next/link";
 import { TermsOfService, PrivacyPolicy, EULA } from './legaldocs';
 
+import { useSearchParams } from 'next/navigation';
+
 const SectionHeader = ({ icon, title }: { icon: React.ElementType, title: string }) => {
     const Icon = icon;
     return (
@@ -22,7 +24,7 @@ const SectionHeader = ({ icon, title }: { icon: React.ElementType, title: string
 const IntegrationCard = ({ icon, title, description }: { icon: React.ElementType, title: string, description: string }) => {
     const Icon = icon;
     return (
-         <Card>
+        <Card>
             <CardContent className="p-6 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Icon className="h-6 w-6 text-muted-foreground" />
@@ -38,7 +40,11 @@ const IntegrationCard = ({ icon, title, description }: { icon: React.ElementType
 }
 
 export default function SettingsPage() {
-    const [legalView, setLegalView] = useState<'tos' | 'privacy' | 'eula' | null>(null);
+    const searchParams = useSearchParams();
+    const docParam = searchParams.get('doc');
+    const [legalView, setLegalView] = useState<'tos' | 'privacy' | 'eula' | null>(
+        (docParam === 'tos' || docParam === 'privacy' || docParam === 'eula') ? docParam : null
+    );
 
     const handleBack = () => setLegalView(null);
 
@@ -57,7 +63,7 @@ export default function SettingsPage() {
             <div className="grid gap-8 max-w-4xl mx-auto">
                 <div>
                     <SectionHeader icon={LinkIcon} title="Integrations" />
-                     <div className="grid gap-4">
+                    <div className="grid gap-4">
                         <IntegrationCard icon={Mail} title="Gmail" description="Automatically import purchases from your inbox." />
                         <IntegrationCard icon={Mail} title="Outlook" description="Connect your Microsoft account for imports." />
                         <IntegrationCard icon={Facebook} title="Facebook" description="List items on Facebook Marketplace." />
@@ -79,27 +85,27 @@ export default function SettingsPage() {
                                 Download Backup
                             </Button>
                             <Button variant="outline" className="w-full justify-center">
-                                 <Upload className="mr-2 h-4 w-4" />
+                                <Upload className="mr-2 h-4 w-4" />
                                 Restore from File
                             </Button>
                         </CardContent>
                     </Card>
                 </div>
-                
-                 <div>
+
+                <div>
                     <SectionHeader icon={BookText} title="Legal" />
                     <Card>
                         <CardContent className="p-4 grid gap-2">
-                           <Button variant="ghost" className="justify-start" onClick={() => setLegalView('tos')}>Terms of Service</Button>
-                           <Button variant="ghost" className="justify-start" onClick={() => setLegalView('privacy')}>Privacy Policy</Button>
-                           <Button variant="ghost" className="justify-start" onClick={() => setLegalView('eula')}>End User License Agreement</Button>
+                            <Button variant="ghost" className="justify-start" onClick={() => setLegalView('tos')}>Terms of Service</Button>
+                            <Button variant="ghost" className="justify-start" onClick={() => setLegalView('privacy')}>Privacy Policy</Button>
+                            <Button variant="ghost" className="justify-start" onClick={() => setLegalView('eula')}>End User License Agreement</Button>
                         </CardContent>
                     </Card>
                 </div>
 
                 <div>
                     <SectionHeader icon={AlertTriangle} title="Danger Zone" />
-                     <Alert variant="destructive" className="flex items-center justify-between">
+                    <Alert variant="destructive" className="flex items-center justify-between">
                         <div>
                             <AlertTitle className="font-semibold">Clear All Data</AlertTitle>
                             <AlertDescription>
@@ -113,7 +119,7 @@ export default function SettingsPage() {
                     </Alert>
                 </div>
 
-                 <div>
+                <div>
                     <SectionHeader icon={LogOut} title="Account Actions" />
                     <Card>
                         <CardContent className="p-6 flex items-center justify-between">

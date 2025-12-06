@@ -63,7 +63,7 @@ export function ConsentModal() {
                             This update covers our migration to cloud storage and how we handle your data.
                         </p>
                         <p>
-                            Please review the <Link href="/settings/legaldocs" className="text-indigo-600 underline" target="_blank">new policy</Link> to continue using MyARK.
+                            Please review the <Link href="/settings?doc=privacy" className="text-indigo-600 underline" target="_blank">new policy</Link> to continue using MyARK.
                         </p>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
