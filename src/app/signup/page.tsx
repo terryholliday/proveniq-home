@@ -188,17 +188,18 @@ export default function SignupPage() {
             className="text-xs text-muted-foreground leading-normal"
           >
             I agree to the{" "}
-            <Link href="/settings?doc=tos" className="underline underline-offset-4 hover:text-indigo-600 font-medium" target="_blank">
+            <Link href="/settings/legaldocs?doc=tos" className="underline underline-offset-4 hover:text-primary" target="_blank">
               Terms of Service
             </Link>
             ,{" "}
-            <Link href="/settings?doc=privacy" className="underline underline-offset-4 hover:text-indigo-600 font-medium" target="_blank">
+            <Link href="/settings/legaldocs?doc=privacy" className="underline underline-offset-4 hover:text-primary" target="_blank">
               Privacy Policy
             </Link>
             , and{" "}
-            <Link href="/settings?doc=ai" className="underline underline-offset-4 hover:text-indigo-600 font-medium" target="_blank">
+            <Link href="/settings/legaldocs?doc=ai" className="underline underline-offset-4 hover:text-primary" target="_blank">
               AI Disclosure
             </Link>
+
             .
           </label>
         </div>
@@ -232,7 +233,7 @@ export default function SignupPage() {
             <AppleIcon />
           </Button>
         </div>
-      </div>
+      </div >
       <div className="mt-8 text-center text-sm text-gray-600">
         Already have an account?{" "}
         <Link href="/login" className="font-bold text-indigo-600 hover:underline">

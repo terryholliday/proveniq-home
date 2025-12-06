@@ -37,6 +37,9 @@ async function seedLegalDocs() {
 
             await docRef.set(docData, { merge: true });
 
+            // Also seed to legal_documents counterpart
+            await db.collection('legal_documents').doc(doc.id).set(docData, { merge: true });
+
             console.log(`✓ Seeded: ${doc.id} - "${doc.title}" (${doc.status})`);
         } catch (error) {
             console.error(`✗ Failed to seed ${doc.id}:`, error);
