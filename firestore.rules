@@ -97,8 +97,13 @@ service cloud.firestore {
 
     // Legal Documents (alternate collection name used by ConsentModal):
     match /legal_documents/{docId} {
+      // Explicitly allow public read for these known documents
       allow get: if docId in ['privacy', 'tos', 'eula'];
+      
+      // Also allow read if the document exists and is published (for others)
       allow read: if resource != null && resource.data.status == 'published';
+      
+      // Admin has full access
       allow read, write: if isAdmin();
     }
 
