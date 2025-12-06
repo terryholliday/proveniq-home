@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Download, Upload, Trash2, LogOut, Link as LinkIcon, Cloud, AlertTriangle, Mail, Facebook, Store, ShoppingBag, BookText } from "lucide-react";
 import Link from "next/link";
 import { TermsOfService, PrivacyPolicy, EULA, AIDisclosure } from './legaldocs';
-
 import { useSearchParams } from 'next/navigation';
 
 const SectionHeader = ({ icon, title }: { icon: React.ElementType, title: string }) => {
@@ -39,7 +38,7 @@ const IntegrationCard = ({ icon, title, description }: { icon: React.ElementType
     )
 }
 
-export default function SettingsPage() {
+function SettingsContent() {
     const searchParams = useSearchParams();
     const docParam = searchParams.get('doc');
     const [legalView, setLegalView] = useState<'tos' | 'privacy' | 'eula' | 'ai' | null>(
@@ -136,5 +135,13 @@ export default function SettingsPage() {
                 </div>
             </div>
         </>
+    );
+}
+
+export default function SettingsPage() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+            <SettingsContent />
+        </Suspense>
     );
 }
