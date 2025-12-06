@@ -24,7 +24,7 @@ export function setDocumentNonBlocking<T extends DocumentData>(
   data: WithFieldValue<T>,
   options?: SetOptions
 ) {
-  const promise = options ? setDoc(docRef, data, options) : setDoc(docRef, data);
+  const promise = options !== undefined ? setDoc(docRef, data, options) : setDoc(docRef, data);
   promise.catch(() => {
     errorEmitter.emit(
       'permission-error',

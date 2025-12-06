@@ -35,3 +35,16 @@ This guide provides technical specifications for partners integrating with the M
 
 ## Getting Started
 To begin the integration process, please contact our partnerships team at partnerships@myark.app to request API credentials and access to our sandbox environment.
+
+### Sandbox API
+**Base URL:** `https://sandboxapi-tyo5hny77q-uc.a.run.app`
+
+**Available Endpoints:**
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/users/{userId}` | Retrieve user profile |
+| `GET` | `/users/{userId}/assets` | List user's assets |
+| `POST` | `/users/{userId}/policies` | Sync an insurance policy |
+| `POST` | `/webhooks/devices` | Submit device discovery data |
+
+**Authentication:** Bearer token in `Authorization` header.

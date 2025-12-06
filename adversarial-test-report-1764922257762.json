@@ -1,0 +1,126 @@
+{
+  "timestamp": "2025-12-05T08:10:57.759Z",
+  "totalTests": 8,
+  "passed": 7,
+  "failed": 1,
+  "falsePositives": 1,
+  "falseNegatives": 0,
+  "averageLatency": 0,
+  "results": [
+    {
+      "testCase": {
+        "id": "TC001",
+        "type": "original",
+        "description": "Unmodified authentic image",
+        "expectedResult": "pass"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "hashChanged": false,
+      "detectionConfidence": 0,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC002",
+        "type": "manipulated",
+        "description": "Single pixel modification",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "897f3ef1c1f88eef7e830ffb36035b713de1fc1d9bcbbd1a9ade0b95ef163d22",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC003",
+        "type": "manipulated",
+        "description": "Color balance adjustment",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "897f3ef1c1f88eef7e830ffb36035b713de1fc1d9bcbbd1a9ade0b95ef163d22",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC004",
+        "type": "compressed",
+        "description": "JPEG re-compression (quality 80)",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "9cd9b74aa3bf618a2feb0762ef1ce2a0b0619d07b8e97137e097fc00c069857a",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC005",
+        "type": "cropped",
+        "description": "Image cropped by 5%",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC006",
+        "type": "deepfake",
+        "description": "AI-generated fake item image",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "eba74012e299a2f3ad44442e3f804ae9cc8149526320626520a3e17e9f11b9a4",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC007",
+        "type": "manipulated",
+        "description": "Metadata stripped but content identical",
+        "expectedResult": "pass"
+      },
+      "passed": false,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "897f3ef1c1f88eef7e830ffb36035b713de1fc1d9bcbbd1a9ade0b95ef163d22",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC008",
+        "type": "manipulated",
+        "description": "Screenshot of original image",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "df969acd6f7b10d86f996c4b9929eec50cd0d54cde9583e1d3f4f1f6bb5e85fe",
+      "resultHash": "897f3ef1c1f88eef7e830ffb36035b713de1fc1d9bcbbd1a9ade0b95ef163d22",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    }
+  ],
+  "recommendations": [
+    "WARNING: 1 false positives detected. Legitimate images may be flagged."
+  ]
+}

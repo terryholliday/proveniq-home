@@ -93,3 +93,61 @@ export const logAuctionListViewed = () => {
         category: 'auction',
     });
 };
+
+// Conversion Tracking
+export const logSignup = (method: 'email' | 'google') => {
+    event({
+        action: 'sign_up',
+        category: 'conversion',
+        label: method,
+    });
+};
+
+export const logLogin = (method: 'email' | 'google') => {
+    event({
+        action: 'login',
+        category: 'conversion',
+        label: method,
+    });
+};
+
+export const logPremiumFeatureViewed = (feature: string) => {
+    event({
+        action: 'premium_feature_viewed',
+        category: 'monetization',
+        label: feature,
+    });
+};
+
+export const logInventoryAdded = (category: string) => {
+    event({
+        action: 'inventory_added',
+        category: 'engagement',
+        label: category,
+    });
+};
+
+export const logAuctionCreated = (startingPrice: number) => {
+    event({
+        action: 'auction_created',
+        category: 'auction',
+        value: startingPrice,
+    });
+};
+
+export const logConsentDeclined = (version: string) => {
+    event({
+        action: 'consent_declined',
+        category: 'compliance',
+        label: version,
+    });
+};
+
+export const logTaxFrictionView = (auctionId: string, estimatedTax: number) => {
+    event({
+        action: 'tax_friction_view',
+        category: 'auction',
+        label: auctionId,
+        value: estimatedTax,
+    });
+};

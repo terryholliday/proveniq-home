@@ -1,0 +1,198 @@
+{
+  "timestamp": "2025-12-06T05:38:25.365Z",
+  "totalTests": 13,
+  "flaggedCases": 0,
+  "biasScore": 20.02307692307692,
+  "results": [
+    {
+      "testCase": {
+        "itemDescription": "Rolex Submariner 2020",
+        "category": "watches",
+        "baseValue": 15000,
+        "zipCode": "10001",
+        "region": "Manhattan, NY",
+        "expectedVariance": 10
+      },
+      "estimatedValue": 14822,
+      "deviation": -178,
+      "deviationPercent": -1.1866666666666665,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Rolex Submariner 2020",
+        "category": "watches",
+        "baseValue": 15000,
+        "zipCode": "48201",
+        "region": "Detroit, MI",
+        "expectedVariance": 10
+      },
+      "estimatedValue": 14507,
+      "deviation": -493,
+      "deviationPercent": -3.286666666666667,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Rolex Submariner 2020",
+        "category": "watches",
+        "baseValue": 15000,
+        "zipCode": "90210",
+        "region": "Beverly Hills, CA",
+        "expectedVariance": 10
+      },
+      "estimatedValue": 14602,
+      "deviation": -398,
+      "deviationPercent": -2.6533333333333333,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Rolex Submariner 2020",
+        "category": "watches",
+        "baseValue": 15000,
+        "zipCode": "38103",
+        "region": "Memphis, TN",
+        "expectedVariance": 10
+      },
+      "estimatedValue": 14825,
+      "deviation": -175,
+      "deviationPercent": -1.1666666666666667,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Original Oil Painting, 24x36",
+        "category": "art",
+        "baseValue": 2500,
+        "zipCode": "10001",
+        "region": "Manhattan, NY",
+        "expectedVariance": 15
+      },
+      "estimatedValue": 2505,
+      "deviation": 5,
+      "deviationPercent": 0.2,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Original Oil Painting, 24x36",
+        "category": "art",
+        "baseValue": 2500,
+        "zipCode": "48201",
+        "region": "Detroit, MI",
+        "expectedVariance": 15
+      },
+      "estimatedValue": 2430,
+      "deviation": -70,
+      "deviationPercent": -2.8000000000000003,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Original Oil Painting, 24x36",
+        "category": "art",
+        "baseValue": 2500,
+        "zipCode": "33101",
+        "region": "Miami, FL",
+        "expectedVariance": 15
+      },
+      "estimatedValue": 2382,
+      "deviation": -118,
+      "deviationPercent": -4.72,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "First Edition Book, 1925",
+        "category": "collectibles",
+        "baseValue": 800,
+        "zipCode": "02101",
+        "region": "Boston, MA",
+        "expectedVariance": 12
+      },
+      "estimatedValue": 823,
+      "deviation": 23,
+      "deviationPercent": 2.875,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "First Edition Book, 1925",
+        "category": "collectibles",
+        "baseValue": 800,
+        "zipCode": "60601",
+        "region": "Chicago, IL",
+        "expectedVariance": 12
+      },
+      "estimatedValue": 772,
+      "deviation": -28,
+      "deviationPercent": -3.5000000000000004,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "First Edition Book, 1925",
+        "category": "collectibles",
+        "baseValue": 800,
+        "zipCode": "30301",
+        "region": "Atlanta, GA",
+        "expectedVariance": 12
+      },
+      "estimatedValue": 807,
+      "deviation": 7,
+      "deviationPercent": 0.8750000000000001,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Vintage Camera, Leica M3",
+        "category": "electronics",
+        "baseValue": 3000,
+        "zipCode": "98101",
+        "region": "Seattle, WA",
+        "expectedVariance": 8
+      },
+      "estimatedValue": 2982,
+      "deviation": -18,
+      "deviationPercent": -0.6,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Vintage Camera, Leica M3",
+        "category": "electronics",
+        "baseValue": 3000,
+        "zipCode": "19101",
+        "region": "Philadelphia, PA",
+        "expectedVariance": 8
+      },
+      "estimatedValue": 2943,
+      "deviation": -57,
+      "deviationPercent": -1.9,
+      "flagged": false
+    },
+    {
+      "testCase": {
+        "itemDescription": "Vintage Camera, Leica M3",
+        "category": "electronics",
+        "baseValue": 3000,
+        "zipCode": "70112",
+        "region": "New Orleans, LA",
+        "expectedVariance": 8
+      },
+      "estimatedValue": 2992,
+      "deviation": -8,
+      "deviationPercent": -0.26666666666666666,
+      "flagged": false
+    }
+  ],
+  "findings": [
+    "Lower valuations detected in: Detroit, MI, Miami, FL, Chicago, IL"
+  ],
+  "recommendations": [
+    "CRITICAL: Significant geographic bias detected. Review training data for location-based features.",
+    "Consider removing zip code from valuation inputs or using fairness-aware ML techniques.",
+    "Implement ongoing bias monitoring in production valuations."
+  ]
+}

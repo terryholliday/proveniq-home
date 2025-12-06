@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,7 @@ import { useMemoFirebase } from '@/firebase/provider';
 import { collection, query, where, orderBy, getFirestore } from 'firebase/firestore';
 import { AuctionListing } from '@/lib/auction-types';
 import { logAuctionListViewed } from '@/lib/analytics';
+import { LiveBidTicker } from '@/components/auctions/LiveBidTicker';
 
 export default function AuctionsPage() {
   const { user } = useUser();
@@ -90,10 +91,10 @@ export default function AuctionsPage() {
             <CardContent className="space-y-2">
               <p className="text-sm text-muted-foreground line-clamp-3">{auction.description}</p>
               <div className="flex gap-4 text-sm">
-                <div>
-                  <span className="text-muted-foreground">Current bid:</span>{' '}
-                  <span className="font-semibold text-green-600">${(auction.currentBid ?? auction.startingBid).toLocaleString()}</span>
-                </div>
+                <LiveBidTicker
+                  currentBid={auction.currentBid ?? auction.startingBid}
+                  previousBid={auction.startingBid}
+                />
                 <div>
                   <span className="text-muted-foreground">Starts:</span>{' '}
                   <span>{auction.startsAt ? new Date(auction.startsAt).toLocaleString() : 'TBD'}</span>

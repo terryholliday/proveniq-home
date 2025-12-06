@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { MoreHorizontal, HeartHandshake } from "lucide-react";
+import { MoreHorizontal, HeartHandshake, ShieldCheck } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,6 +40,12 @@ export function ItemCard({ item }: ItemCardProps) {
               <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-background/80 p-1.5 text-xs backdrop-blur-sm">
                 <HeartHandshake className="h-3 w-3 text-primary" />
                 <span>On Loan</span>
+              </div>
+            )}
+            {item.visualTruthVerified && (
+              <div className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-green-500/90 p-1.5 text-xs text-white backdrop-blur-sm">
+                <ShieldCheck className="h-3 w-3" />
+                <span>Verified</span>
               </div>
             )}
           </div>

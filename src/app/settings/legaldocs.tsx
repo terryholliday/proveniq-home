@@ -42,7 +42,7 @@ const LegalLayout: React.FC<{
 
 const LegalDocFetcher: React.FC<{ docId: LegalDocType }> = ({ docId }) => {
   const firestore = useFirestore();
-  const ref = useMemo(() => firestore ? doc(firestore, 'legal_docs', docId) : null, [firestore, docId]);
+  const ref = useMemo(() => firestore ? doc(firestore, 'legal_documents', docId) : null, [firestore, docId]);
   const { data, isLoading } = useDoc<LegalDocument>(ref);
 
   const seedDoc = SEED_LEGAL_DOCS.find(d => d.id === docId);

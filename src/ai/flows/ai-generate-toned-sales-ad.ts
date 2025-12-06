@@ -8,8 +8,8 @@
  * - GenerateTonedSalesAdOutput - The return type for the generateTonedSalesAd function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const GenerateTonedSalesAdInputSchema = z.object({
   itemName: z.string().describe('The name of the item for sale.'),
@@ -30,9 +30,14 @@ export async function generateTonedSalesAd(input: GenerateTonedSalesAdInput): Pr
 
 const prompt = ai.definePrompt({
   name: 'generateTonedSalesAdPrompt',
-  input: {schema: GenerateTonedSalesAdInputSchema},
-  output: {schema: GenerateTonedSalesAdOutputSchema},
+  input: { schema: GenerateTonedSalesAdInputSchema },
+  output: { schema: GenerateTonedSalesAdOutputSchema },
   prompt: `You are an expert marketing copywriter. Generate compelling sales ad copy for the following item.
+
+SAFETY & COMPLIANCE RULES:
+1. Do NOT make any legal claims or guarantees.
+2. Do NOT make safety guarantees.
+3. Do NOT generate misleading descriptions.
 
 Item Name: {{{itemName}}}
 Item Description: {{{itemDescription}}}
@@ -50,7 +55,7 @@ const generateTonedSalesAdFlow = ai.defineFlow(
     outputSchema: GenerateTonedSalesAdOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );

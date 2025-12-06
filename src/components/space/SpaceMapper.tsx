@@ -210,7 +210,7 @@ const SpaceMapper: React.FC<SpaceMapperProps> = ({ items, onSelectItem, onBack }
         {analysisError && <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm flex items-start gap-2"><AlertTriangle size={18} className="shrink-0 mt-0.5" /><span>{analysisError}</span></div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {locations.map(loc => (
-            <button key={loc} onClick={() => handleSelectLocation(loc)} className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-left font-semibold text-gray-700 hover:bg-indigo-50 hover:border-indigo-300 transition-colors">
+            <button key={loc} onClick={() => handleSelectLocation(loc as string)} className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-left font-semibold text-gray-700 hover:bg-indigo-50 hover:border-indigo-300 transition-colors">
               {loc}
             </button>
           ))}

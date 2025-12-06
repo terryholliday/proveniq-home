@@ -112,7 +112,7 @@ export function Quiz({ questions, moduleId }: QuizProps) {
 
           return (
             <Label
-              key={index}
+              key={option}
               htmlFor={`${currentQuestion.id}-${index}`}
               className={cn('flex items-center space-x-3 rounded-md border p-3 transition-colors', feedbackClass, {
                 'cursor-pointer hover:bg-muted/50': !isAnswered,

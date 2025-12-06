@@ -2,11 +2,15 @@ import { getFirestore } from "firebase-admin/firestore";
 import * as admin from "firebase-admin";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
 import Stripe from "stripe";
+import { createBidRateLimiter } from "./rate_limiter";
 
 const db = getFirestore();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
   // apiVersion: "2024-11-20", // Let it default or use latest
 });
+
+// Rate limiter for bid operations
+const bidRateLimiter = createBidRateLimiter();
 
 interface CreateAuctionInput {
   itemPath: string; // e.g. "users/<uid>/items/<itemId>"
@@ -158,6 +162,17 @@ export const placeBid = onCall(
     const bidderUid = request.auth.uid;
     const data = request.data as Partial<PlaceBidInput>;
 
+    // [RATE LIMIT] Check per-user bid rate
+    const rateLimitKey = `bid:user:${bidderUid}`;
+    const rateLimitResult = await bidRateLimiter.checkLimit(rateLimitKey);
+
+    if (!rateLimitResult.allowed) {
+      throw new HttpsError(
+        "resource-exhausted",
+        `Too many bids. Please wait ${Math.ceil((rateLimitResult.retryAfterMs || 1000) / 1000)} seconds.`
+      );
+    }
+
     if (!data.auctionId || typeof data.auctionId !== "string") {
       throw new HttpsError("invalid-argument", "auctionId is required.");
     }
@@ -166,34 +181,13 @@ export const placeBid = onCall(
     }
 
     const auctionRef = db.collection("auctions").doc(data.auctionId);
-    const auctionSnap = await auctionRef.get();
-
-    if (!auctionSnap.exists) {
-      throw new HttpsError("not-found", "Auction not found.");
-    }
+    const now = admin.firestore.Timestamp.now();
 
     interface AuctionDoc {
       status?: string;
       currentBid?: number;
       startingBid?: number;
     }
-
-    const auction = auctionSnap.data() as AuctionDoc;
-
-    if (auction.status !== "live") {
-      throw new HttpsError("failed-precondition", "Auction is not live.");
-    }
-
-    const currentBid = typeof auction.currentBid === "number" ?
-      auction.currentBid : auction.startingBid;
-    if (data.amount <= (currentBid || 0)) {
-      throw new HttpsError(
-        "failed-precondition",
-        "Bid must be higher than current bid."
-      );
-    }
-
-    const now = admin.firestore.Timestamp.now();
 
     // Create bid doc
     const bidsCol = auctionRef.collection("bids");
@@ -214,13 +208,18 @@ export const placeBid = onCall(
         throw new HttpsError("not-found", "Auction not found.");
       }
       const fresh = freshSnap.data() as AuctionDoc;
+
+      if (fresh.status !== "live") {
+        throw new HttpsError("failed-precondition", "Auction is not live.");
+      }
+
       const freshCurrent = typeof fresh.currentBid === "number" ?
         fresh.currentBid : fresh.startingBid;
 
       if (data.amount! <= (freshCurrent || 0)) {
         throw new HttpsError(
           "failed-precondition",
-          "Bid must be higher than current bid (race condition)."
+          "Bid must be higher than current bid."
         );
       }
 
