@@ -16,7 +16,15 @@ Partners must request sandbox access via `partnerships@myark.app`. Upon approval
 - A test user account credentials.
 
 ### 2. API Configuration
-Base URL: `https://api.sandbox.myark.app/v1`
+**Live Sandbox API:** `https://sandboxapi-tyo5hny77q-uc.a.run.app`
+
+**Authentication:** Include the API key in the `Authorization` header as `Bearer <API_KEY>`.
+
+**Example Request:**
+```bash
+curl -X GET "https://sandboxapi-tyo5hny77q-uc.a.run.app/test" \
+  -H "Authorization: Bearer sb_key_lemonade_123"
+```
 
 ### 3. Testing Scenarios
 #### Insurance Policy Sync

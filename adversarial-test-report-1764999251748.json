@@ -1,0 +1,126 @@
+{
+  "timestamp": "2025-12-06T05:34:11.745Z",
+  "totalTests": 8,
+  "passed": 8,
+  "failed": 0,
+  "falsePositives": 0,
+  "falseNegatives": 0,
+  "averageLatency": 0.125,
+  "results": [
+    {
+      "testCase": {
+        "id": "TC001",
+        "type": "original",
+        "description": "Unmodified authentic image",
+        "expectedResult": "pass"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "hashChanged": false,
+      "detectionConfidence": 0,
+      "latencyMs": 1
+    },
+    {
+      "testCase": {
+        "id": "TC002",
+        "type": "manipulated",
+        "description": "Single pixel modification",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "109375b47b9b3310cd386ff07fa27571fb71fcacbc71573ed6039046090df756",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC003",
+        "type": "manipulated",
+        "description": "Color balance adjustment",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "109375b47b9b3310cd386ff07fa27571fb71fcacbc71573ed6039046090df756",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC004",
+        "type": "compressed",
+        "description": "JPEG re-compression (quality 80)",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "2b671df79f35d80c66b0273f8b687b7503e9dce4da2c5c7379f69e130cd47cd2",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC005",
+        "type": "cropped",
+        "description": "Image cropped by 5%",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC006",
+        "type": "deepfake",
+        "description": "AI-generated fake item image",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "255f3d939ece21c38842788e6bc1c6a029abafb9c352f9ed4180dbff56bea4f8",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC007",
+        "type": "manipulated",
+        "description": "Metadata stripped (Strict SHA-256 Check)",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "109375b47b9b3310cd386ff07fa27571fb71fcacbc71573ed6039046090df756",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    },
+    {
+      "testCase": {
+        "id": "TC008",
+        "type": "manipulated",
+        "description": "Screenshot of original image",
+        "expectedResult": "fail"
+      },
+      "passed": true,
+      "originalHash": "2a7621b62179d2b614c75e3880ee354fa7dd419ef1a6bab41fe81a020ac10ba5",
+      "resultHash": "109375b47b9b3310cd386ff07fa27571fb71fcacbc71573ed6039046090df756",
+      "hashChanged": true,
+      "detectionConfidence": 1,
+      "latencyMs": 0
+    }
+  ],
+  "recommendations": [
+    "All tests passed. Visual Truth tamper detection is robust."
+  ]
+}

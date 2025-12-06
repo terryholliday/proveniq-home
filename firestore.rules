@@ -80,12 +80,19 @@ service cloud.firestore {
       allow delete: if isSystemOrAdmin();
     }
 
-    // Legal Documents:
-    // - Public read.
-    // - Admin write only.
+    // Legal Documents (current collection):
+    // 1. Allow public get for known public docs (prevents 403 if doc is missing/unseeded)
+    // 2. Allow public read for any EXISTING document marked as published
+    // 3. Admin has full access
     match /legal_docs/{docId} {
-      allow read: if true;
-      allow write: if isAdmin();
+      // Allow public get for known public docs (prevents 403 if doc is missing/unseeded)
+      allow get: if docId in ['privacy', 'tos', 'eula'];
+      
+      // Allow public read for any EXISTING document marked as published
+      allow read: if resource != null && resource.data.status == 'published';
+
+      // Admin has full access
+      allow read, write: if isAdmin();
     }
 
     // Audit Logs (System Only):
@@ -95,6 +102,7 @@ service cloud.firestore {
       allow read: if isSystemOrAdmin();
       allow create: if isSignedIn(); // Functions write here
       allow update, delete: if false; // Immutable
+    }
     }
   }
 }

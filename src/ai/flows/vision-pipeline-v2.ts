@@ -216,8 +216,8 @@ export const visionPipelineV2 = ai.defineFlow(
                 imageId: p.id,
                 imageHash: p.hash,
                 verifiedAt: new Date().toISOString(),
-                method: 'server-side-hash',
-                status: 'verified' // Initial status
+                method: 'server-side-hash' as const,
+                status: 'verified' as const
             })),
             details: analysis.output?.details || {},
             condition: analysis.output?.condition || { overallScore: 0, defects: [], wearLevel: 'poor' }

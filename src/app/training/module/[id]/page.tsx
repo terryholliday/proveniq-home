@@ -36,8 +36,8 @@ export default function ModulePage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          {trainingModule.content.map((section, index) => (
-            <div key={index}>
+          {trainingModule.content.map((section) => (
+            <div key={section.heading}>
               <h2 className="text-2xl font-semibold tracking-tight text-foreground">{section.heading}</h2>
               <div className="mt-2 text-muted-foreground prose prose-sm max-w-none">
                 {section.body}

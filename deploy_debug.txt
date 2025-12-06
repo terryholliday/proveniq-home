@@ -1,0 +1,368 @@
+﻿[2025-12-05T04:22:41.249Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[2025-12-05T04:22:41.250Z] > authorizing via signed-in user (intuitive.terry@gmail.com)
+[2025-12-05T04:22:41.250Z] [iam] checking project arkive-auctions-70102726-f9642 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[2025-12-05T04:22:41.252Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:41.252Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:41.254Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/arkive-auctions-70102726-f9642:testIamPermissions [none]
+[2025-12-05T04:22:41.254Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/arkive-auctions-70102726-f9642:testIamPermissions x-goog-quota-user=projects/arkive-auctions-70102726-f9642
+[2025-12-05T04:22:41.254Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/arkive-auctions-70102726-f9642:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[2025-12-05T04:22:46.456Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/arkive-auctions-70102726-f9642:testIamPermissions 200
+[2025-12-05T04:22:46.456Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/arkive-auctions-70102726-f9642:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[2025-12-05T04:22:46.457Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:46.457Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:46.457Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642 [none]
+[2025-12-05T04:22:47.785Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642 200
+[2025-12-05T04:22:47.785Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642 {"projectId":"arkive-auctions-70102726-f9642","projectNumber":"329989111428","displayName":"MyARK Auctions","name":"projects/arkive-auctions-70102726-f9642","resources":{"hostingSite":"arkive-auctions-70102726-f9642"},"state":"ACTIVE","etag":"1_14d7c927-cc46-4098-8f27-d14aa20bd9d8"}
+[2025-12-05T04:22:56.306Z] defaultcredentials: writing to file C:\Users\intui\AppData\Roaming\firebase\intuitive_terry_gmail.com_application_default_credentials.json
+[2025-12-05T04:22:56.314Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:56.314Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:56.316Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites pageToken=&pageSize=10
+[2025-12-05T04:22:56.918Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites 200
+[2025-12-05T04:22:56.919Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites {"sites":[{"name":"projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642","defaultUrl":"https://arkive-auctions-70102726-f9642.web.app","type":"DEFAULT_SITE"}]}
+[2025-12-05T04:22:56.919Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:56.919Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:56.919Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites 
+[2025-12-05T04:22:57.134Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites 200
+[2025-12-05T04:22:57.134Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites {"sites":[{"name":"projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642","defaultUrl":"https://arkive-auctions-70102726-f9642.web.app","type":"DEFAULT_SITE"}]}
+[2025-12-05T04:22:57.135Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:57.135Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:22:57.135Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/webApps/-/config [none]
+[2025-12-05T04:22:57.615Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/webApps/-/config 200
+[2025-12-05T04:22:57.615Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/webApps/-/config {"projectId":"arkive-auctions-70102726-f9642","storageBucket":"arkive-auctions-70102726-f9642.firebasestorage.app","apiKey":"AIzaSyBC4HVzqDC1lna_elX5_NB_H0OZXeUMrTY","authDomain":"arkive-auctions-70102726-f9642.firebaseapp.com","messagingSenderId":"329989111428","projectNumber":"329989111428","version":"2"}
+npx : No Firebase 
+app associated with 
+site arkive-auctions-
+70102726-f9642, 
+injecting project 
+default config.
+At line:1 char:1
++ npx firebase 
+deploy --only 
+hosting --debug 2>&1 
+| Out-File -FilePath 
+ ...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (No Fire   
+ base app...defau    
+lt config.:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+  You can link a Web 
+app to a Hosting 
+site here https://con
+sole.firebase.google.
+com/project/arkive-au
+ctions-70102726-f9642
+/settings/general/web
+
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+
+WARNING: Your 
+package.json 
+contains a custom 
+build that is being 
+ignored. Only the 
+Next.js default 
+build script (e.g, 
+"next build") is 
+respected. If you 
+have a more advanced 
+build process you 
+should build a 
+custom integration ht
+tps://firebase.google
+.com/docs/hosting/exp
+ress
+
+[2025-12-05T04:23:15.272Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:23:15.272Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:23:15.272Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642 [none]
+[2025-12-05T04:23:19.891Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642 200
+[2025-12-05T04:23:19.891Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642 {"name":"projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642","defaultUrl":"https://arkive-auctions-70102726-f9642.web.app","type":"DEFAULT_SITE"}
+ ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\intui\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\intui\Dropbox\MyArk\myark_app\app\package-lock.json
+   * C:\Users\intui\Dropbox\MyArk\myark_app\package-lock.json
+
+
+   Γû▓ Next.js 16.0.7 (Turbopack)
+
+   - Experiments (use with caution):
+     Γ£ô externalDir
+
+
+   Creating an optimized production build ...
+
+
+
+
+Source path: ./src/app/globals.css
+
+Setting up new context...
+
+Finding changed files: 26.932ms
+
+Reading changed files: 229.331ms
+
+Sorting candidates: 9.837ms
+
+Generate rules: 462.012ms
+
+Build stylesheet: 8.82ms
+
+Potential classes:  9097
+
+Active contexts:  1
+
+JIT TOTAL: 1.066s
+
+
+
+
+Source path: ./src/app/landing-page.css
+
+JIT TOTAL: 180.508ms
+
+
+
+
+ Γ£ô Compiled successfully in 12.0s
+
+   Skipping validation of types
+
+   Collecting page data using 11 workers ...
+
+   Generating static pages using 11 workers (0/25) ...
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /_not-found. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /admin/compliance. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /admin. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /admin/growth. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /admin/migrations. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+   Generating static pages using 11 workers (6/25) 
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /auctions. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /check-email. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /dashboard. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /inventory/add. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /inventory. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /legacy-planner. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /lending. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+   Generating static pages using 11 workers (12/25) 
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /onboarding/permissions. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /move-planner. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /settings. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /signup. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /training. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /user-guide. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+   Generating static pages using 11 workers (18/25) 
+
+ ΓÜá Unsupported metadata viewport is configured in metadata export in /verify-email. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+
+ Γ£ô Generating static pages using 11 workers (25/25) in 2.6s
+
+   Finalizing page optimization ...
+
+
+
+Route (app)
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ Γùï /admin
+Γö£ Γùï /admin/compliance
+Γö£ Γùï /admin/growth
+Γö£ Γùï /admin/migrations
+Γö£ ╞Æ /api/alexa
+Γö£ ╞Æ /api/google
+Γö£ Γùï /auctions
+Γö£ Γùï /check-email
+Γö£ Γùï /dashboard
+Γö£ Γùï /inventory
+Γö£ ╞Æ /inventory/[id]
+Γö£ Γùï /inventory/add
+Γö£ Γùï /legacy-planner
+Γö£ Γùï /lending
+Γö£ Γùï /login
+Γö£ Γùï /move-planner
+Γö£ Γùï /onboarding/permissions
+Γö£ Γùï /settings
+Γö£ Γùï /signup
+Γö£ Γùï /training
+Γö£ ╞Æ /training/module/[id]
+Γö£ Γùï /user-guide
+Γö£ Γùï /verify-email
+Γöö ╞Æ /verify/[id]
+
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+
+
+
+Building a Cloud Function to run this application. This is needed due to:
+ ΓÇó non-static component /api/alexa/route
+ ΓÇó non-static component /api/google/route
+ ΓÇó non-static component /inventory/[id]/page
+ ΓÇó non-static component /training/module/[id]/page
+ ΓÇó non-static component /verify/[id]/page
+[2025-12-05T04:23:47.620Z]  ΓÇó route with server action /inventory
+[2025-12-05T04:23:47.620Z]  ΓÇó route with server action /training/module/[id]
+
+[2025-12-05T04:23:47.793Z] skipping /inventory due to server action
+[2025-12-05T04:23:48.318Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:23:48.318Z] Checked if tokens are valid: true, expires at: 1764909966454
+[2025-12-05T04:23:48.319Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642 [none]
+[2025-12-05T04:23:48.792Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642 200
+[2025-12-05T04:23:48.792Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642 {"name":"projects/arkive-auctions-70102726-f9642/sites/arkive-auctions-70102726-f9642","defaultUrl":"https://arkive-auctions-70102726-f9642.web.app","type":"DEFAULT_SITE"}
+npm ERR! code 
+ERESOLVE
+npm ERR! ERESOLVE 
+could not resolve
+npm ERR! 
+npm ERR! While 
+resolving: @genkit-ai
+/next@1.20.0
+npm ERR! Found: 
+next@16.0.7
+npm ERR! 
+node_modules/next
+npm ERR!   
+next@"^16.0.7" from 
+the root project
+npm ERR!   peer 
+next@">=14.0.0" from 
+@ducanh2912/next-pwa@
+10.2.9
+npm ERR!   node_modul
+es/@ducanh2912/next-p
+wa
+npm ERR!     @ducanh2
+912/next-pwa@"^10.2.9
+" from the root 
+project
+npm ERR! 
+npm ERR! Could not 
+resolve dependency:
+npm ERR! peer 
+next@"^15.0.0" from @
+genkit-ai/next@1.20.0
+npm ERR! node_modules
+/@genkit-ai/next
+npm ERR!   @genkit-ai
+/next@"^1.20.0" from 
+the root project
+npm ERR! 
+npm ERR! Conflicting 
+peer dependency: 
+next@15.5.7
+npm ERR! 
+node_modules/next
+npm ERR!   peer 
+next@"^15.0.0" from @
+genkit-ai/next@1.20.0
+npm ERR!   node_modul
+es/@genkit-ai/next
+npm ERR!     @genkit-
+ai/next@"^1.20.0" 
+from the root project
+npm ERR! 
+npm ERR! Fix the 
+upstream dependency 
+conflict, or retry
+npm ERR! this 
+command with --force 
+or --legacy-peer-deps
+npm ERR! to accept 
+an incorrect (and 
+potentially broken) 
+dependency 
+resolution.
+npm ERR! 
+npm ERR! 
+npm ERR! For a full 
+report see:
+npm ERR! C:\Users\int
+ui\AppData\Local\npm-
+cache\_logs\2025-12-0
+5T04_23_51_719Z-ereso
+lve-report.txt
+
+npm ERR! A complete 
+log of this run can 
+be found in: C:\Users
+\intui\AppData\Local\
+npm-cache\_logs\2025-
+12-05T04_23_51_719Z-d
+ebug-0.log
+[2025-12-05T04:23:55.600Z] Error: Command failed: npm i --omit dev --no-audit
+    at checkExecSyncError (node:child_process:890:11)
+    at execSync (node:child_process:962:15)
+    at prepareFrameworks (C:\Users\intui\Dropbox\MyArk\myark_app\app\node_modules\firebase-tools\lib\frameworks\index.js:373:42)
+    at async deploy (C:\Users\intui\Dropbox\MyArk\myark_app\app\node_modules\firebase-tools\lib\deploy\index.js:79:9)
+
+Error: An unexpected error has occurred.

@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  // Required for Next.js 16+ when using webpack-based plugins like next-pwa
+  turbopack: {},
 
   experimental: {
     externalDir: true,

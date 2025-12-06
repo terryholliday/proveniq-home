@@ -7,8 +7,8 @@
  * - GenerateAuctionDetailsOutput - The return type for the generateAuctionDetails function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const GenerateAuctionDetailsInputSchema = z.object({
   itemDescription: z.string().describe('A detailed description of the item being auctioned.'),
@@ -30,9 +30,15 @@ export async function generateAuctionDetails(input: GenerateAuctionDetailsInput)
 
 const prompt = ai.definePrompt({
   name: 'generateAuctionDetailsPrompt',
-  input: {schema: GenerateAuctionDetailsInputSchema},
-  output: {schema: GenerateAuctionDetailsOutputSchema},
+  input: { schema: GenerateAuctionDetailsInputSchema },
+  output: { schema: GenerateAuctionDetailsOutputSchema },
   prompt: `You are an expert auction listing creator. Given the item description, target audience, and desired tone, generate a compelling auction title, an engaging auction description, and a reasonable starting bid price (in USD).
+
+SAFETY & COMPLIANCE RULES:
+1. Do NOT make any legal claims or guarantees (e.g., "This item is legal to own in all 50 states").
+2. Do NOT make safety guarantees (e.g., "This car is perfectly safe").
+3. Include a standard disclaimer if the item seems hazardous or regulated.
+4. Do NOT generate misleading descriptions.
 
 Item Description: {{{itemDescription}}}
 Target Audience: {{{targetAudience}}}
@@ -49,7 +55,7 @@ const generateAuctionDetailsFlow = ai.defineFlow(
     outputSchema: GenerateAuctionDetailsOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );

@@ -8,8 +8,8 @@
  * - AiSearchInventoryOutput - The return type for the aiSearchInventory function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const AiSearchInventoryInputSchema = z.object({
   query: z.string().describe('The natural language search query.'),
@@ -26,9 +26,15 @@ export async function aiSearchInventory(input: AiSearchInventoryInput): Promise<
 
 const prompt = ai.definePrompt({
   name: 'aiSearchInventoryPrompt',
-  input: {schema: AiSearchInventoryInputSchema},
-  output: {schema: AiSearchInventoryOutputSchema},
+  input: { schema: AiSearchInventoryInputSchema },
+  output: { schema: AiSearchInventoryOutputSchema },
   prompt: `You are an AI assistant designed to search through a user's inventory data based on their natural language query.  The inventory data is in JSON format.  You must return a JSON array of objects representing the matching inventory items.  The returned array should only include items that closely match the intent of the user's query.
+
+SAFETY & COMPLIANCE RULES:
+1. DO NOT provide legal advice, medical advice, or financial planning advice.
+2. If the user asks a question that requires professional licensure (e.g., "Is my will valid?", "How do I avoid probate?"), ignore the question and strictly search for items matching the keywords.
+3. If no items match, return an empty array. Do not hallucinate items.
+4. Do not infer or generate legal documents.
 
 User Query: {{{query}}}
 
@@ -47,7 +53,7 @@ const aiSearchInventoryFlow = ai.defineFlow(
   },
   async input => {
     try {
-      const {output} = await prompt(input);
+      const { output } = await prompt(input);
 
       if (!output) {
         console.warn('No output from prompt, returning empty array.');

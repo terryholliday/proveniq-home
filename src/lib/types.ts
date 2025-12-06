@@ -79,6 +79,19 @@ export type CompanyAssetMetadata = {
 
 // --- LEGAL CMS & TASKS ---
 
+export type RoleCategory = 'compliance' | 'executive' | 'operational' | 'security';
+
+export type LeadershipRole = {
+  id: string;
+  title: string;
+  category: RoleCategory;
+  assigneeName?: string;
+  responsibilities: string[];
+  keyDeliverables: string[];
+  status: 'active' | 'vacant' | 'acting';
+  avatarUrl?: string; // Optional for UI appeal
+};
+
 export type LegalDocType =
   // Public Policies
   | 'tos'
@@ -105,7 +118,8 @@ export type LegalDocType =
   // Legacy status types for compatibility (optional, if needed)
   | 'internal_only'
   | 'published'
-  | 'archived';
+  | 'archived'
+  | 'regulatory_risk_assessment';
 
 export type LegalDocument = {
   id: LegalDocType;

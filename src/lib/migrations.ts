@@ -1,10 +1,10 @@
-import { collection, getDocs, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collectionGroup, getDocs, doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { initializeFirebase } from '@/firebase';
 import { InventoryItem, ProvenanceEvent } from '@/lib/types';
 
 export async function migrateProvenanceData() {
     const { firestore } = initializeFirebase();
-    const itemsRef = collection(firestore, 'inventory'); // Assuming collection name is 'inventory'
+    const itemsRef = collectionGroup(firestore, 'items');
     const snapshot = await getDocs(itemsRef);
 
     let updatedCount = 0;
@@ -32,8 +32,7 @@ export async function migrateProvenanceData() {
         };
 
         try {
-            const itemRef = doc(firestore, 'inventory', itemId);
-            await updateDoc(itemRef, {
+            await updateDoc(docSnap.ref, {
                 provenance: [acquisitionEvent]
             });
             updatedCount++;

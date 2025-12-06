@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MyArkLogo } from "../onboarding/MyArkLogo";
 import { AdminAccessTrigger } from "@/components/admin/AdminAccessTrigger";
+import { TechDocsAccessTrigger } from "@/components/admin/TechDocsAccessTrigger";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -29,7 +30,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                         <span>© {new Date().getFullYear()} MyARK, Inc.</span>
                     </AdminAccessTrigger>
                     <div className="flex gap-4">
-                        <Link href="#" className="hover:underline">Privacy Policy</Link>
+                        <TechDocsAccessTrigger>
+                            <Link href="#" className="hover:underline">Privacy Policy</Link>
+                        </TechDocsAccessTrigger>
                         <Link href="#" className="hover:underline">Terms of Service</Link>
                     </div>
                 </div>

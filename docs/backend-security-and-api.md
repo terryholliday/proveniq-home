@@ -54,10 +54,14 @@ To ensure fairness and system stability during high-frequency auctions, we imple
 3.  **DDoS Protection**: Cloud Armor / WAF at the edge.
 
 ### Implementation Plan
--   **Phase 1 (MVP)**: Firestore `lastBidTimestamp` check in Security Rules or Cloud Function.
+-   **Phase 1 (MVP)** ✅ IMPLEMENTED: Firestore sliding window in `rate_limiter.ts`.
+    -   Uses `rate_limits` collection with timestamp array per user.
+    -   Integrated into `placeBid` function in `auction_api.ts`.
     -   *Pros*: Simple, no extra infra.
     -   *Cons*: Potential contention, higher latency.
 -   **Phase 2 (Scale)**: Redis (Memorystore) for low-latency rate limiting.
+    -   Placeholder `RedisRateLimiter` class ready for implementation.
+    -   Switch via `createBidRateLimiter()` factory.
 
 ## Specialized Database Selection (TrueLedger)
 

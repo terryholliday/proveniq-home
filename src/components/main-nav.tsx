@@ -93,7 +93,7 @@ export function MainNav() {
           </Link>
         </SidebarMenuItem>
         <SidebarMenuItem>
-          <SidebarMenuButton tooltip={{ children: 'ARKive Auctions' }}>
+          <SidebarMenuButton id="nav-auctions" tooltip={{ children: 'ARKive Auctions' }}>
             <GanttChartSquare />
             <span>ARKive Auctions</span>
           </SidebarMenuButton>

@@ -42,7 +42,7 @@ const PackingPlanModal: React.FC<PackingPlanModalProps> = ({ plan, onClose, onCr
                 <div className="flex justify-between items-start">
                   <p className="font-bold text-gray-900">{item.itemName}</p>
                   <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${item.action === 'Sell' ? 'bg-green-100 text-green-800' :
-                      item.action === 'Donate' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
+                    item.action === 'Donate' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
                     }`}>{item.action}</span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">{item.reasoning}</p>

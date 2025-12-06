@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo } from 'react';
 import { TourStep, AppView } from '@/lib/types';
 import { ArrowRight, X } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface GuidedTourProps {
   isActive: boolean;
@@ -10,54 +11,51 @@ interface GuidedTourProps {
   onNavigate: (view: AppView) => void;
 }
 
-const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
-
-const getTourSteps = (): TourStep[] => [
-  {
-    targetId: 'dashboard-value',
-    title: 'Your Asset Dashboard',
-    content: 'This is your financial overview. See the total value of your inventory at a glance.',
-    view: 'dashboard',
-    placement: 'bottom'
-  },
-  {
-    targetId: isMobile() ? 'mobile-add' : 'dashboard-add',
-    title: 'Add Your First Item',
-    content: 'Tap here to start. The AI will identify your item, estimate its value, and suggest a maintenance schedule.',
-    view: 'dashboard',
-    placement: isMobile() ? 'top' : 'bottom'
-  },
-  {
-    targetId: 'dashboard-quick-actions',
-    title: 'Powerful Tools',
-    content: 'Access the AI Move Planner, Risk Simulator, and Room Audit directly from here.',
-    view: 'dashboard',
-    placement: 'bottom'
-  },
-  {
-    targetId: 'nav-auctions',
-    title: 'ARKive Auctions',
-    content: 'Ready to declutter? Create private auctions for your items instantly with one tap.',
-    view: 'dashboard',
-    placement: isMobile() ? 'top' : 'right'
-  },
-  {
-    targetId: 'inventory-search',
-    title: 'Ask Your Ark',
-    content: 'Type a natural question like \"Show me tools in the garage\" and the AI will find them instantly.',
-    view: 'inventory',
-    placement: 'bottom'
-  }
-];
-
-
 const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigate }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [tooltipStyle, setTooltipStyle] = useState({});
   const tooltipRef = useRef<HTMLDivElement>(null);
-  
-  const tourSteps = getTourSteps();
+  const isMobile = useIsMobile();
+
+  const tourSteps = useMemo<TourStep[]>(() => [
+    {
+      targetId: 'dashboard-value',
+      title: 'Your Asset Dashboard',
+      content: 'This is your financial overview. See the total value of your inventory at a glance.',
+      view: 'dashboard',
+      placement: 'bottom'
+    },
+    {
+      targetId: isMobile ? 'mobile-add' : 'dashboard-add',
+      title: 'Add Your First Item',
+      content: 'Tap here to start. The AI will identify your item, estimate its value, and suggest a maintenance schedule.',
+      view: 'dashboard',
+      placement: isMobile ? 'top' : 'bottom'
+    },
+    {
+      targetId: 'dashboard-quick-actions',
+      title: 'Powerful Tools',
+      content: 'Access the AI Move Planner, Risk Simulator, and Room Audit directly from here.',
+      view: 'dashboard',
+      placement: 'bottom'
+    },
+    {
+      targetId: 'nav-auctions',
+      title: 'ARKive Auctions',
+      content: 'Ready to declutter? Create private auctions for your items instantly with one tap.',
+      view: 'dashboard',
+      placement: isMobile ? 'top' : 'right'
+    },
+    {
+      targetId: 'inventory-search',
+      title: 'Ask Your Ark',
+      content: 'Type a natural question like "Show me tools in the garage" and the AI will find them instantly.',
+      view: 'inventory',
+      placement: 'bottom'
+    }
+  ], [isMobile]);
+
   const currentStep = tourSteps[stepIndex];
 
   const handleNext = useCallback(() => {
@@ -75,10 +73,18 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
   }, [onComplete]);
 
   const positionElement = useCallback((step: TourStep) => {
-    const element = document.getElementById(step.targetId);
+    // If mobile, try to find the mobile target first, fallback to desktop target if not found (and vice versa if needed)
+    // But here we rely on the step.targetId being correct based on isMobile
+    let element = document.getElementById(step.targetId);
+
+    // Fallback for add button if mobile-add is missing but dashboard-add exists (or vice versa)
+    if (!element && step.targetId === 'mobile-add') {
+      element = document.getElementById('dashboard-add');
+    }
+
     if (element) {
       const isFixed = window.getComputedStyle(element).position === 'fixed';
-      
+
       if (!isFixed) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
@@ -88,9 +94,10 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
       }, isFixed ? 50 : 350);
     } else {
       console.warn(`Tour target not found: ${step.targetId}`);
-      handleNext();
+      // Skip step if target not found, but prevent infinite loop if all missing
+      // For now just log warning. In production maybe auto-skip.
     }
-  }, [handleNext]);
+  }, []);
 
   useEffect(() => {
     if (!isActive) {
@@ -107,18 +114,23 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
     setTargetRect(null);
 
     const currentView = document.querySelector('[data-current-view]')?.getAttribute('data-current-view');
-    
-    if (currentView !== currentStep.view) {
+
+    // Simple view check - in a real app might need more robust routing check
+    // Here we assume onNavigate handles it or we are already there.
+    if (currentView !== currentStep.view && onNavigate) {
+      // If we need to navigate, we do it. 
+      // Note: This assumes onNavigate will trigger a re-render or view change that eventually mounts the target.
       onNavigate(currentStep.view);
-      setTimeout(() => positionElement(currentStep), 200);
+      // We wait a bit for navigation
+      setTimeout(() => positionElement(currentStep), 500);
     } else {
       positionElement(currentStep);
     }
 
     const handleResize = () => {
-        if (isActive && currentStep) {
-            positionElement(currentStep);
-        }
+      if (isActive && currentStep) {
+        positionElement(currentStep);
+      }
     }
 
     window.addEventListener('resize', handleResize);
@@ -127,7 +139,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
   }, [stepIndex, isActive, onNavigate, currentStep, onComplete, positionElement]);
 
   useLayoutEffect(() => {
-    if (!targetRect || !tooltipRef.current) return;
+    if (!targetRect || !tooltipRef.current || !currentStep) return;
 
     const tooltip = tooltipRef.current;
     const { width: tooltipWidth, height: tooltipHeight } = tooltip.getBoundingClientRect();
@@ -136,18 +148,24 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
     let top = 0;
     let left = 0;
     let placement = currentStep.placement;
-    
+
+    // Viewport boundary checks
     if (placement === 'bottom' && targetRect.bottom + padding + tooltipHeight > window.innerHeight) {
-        placement = 'top';
+      placement = 'top';
     }
     if (placement === 'top' && targetRect.top - padding - tooltipHeight < 0) {
-        placement = 'bottom';
+      placement = 'bottom';
     }
     if (placement === 'right' && targetRect.right + padding + tooltipWidth > window.innerWidth) {
-        placement = 'left';
+      placement = 'left';
     }
-     if (placement === 'left' && targetRect.left - padding - tooltipWidth < 0) {
-        placement = 'right';
+    if (placement === 'left' && targetRect.left - padding - tooltipWidth < 0) {
+      placement = 'right';
+    }
+
+    // Mobile specific override: if screen is narrow, force top/bottom to avoid squishing
+    if (window.innerWidth < 768 && (placement === 'left' || placement === 'right')) {
+      placement = targetRect.bottom + tooltipHeight + padding > window.innerHeight ? 'top' : 'bottom';
     }
 
     switch (placement) {
@@ -170,6 +188,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
         break;
     }
 
+    // Keep within screen bounds
     if (left < padding) left = padding;
     if (top < padding) top = padding;
     if (left + tooltipWidth > window.innerWidth - padding) {
@@ -189,8 +208,8 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
       willChange: 'transform, opacity',
     });
 
-  }, [targetRect, currentStep.placement]);
-  
+  }, [targetRect, currentStep?.placement]);
+
   if (!isActive || !currentStep || !targetRect) {
     return null;
   }
@@ -202,7 +221,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
       <svg
         width={window.innerWidth}
         height={window.innerHeight}
-        style={{ position: 'fixed', top: 0, left: 0, zIndex: 9998 }}
+        style={{ position: 'fixed', top: 0, left: 0, zIndex: 9998, pointerEvents: 'none' }}
         className="animate-fade-in"
       >
         <defs>
@@ -224,16 +243,17 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
           height="100%"
           fill="rgba(0, 0, 0, 0.6)"
           mask="url(#tour-mask)"
+          style={{ pointerEvents: 'auto' }}
         />
       </svg>
-      
+
       <div
         ref={tooltipRef}
         style={{
-            ...tooltipStyle,
-            zIndex: 9999,
-            opacity: 0,
-            transform: 'scale(0.95)'
+          ...tooltipStyle,
+          zIndex: 9999,
+          opacity: 0,
+          transform: 'scale(0.95)'
         }}
         className="bg-white rounded-xl shadow-2xl w-72 p-5 flex flex-col"
       >
@@ -244,7 +264,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
           </button>
         </div>
         <p className="text-gray-600 text-sm mb-5 leading-relaxed">{currentStep.content}</p>
-        
+
         <div className="flex justify-between items-center mt-auto">
           <div className="flex gap-2">
             {tourSteps.map((_, i) => (

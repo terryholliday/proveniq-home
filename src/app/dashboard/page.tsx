@@ -113,7 +113,9 @@ export default function DashboardPage() {
         </Alert>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          <StatCard title="Total Value" value={`$${totalValue.toLocaleString()}`} icon="dollar-sign" />
+          <div id="dashboard-value" className="contents">
+            <StatCard title="Total Value" value={`$${totalValue.toLocaleString()}`} icon="dollar-sign" />
+          </div>
           <StatCard title="Total Items" value={totalItems} icon="archive" />
           <StatCard title="Items on Loan" value={itemsOnLoan} icon="heart-handshake" />
           <StatCard title="Locations" value={totalLocations} icon="map-pin" />
@@ -121,7 +123,7 @@ export default function DashboardPage() {
 
         <div className="mb-8">
           <Link href="/inventory/add" passHref>
-            <Card className="group flex h-full flex-col items-center justify-center p-6 text-center transition-all hover:shadow-md bg-primary text-primary-foreground hover:bg-primary/90">
+            <Card id="dashboard-add" className="group flex h-full flex-col items-center justify-center p-6 text-center transition-all hover:shadow-md bg-primary text-primary-foreground hover:bg-primary/90">
               <div className="mb-3 rounded-full bg-primary-foreground/20 p-3">
                 <Plus className="h-6 w-6 text-primary-foreground" />
               </div>
@@ -131,7 +133,7 @@ export default function DashboardPage() {
         </div>
 
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+        <div id="dashboard-quick-actions" className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {actions.map((action) => (
             <DashboardActionCard key={action.title} {...action} />
           ))}

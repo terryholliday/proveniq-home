@@ -24,7 +24,7 @@ export function ConsentModal() {
     const firestore = useFirestore();
 
     // Fetch latest privacy policy
-    const ref = useMemo(() => firestore ? doc(firestore, 'legal_docs', 'privacy') : null, [firestore]);
+    const ref = useMemo(() => firestore ? doc(firestore, 'legal_documents', 'privacy') : null, [firestore]);
     const { data: privacyDoc } = useDoc<LegalDocument>(ref);
 
     const latestVersion = privacyDoc?.version || SEED_LEGAL_DOCS.find(d => d.id === 'privacy')?.version;

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import QRCode from 'react-qr-code';
-// @ts-ignore
 import Barcode from 'react-barcode';
 import { InventoryItem } from '@/lib/types';
 import { QrCode, ScanLine, Printer } from 'lucide-react';
@@ -95,8 +94,8 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ item }) => {
         <button
           onClick={() => setMode('qr')}
           className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${mode === 'qr'
-              ? 'bg-white text-indigo-600 shadow-sm'
-              : 'text-gray-500 hover:text-gray-700'
+            ? 'bg-white text-indigo-600 shadow-sm'
+            : 'text-gray-500 hover:text-gray-700'
             }`}
         >
           <QrCode size={16} />
@@ -105,8 +104,8 @@ const QRCodeDisplay: React.FC<QRCodeDisplayProps> = ({ item }) => {
         <button
           onClick={() => setMode('barcode')}
           className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all ${mode === 'barcode'
-              ? 'bg-white text-indigo-600 shadow-sm'
-              : 'text-gray-500 hover:text-gray-700'
+            ? 'bg-white text-indigo-600 shadow-sm'
+            : 'text-gray-500 hover:text-gray-700'
             }`}
         >
           <ScanLine size={16} />
