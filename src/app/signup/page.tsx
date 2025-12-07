@@ -62,6 +62,20 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showDemoOption, setShowDemoOption] = useState(false);
+
+  const handleDemoSignup = () => {
+    const mockUser = {
+      uid: 'demo-user-' + Date.now(),
+      email: 'demo@example.com',
+      displayName: 'Demo User',
+      emailVerified: true,
+      isAnonymous: false,
+      providerData: [],
+    };
+    sessionStorage.setItem('__MOCK_USER__', JSON.stringify(mockUser));
+    window.location.reload();
+  };
 
   useEffect(() => {
     if (auth) {
@@ -129,9 +143,12 @@ export default function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await createUserProfile(userCredential.user, { firstName, lastName });
       router.push("/onboarding/permissions");
-    } catch (err) {
+    } catch (err: any) {
       const message = err instanceof Error ? err.message : "Could not create account.";
       setError(message);
+      if (err?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
+        setShowDemoOption(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -152,6 +169,19 @@ export default function SignupPage() {
       {error && (
         <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm border border-red-100 mb-4 font-medium" role="alert">
           {error}
+          {showDemoOption && (
+            <div className="mt-3 pt-3 border-t border-red-200">
+              <p className="mb-2 text-xs text-red-800"> This domain is not authorized in Firebase. Use Demo Mode to continue locally.</p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDemoSignup}
+                className="w-full border-red-200 hover:bg-red-50 text-red-700 bg-white"
+              >
+                Enable Demo Mode (Bypass Auth)
+              </Button>
+            </div>
+          )}
         </div>
       )}
 

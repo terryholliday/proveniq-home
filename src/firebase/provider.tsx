@@ -93,8 +93,19 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
   const contextValue = useMemo((): FirebaseContextState => {
     // E2E Test Hook: Mock User
     let mockUser = null;
-    if (typeof window !== 'undefined' && (window as any).__MOCK_USER__) {
-      mockUser = (window as any).__MOCK_USER__;
+    if (typeof window !== 'undefined') {
+      if ((window as any).__MOCK_USER__) {
+        mockUser = (window as any).__MOCK_USER__;
+      } else {
+        const stored = sessionStorage.getItem('__MOCK_USER__');
+        if (stored) {
+          try {
+            mockUser = JSON.parse(stored);
+          } catch (e) {
+            console.error("Failed to parse mock user", e);
+          }
+        }
+      }
     }
 
     const servicesAvailable = !!(firebaseApp && firestore && auth);
