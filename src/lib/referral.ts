@@ -27,7 +27,7 @@ export function parseReferralCode(code: string): { valid: boolean; prefix?: stri
     };
 }
 
-export interface Referral reward {
+export interface ReferralReward {
     referrerId: string;
     refereeId: string;
     campaignId: string; // e.g., 'beta_launch_2025'
