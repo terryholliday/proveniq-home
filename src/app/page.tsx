@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -113,6 +113,25 @@ export default function LandingPage() {
   const [slideDirection, setSlideDirection] = useState('slide-in');
   const { user, isUserLoading } = useUser();
   const router = useRouter();
+  const transitionTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearTransitionTimeout = useCallback(() => {
+    if (transitionTimeout.current) {
+      clearTimeout(transitionTimeout.current);
+      transitionTimeout.current = null;
+    }
+  }, []);
+
+  const queueSlideChange = useCallback((delta: number) => {
+    setSlideDirection('slide-out');
+    clearTransitionTimeout();
+
+    transitionTimeout.current = setTimeout(() => {
+      setActiveIndex((prevIndex) => (prevIndex + delta + features.length) % features.length);
+      setSlideDirection('slide-in');
+      transitionTimeout.current = null;
+    }, 500);
+  }, [clearTransitionTimeout]);
 
   useEffect(() => {
     if (user) {
@@ -120,28 +139,19 @@ export default function LandingPage() {
     }
   }, [user, router]);
 
-  const handleNext = useCallback(() => {
-    setSlideDirection('slide-out');
-    setTimeout(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % features.length);
-      setSlideDirection('slide-in');
-    }, 500);
-  }, []);
+  const handleNext = useCallback(() => queueSlideChange(1), [queueSlideChange]);
 
-  const handlePrev = useCallback(() => {
-    setSlideDirection('slide-out');
-    setTimeout(() => {
-      setActiveIndex((prevIndex) => (prevIndex - 1 + features.length) % features.length);
-      setSlideDirection('slide-in');
-    }, 500);
-  }, []);
+  const handlePrev = useCallback(() => queueSlideChange(-1), [queueSlideChange]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
     }, 5000);
-    return () => clearInterval(interval);
-  }, [handleNext]);
+    return () => {
+      clearInterval(interval);
+      clearTransitionTimeout();
+    };
+  }, [handleNext, clearTransitionTimeout]);
 
   const userAvatars = PlaceHolderImages.filter(img => ['user-avatar-1', 'user-avatar-2', 'user-avatar-3'].includes(img.id));
 
