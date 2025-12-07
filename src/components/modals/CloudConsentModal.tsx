@@ -17,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ConsentRecord } from '@/lib/types';
 import { logConsentAccepted, logConsentViewed } from '@/lib/analytics';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 interface CloudConsentModalProps {
     isOpen: boolean;
@@ -108,7 +109,15 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
                         </div>
 
                         <p className="text-xs text-muted-foreground">
-                            By clicking "I Agree", you consent to the transfer of your data to cloud servers and accept the updated <a href="#" className="underline text-indigo-600">Privacy Policy (v2.0)</a> and <a href="#" className="underline text-indigo-600">Terms of Service</a>.
+                            By clicking "I Agree", you consent to the transfer of your data to cloud servers and accept the updated{" "}
+                            <Link href="/settings/legaldocs?doc=privacy" target="_blank" className="underline text-indigo-600">
+                                Privacy Policy (v2.0)
+                            </Link>{" "}
+                            and{" "}
+                            <Link href="/settings/legaldocs?doc=tos" target="_blank" className="underline text-indigo-600">
+                                Terms of Service
+                            </Link>
+                            .
                         </p>
                     </DialogDescription>
                 </DialogHeader>
