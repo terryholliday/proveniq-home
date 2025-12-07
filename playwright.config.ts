@@ -8,7 +8,7 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     reporter: 'html',
     use: {
-        baseURL: 'http://localhost:9002',
+        baseURL: 'http://localhost:9003',
         trace: 'on-first-retry',
     },
     projects: [
@@ -23,7 +23,7 @@ export default defineConfig({
     ],
     webServer: {
         command: 'npm run dev',
-        url: 'http://localhost:9002',
+        url: 'http://localhost:9003',
         reuseExistingServer: !process.env.CI,
         timeout: 120000, // 2 minutes for Next.js compilation
     },
