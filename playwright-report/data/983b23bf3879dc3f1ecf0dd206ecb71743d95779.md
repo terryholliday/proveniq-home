@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - img "MyARK Logo" [ref=e5]
+      - heading "Create an account" [level=1] [ref=e6]
+      - paragraph [ref=e7]: Enter your information below to get started
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: First name
+          - textbox "First name" [ref=e12]:
+            - /placeholder: Max
+        - generic [ref=e13]:
+          - generic [ref=e14]: Last name
+          - textbox "Last name" [ref=e15]:
+            - /placeholder: Robinson
+      - generic [ref=e16]:
+        - generic [ref=e17]: Email
+        - textbox "Email" [ref=e18]:
+          - /placeholder: m@example.com
+      - generic [ref=e19]:
+        - generic [ref=e20]: Password
+        - textbox "Password" [ref=e21]
+      - generic [ref=e22]:
+        - checkbox "I agree to the Terms of Service, Privacy Policy, and AI Disclosure." [ref=e23] [cursor=pointer]
+        - checkbox
+        - generic [ref=e24]:
+          - text: I agree to the
+          - link "Terms of Service" [ref=e25] [cursor=pointer]:
+            - /url: /settings/legaldocs?doc=tos
+          - text: ","
+          - link "Privacy Policy" [ref=e26] [cursor=pointer]:
+            - /url: /settings/legaldocs?doc=privacy
+          - text: ", and"
+          - link "AI Disclosure" [ref=e27] [cursor=pointer]:
+            - /url: /settings/legaldocs?doc=ai
+          - text: .
+      - button "Create Account" [ref=e28] [cursor=pointer]
+      - generic [ref=e33]: Or continue with
+      - generic [ref=e34]:
+        - button [ref=e35] [cursor=pointer]:
+          - img
+        - button [ref=e36] [cursor=pointer]:
+          - img
+        - button [ref=e37] [cursor=pointer]:
+          - img
+    - generic [ref=e38]:
+      - text: Already have an account?
+      - link "Sign In" [ref=e39] [cursor=pointer]:
+        - /url: /login
+  - region "Notifications (F8)":
+    - list
+```

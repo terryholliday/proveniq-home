@@ -1,0 +1,209 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - img "MyARK Logo" [ref=e9]
+        - generic [ref=e10]: MyARK
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link "Dashboard" [ref=e14] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=e15]:
+              - img [ref=e16]
+              - generic [ref=e21]: Dashboard
+        - generic [ref=e22]:
+          - generic [ref=e23]: Inventory
+          - listitem [ref=e24]:
+            - link "My ARK" [ref=e25] [cursor=pointer]:
+              - /url: /inventory
+              - generic [ref=e26]:
+                - img [ref=e27]
+                - generic [ref=e30]: My ARK
+          - listitem [ref=e31]:
+            - link "Lending Tracker" [ref=e32] [cursor=pointer]:
+              - /url: /lending
+              - generic [ref=e33]:
+                - img [ref=e34]
+                - generic [ref=e39]: Lending Tracker
+        - generic [ref=e40]:
+          - generic [ref=e41]: Services
+          - listitem [ref=e42]:
+            - button "AI Suite" [ref=e43] [cursor=pointer]:
+              - generic [ref=e44]:
+                - img [ref=e45]
+                - generic [ref=e47]: AI Suite
+          - listitem [ref=e48]:
+            - link "Move Planner" [ref=e49] [cursor=pointer]:
+              - /url: /move-planner
+              - generic [ref=e50]:
+                - img [ref=e51]
+                - generic [ref=e54]: Move Planner
+          - listitem [ref=e55]:
+            - button "ARKive Auctions" [ref=e56] [cursor=pointer]:
+              - generic [ref=e57]:
+                - img [ref=e58]
+                - generic [ref=e60]: ARKive Auctions
+          - listitem [ref=e61]:
+            - button "Insurance" [ref=e62] [cursor=pointer]:
+              - generic [ref=e63]:
+                - img [ref=e64]
+                - generic [ref=e67]: Insurance
+          - listitem [ref=e68]:
+            - link "Legacy Planner" [ref=e69] [cursor=pointer]:
+              - /url: /legacy-planner
+              - generic [ref=e70]:
+                - img [ref=e71]
+                - generic [ref=e74]: Legacy Planner
+        - generic [ref=e75]:
+          - generic [ref=e76]: Support
+          - listitem [ref=e77]:
+            - link "User Guide" [ref=e78] [cursor=pointer]:
+              - /url: /user-guide
+              - generic [ref=e79]:
+                - img [ref=e80]
+                - generic [ref=e83]: User Guide
+        - generic [ref=e84]:
+          - generic [ref=e85]: System
+          - listitem [ref=e86]:
+            - link "Settings" [ref=e87] [cursor=pointer]:
+              - /url: /settings
+              - generic [ref=e88]:
+                - img [ref=e89]
+                - generic [ref=e92]: Settings
+      - link "Admin" [ref=e95] [cursor=pointer]:
+        - /url: /admin
+        - img [ref=e96]
+        - generic [ref=e99]: Admin
+    - main [ref=e100]:
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - img [ref=e103]
+          - searchbox "Ask your ARK..." [ref=e106]
+        - button "Toggle notifications" [ref=e107] [cursor=pointer]:
+          - img
+          - generic [ref=e108]: Toggle notifications
+        - button "U" [ref=e109] [cursor=pointer]:
+          - generic [ref=e111]: U
+      - main [ref=e112]:
+        - generic [ref=e113]:
+          - generic [ref=e117]:
+            - generic [ref=e119]:
+              - img "MyARK Logo" [ref=e120]
+              - generic [ref=e121]: MyARK
+            - list [ref=e123]:
+              - listitem [ref=e124]:
+                - link "Dashboard" [ref=e125] [cursor=pointer]:
+                  - /url: /dashboard
+                  - generic [ref=e126]:
+                    - img [ref=e127]
+                    - generic [ref=e132]: Dashboard
+              - generic [ref=e133]:
+                - generic [ref=e134]: Inventory
+                - listitem [ref=e135]:
+                  - link "My ARK" [ref=e136] [cursor=pointer]:
+                    - /url: /inventory
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: My ARK
+                - listitem [ref=e142]:
+                  - link "Lending Tracker" [ref=e143] [cursor=pointer]:
+                    - /url: /lending
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e150]: Lending Tracker
+              - generic [ref=e151]:
+                - generic [ref=e152]: Services
+                - listitem [ref=e153]:
+                  - button "AI Suite" [ref=e154] [cursor=pointer]:
+                    - generic [ref=e155]:
+                      - img [ref=e156]
+                      - generic [ref=e158]: AI Suite
+                - listitem [ref=e159]:
+                  - link "Move Planner" [ref=e160] [cursor=pointer]:
+                    - /url: /move-planner
+                    - generic [ref=e161]:
+                      - img [ref=e162]
+                      - generic [ref=e165]: Move Planner
+                - listitem [ref=e166]:
+                  - button "ARKive Auctions" [ref=e167] [cursor=pointer]:
+                    - generic [ref=e168]:
+                      - img [ref=e169]
+                      - generic [ref=e171]: ARKive Auctions
+                - listitem [ref=e172]:
+                  - button "Insurance" [ref=e173] [cursor=pointer]:
+                    - generic [ref=e174]:
+                      - img [ref=e175]
+                      - generic [ref=e178]: Insurance
+                - listitem [ref=e179]:
+                  - link "Legacy Planner" [ref=e180] [cursor=pointer]:
+                    - /url: /legacy-planner
+                    - generic [ref=e181]:
+                      - img [ref=e182]
+                      - generic [ref=e185]: Legacy Planner
+              - generic [ref=e186]:
+                - generic [ref=e187]: Support
+                - listitem [ref=e188]:
+                  - link "User Guide" [ref=e189] [cursor=pointer]:
+                    - /url: /user-guide
+                    - generic [ref=e190]:
+                      - img [ref=e191]
+                      - generic [ref=e194]: User Guide
+              - generic [ref=e195]:
+                - generic [ref=e196]: System
+                - listitem [ref=e197]:
+                  - link "Settings" [ref=e198] [cursor=pointer]:
+                    - /url: /settings
+                    - generic [ref=e199]:
+                      - img [ref=e200]
+                      - generic [ref=e203]: Settings
+            - link "Admin" [ref=e206] [cursor=pointer]:
+              - /url: /admin
+              - img [ref=e207]
+              - generic [ref=e210]: Admin
+          - main [ref=e211]:
+            - generic [ref=e212]:
+              - generic [ref=e213]:
+                - img [ref=e214]
+                - searchbox "Ask your ARK..." [ref=e217]
+              - button "Toggle notifications" [ref=e218] [cursor=pointer]:
+                - img
+                - generic [ref=e219]: Toggle notifications
+              - button "U" [ref=e220] [cursor=pointer]:
+                - generic [ref=e222]: U
+            - main [ref=e223]:
+              - generic [ref=e225]:
+                - generic [ref=e226]:
+                  - heading "Add New Item" [level=1] [ref=e227]
+                  - link "Close" [ref=e228] [cursor=pointer]:
+                    - /url: /inventory
+                    - button "Close" [ref=e229]:
+                      - img
+                - generic [ref=e230]:
+                  - generic [ref=e232] [cursor=pointer]:
+                    - img [ref=e233]
+                    - paragraph [ref=e236]: Drag & drop images here
+                    - paragraph [ref=e237]: or Browse files
+                  - generic [ref=e240]: OR
+                  - generic [ref=e242]:
+                    - button "Use Camera" [ref=e243] [cursor=pointer]:
+                      - img
+                      - generic [ref=e244]: Use Camera
+                    - button "Scan QR Code" [ref=e245] [cursor=pointer]:
+                      - img
+                      - generic [ref=e246]: Scan QR Code
+  - region "Notifications (F8)":
+    - list [ref=e248]:
+      - status [ref=e249]:
+        - generic [ref=e250]:
+          - generic [ref=e251]: File Selected
+          - generic [ref=e252]: test-image.png is ready to be scanned.
+        - button [ref=e253] [cursor=pointer]:
+          - img [ref=e254]
+  - button "Open Next.js Dev Tools" [ref=e263] [cursor=pointer]:
+    - img [ref=e264]
+  - alert [ref=e267]
+  - status [ref=e268]: Notification File Selectedtest-image.png is ready to be scanned.
+```
