@@ -24,6 +24,7 @@ export function UserNav() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      sessionStorage.removeItem('__MOCK_USER__');
       router.push('/login');
     } catch (error) {
       console.error("Sign out error", error);
@@ -67,10 +68,10 @@ export function UserNav() {
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleSignOut}>
-            <LogOut />
-            Log out
-          </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignOut}>
+          <LogOut />
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
