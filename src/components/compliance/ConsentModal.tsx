@@ -57,7 +57,6 @@ export function ConsentModal() {
             <AlertDialogContent className="max-h-[85vh] overflow-y-auto">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Update to Privacy Policy</AlertDialogTitle>
-<<<<<<< ours
                     <AlertDialogDescription asChild>
                         <div className="space-y-4 text-sm text-muted-foreground">
                             <p>
@@ -68,16 +67,6 @@ export function ConsentModal() {
                                 Please review the <Link href="/settings/legaldocs?doc=privacy" className="text-indigo-600 underline" target="_blank">new policy</Link> to continue using MyARK.
                             </p>
                         </div>
-=======
-                    <AlertDialogDescription className="space-y-4">
-                        <p>
-                            We have updated our Privacy Policy to version <strong>{latestVersion}</strong>.
-                            This update covers our migration to cloud storage and how we handle your data.
-                        </p>
-                        <p>
-                            Please review the <Link href="/settings?doc=privacy" className="text-indigo-600 underline" target="_blank">new policy</Link> to continue using MyARK.
-                        </p>
->>>>>>> theirs
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
