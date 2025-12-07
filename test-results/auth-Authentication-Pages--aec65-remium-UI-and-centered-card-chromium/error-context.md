@@ -1,0 +1,78 @@
+# Page snapshot
+
+```yaml
+- generic [active]:
+  - generic:
+    - generic:
+      - generic:
+        - img
+        - heading [level=1]: Create an account
+        - paragraph: Enter your information below to get started
+      - generic:
+        - generic:
+          - generic:
+            - generic: First name
+            - textbox:
+              - /placeholder: Max
+          - generic:
+            - generic: Last name
+            - textbox:
+              - /placeholder: Robinson
+        - generic:
+          - generic: Email
+          - textbox:
+            - /placeholder: m@example.com
+        - generic:
+          - generic: Password
+          - textbox
+        - generic:
+          - checkbox
+          - generic:
+            - text: I agree to the
+            - link:
+              - /url: /settings/legaldocs?doc=tos
+              - text: Terms of Service
+            - text: ","
+            - link:
+              - /url: /settings/legaldocs?doc=privacy
+              - text: Privacy Policy
+            - text: ", and"
+            - link:
+              - /url: /settings/legaldocs?doc=ai
+              - text: AI Disclosure
+            - text: .
+        - button: Create Account
+        - generic:
+          - generic:
+            - generic: Or continue with
+        - generic:
+          - button:
+            - img
+          - button:
+            - img
+          - button:
+            - img
+      - generic:
+        - text: Already have an account?
+        - link:
+          - /url: /login
+          - text: Sign In
+  - list
+  - button [ref=e6] [cursor=pointer]:
+    - img [ref=e7]
+  - alert
+  - alertdialog "Update to Privacy Policy" [ref=e11]:
+    - generic [ref=e12]:
+      - heading "Update to Privacy Policy" [level=2] [ref=e13]
+      - generic [ref=e14]:
+        - paragraph [ref=e15]:
+          - text: We have updated our Privacy Policy to version
+          - strong [ref=e16]: 2.0-cloud-migration
+          - text: . This update covers our migration to cloud storage and how we handle your data.
+        - paragraph [ref=e17]:
+          - text: Please review the
+          - link "new policy" [ref=e18] [cursor=pointer]:
+            - /url: /settings/legaldocs?doc=privacy
+          - text: to continue using MyARK.
+    - button "I Accept" [ref=e20] [cursor=pointer]
+```

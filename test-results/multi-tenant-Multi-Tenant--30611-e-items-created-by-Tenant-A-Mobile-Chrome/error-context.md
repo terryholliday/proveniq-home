@@ -1,0 +1,101 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [active]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - navigation [ref=e7]:
+          - button "previous" [disabled] [ref=e8]:
+            - img "previous" [ref=e9]
+          - generic [ref=e11]:
+            - generic [ref=e12]: 1/
+            - text: "1"
+          - button "next" [disabled] [ref=e13]:
+            - img "next" [ref=e14]
+        - link "Next.js 15.5.7 (outdated) Webpack" [ref=e17] [cursor=pointer]:
+          - /url: https://nextjs.org/docs/messages/version-staleness
+          - img [ref=e18]
+          - generic "An outdated version detected (latest is 16.0.7), upgrade is highly recommended!" [ref=e20]: Next.js 15.5.7 (outdated)
+          - generic [ref=e21]: Webpack
+      - dialog "Runtime FirebaseError" [ref=e23]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - generic [ref=e30]: Runtime FirebaseError
+              - generic [ref=e31]:
+                - button "Copy Error Info" [ref=e32] [cursor=pointer]:
+                  - img [ref=e33]
+                - button "No related documentation found" [disabled] [ref=e35]:
+                  - img [ref=e36]
+                - link "Learn more about enabling Node.js inspector for server code with Chrome DevTools" [ref=e38] [cursor=pointer]:
+                  - /url: https://nextjs.org/docs/app/building-your-application/configuring/debugging#server-side-code
+                  - img [ref=e39]
+            - generic [ref=e47]:
+              - paragraph [ref=e48]: "Missing or insufficient permissions: The following request was denied by Firestore Security Rules: { \"auth\": null, \"method\": \"get\", \"path\": \"/databases/(default)/documents/legal_documents/privacy\" }"
+              - button "Show More" [ref=e50] [cursor=pointer]
+          - generic [ref=e51]:
+            - generic [ref=e52]:
+              - paragraph [ref=e54]:
+                - img [ref=e56]
+                - generic [ref=e59]: src\firebase\firestore\use-doc.tsx (75:33) @ useDoc.useEffect.unsubscribe
+                - button "Open in editor" [ref=e60] [cursor=pointer]:
+                  - img [ref=e62]
+              - generic [ref=e65]:
+                - generic [ref=e66]: "73 | },"
+                - generic [ref=e67]: "74 | () => {"
+                - generic [ref=e68]: "> 75 | const contextualError = new FirestorePermissionError({"
+                - generic [ref=e69]: "| ^"
+                - generic [ref=e70]: "76 | operation: 'get',"
+                - generic [ref=e71]: "77 | path: memoizedDocRef.path,"
+                - generic [ref=e72]: "78 | })"
+            - generic [ref=e73]:
+              - generic [ref=e74]:
+                - paragraph [ref=e75]:
+                  - text: Call Stack
+                  - generic [ref=e76]: "5"
+                - button "Show 1 ignore-listed frame(s)" [ref=e77] [cursor=pointer]:
+                  - text: Show 1 ignore-listed frame(s)
+                  - img [ref=e78]
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - text: useDoc.useEffect.unsubscribe
+                  - button "Open useDoc.useEffect.unsubscribe in editor" [ref=e82] [cursor=pointer]:
+                    - img [ref=e83]
+                - text: src\firebase\firestore\use-doc.tsx (75:33)
+              - generic [ref=e85]:
+                - generic [ref=e86]:
+                  - text: FirebaseProvider
+                  - button "Open FirebaseProvider in editor" [ref=e87] [cursor=pointer]:
+                    - img [ref=e88]
+                - text: src\firebase\provider.tsx (114:7)
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - text: FirebaseClientProvider
+                  - button "Open FirebaseClientProvider in editor" [ref=e92] [cursor=pointer]:
+                    - img [ref=e93]
+                - text: src\firebase\client-provider.tsx (18:5)
+              - generic [ref=e95]:
+                - generic [ref=e96]:
+                  - text: RootLayout
+                  - button "Open RootLayout in editor" [ref=e97] [cursor=pointer]:
+                    - img [ref=e98]
+                - text: src\app\layout.tsx (31:9)
+        - generic [ref=e100]:
+          - generic [ref=e101]: "1"
+          - generic [ref=e102]: "2"
+    - generic [ref=e107] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=e108]:
+        - img [ref=e109]
+      - generic [ref=e112]:
+        - button "Open issues overlay" [ref=e113]:
+          - generic [ref=e114]:
+            - generic [ref=e115]: "0"
+            - generic [ref=e116]: "1"
+          - generic [ref=e117]: Issue
+        - button "Collapse issues badge" [ref=e118]:
+          - img [ref=e119]
+  - iframe [ref=e121]:
+    
+  - 'heading "Application error: a client-side exception has occurred while loading localhost (see the browser console for more information)." [level=2] [ref=e124]'
+```

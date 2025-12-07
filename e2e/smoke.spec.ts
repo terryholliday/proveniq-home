@@ -28,7 +28,7 @@ test.describe('Smoke Test: Core Flows', () => {
 
         // 4. Verify Success Toast
         // The toast should contain the file name
-        const toastTitle = page.locator('text=File Selected');
+        const toastTitle = page.locator('text=File Selected').first();
         const toastDesc = page.locator(`text=${fileName} is ready to be scanned.`);
 
         await expect(toastTitle).toBeVisible();
