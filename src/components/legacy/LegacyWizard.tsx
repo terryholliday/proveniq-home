@@ -1,21 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CheckCircle, ChevronRight, ChevronLeft, FileText, Loader2 } from 'lucide-react';
+import { CheckCircle, ChevronRight, ChevronLeft, FileText, Loader2, MapPinOff } from 'lucide-react';
 import { useFirestore, useUser } from '@/firebase/provider';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 type WizardStep = 'intro' | 'state' | 'type' | 'details' | 'review' | 'success';
 
+// States where the online wizard is not allowed due to legal restrictions
+const BANNED_STATES = ['FL'];
+
 export function LegacyWizard() {
     const [step, setStep] = useState<WizardStep>('intro');
     const [isSaving, setIsSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [checkingLocation, setCheckingLocation] = useState(true);
+    const [isRestricted, setIsRestricted] = useState(false);
+    const [detectedState, setDetectedState] = useState<string | null>(null);
     const firestore = useFirestore();
     const { user } = useUser();
 
@@ -25,6 +31,30 @@ export function LegacyWizard() {
         fullName: '',
         beneficiary: '',
     });
+
+    useEffect(() => {
+        const checkLocation = async () => {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+
+                if (data.region_code) {
+                    setDetectedState(data.region_code);
+                    if (BANNED_STATES.includes(data.region_code)) {
+                        setIsRestricted(true);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to detect location:', error);
+                // On error, we default to allowing access, or we could be strict
+                // For now, allowing access to avoid blocking legitimate users on API fail
+            } finally {
+                setCheckingLocation(false);
+            }
+        };
+
+        checkLocation();
+    }, []);
 
     const updateData = (key: string, value: string) => {
         setFormData(prev => ({ ...prev, [key]: value }));
@@ -57,6 +87,43 @@ export function LegacyWizard() {
             setIsSaving(false);
         }
     };
+
+    const renderRestricted = () => (
+        <Card className="border-red-200 bg-red-50">
+            <CardHeader className="text-center">
+                <div className="mx-auto bg-red-100 p-4 rounded-full mb-4 w-fit">
+                    <MapPinOff className="h-8 w-8 text-red-600" />
+                </div>
+                <CardTitle className="text-red-800">Service Not Available in {detectedState}</CardTitle>
+                <CardDescription className="text-red-700">
+                    due to local regulations in your state, we cannot offer the automated will creation wizard.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 text-center">
+                <p className="text-sm text-red-800/80">
+                    We recommend using our "Scrivener" service which connects you with a legal professional who can assist you in drafting your documents in compliance with {detectedState} state laws.
+                </p>
+                <Button className="w-full mt-4" variant="default" onClick={() => window.location.href = '/scrivener-service'}>
+                    Connect with a Scrivener
+                </Button>
+            </CardContent>
+        </Card>
+    );
+
+    if (checkingLocation) {
+        return (
+            <Card>
+                <CardContent className="flex flex-col items-center justify-center py-10 space-y-4">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <p className="text-sm text-muted-foreground">Verifying availability in your region...</p>
+                </CardContent>
+            </Card>
+        );
+    }
+
+    if (isRestricted) {
+        return renderRestricted();
+    }
 
     const renderIntro = () => (
         <Card className="border-dashed border-primary/50 bg-primary/5">

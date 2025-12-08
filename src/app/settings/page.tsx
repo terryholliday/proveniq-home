@@ -133,6 +133,37 @@ function SettingsContent() {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Security Section */}
+                <div>
+                    <div className="flex items-center gap-2 mb-4">
+                        {/* Shield Icon inline */}
+                        <svg className="h-5 w-5 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                        <h2 className="text-xl font-semibold tracking-tight">Security</h2>
+                    </div>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Biometric Authentication</CardTitle>
+                            <CardDescription>Use your face or fingerprint to sign in securely.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                            <div className="text-sm text-muted-foreground">
+                                Supported on devices with FaceID, TouchID, or Hello.
+                            </div>
+                            <Button variant="outline" onClick={() => {
+                                import('@/firebase/non-blocking-login').then(mod => {
+                                    // We need to pass the current auth user here. 
+                                    // Since we are in settings, we assume user is logged in.
+                                    // For now just call the stub.
+                                    // mod.registerPasskey(auth, user);
+                                    alert("Passkey registration initiated (stub).");
+                                });
+                            }}>
+                                Register Passkey
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
         </>
     );
