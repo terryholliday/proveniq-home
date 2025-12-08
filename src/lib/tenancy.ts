@@ -5,6 +5,7 @@ export interface TenantContext {
     userId?: string;
     roles: string[];
     isSystem: boolean;
+    traceId?: string;
 }
 
 /**

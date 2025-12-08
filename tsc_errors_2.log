@@ -1,0 +1,5 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+src/ai/flows/vision-pipeline-v2.test.ts(46,9): error TS2578: Unused '@ts-expect-error' directive.

@@ -1,0 +1,39 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+src/ai/flows/vision-pipeline-v2.test.ts(4,1): error TS2304: Cannot find name 'jest'.
+src/ai/flows/vision-pipeline-v2.test.ts(7,27): error TS2304: Cannot find name 'jest'.
+src/ai/flows/vision-pipeline-v2.test.ts(7,36): error TS7006: Parameter 'config' implicitly has an 'any' type.
+src/ai/flows/vision-pipeline-v2.test.ts(9,24): error TS2304: Cannot find name 'jest'.
+src/ai/flows/vision-pipeline-v2.test.ts(30,25): error TS2304: Cannot find name 'jest'.
+src/ai/flows/vision-pipeline-v2.test.ts(30,34): error TS7006: Parameter 'config' implicitly has an 'any' type.
+src/ai/flows/vision-pipeline-v2.test.ts(30,42): error TS7006: Parameter 'handler' implicitly has an 'any' type.
+src/ai/flows/vision-pipeline-v2.test.ts(35,1): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/ai/flows/vision-pipeline-v2.test.ts(36,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/ai/flows/vision-pipeline-v2.test.ts(46,9): error TS2578: Unused '@ts-expect-error' directive.
+src/ai/flows/vision-pipeline-v2.test.ts(49,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(50,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(52,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(53,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(55,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(57,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(58,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(60,9): error TS2304: Cannot find name 'expect'.
+src/ai/flows/vision-pipeline-v2.test.ts(61,9): error TS2304: Cannot find name 'expect'.
+src/ai/orchestrator.ts(94,13): error TS2578: Unused '@ts-expect-error' directive.
+src/ai/safety/adversarial_test.ts(92,71): error TS2304: Cannot find name 'passwed'.
+src/analytics/partitioning.ts(1,24): error TS2307: Cannot find module '../logger' or its corresponding type declarations.
+src/app/api/analyze/route.ts(23,30): error TS2339: Property 'traceId' does not exist on type 'TenantContext'.
+src/app/settings/legaldocs.tsx(8,27): error TS2307: Cannot find module 'react-markdown' or its corresponding type declarations.
+src/lib/merkle_tree.test.ts(8,1): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/lib/merkle_tree.test.ts(9,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/lib/merkle_tree.test.ts(12,9): error TS2304: Cannot find name 'expect'.
+src/lib/merkle_tree.test.ts(15,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/lib/merkle_tree.test.ts(19,9): error TS2304: Cannot find name 'expect'.
+src/lib/merkle_tree.test.ts(22,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/lib/merkle_tree.test.ts(35,9): error TS2304: Cannot find name 'expect'.
+src/lib/merkle_tree.test.ts(38,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/lib/merkle_tree.test.ts(47,9): error TS2304: Cannot find name 'expect'.
+src/lib/merkle_tree.test.ts(50,5): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/lib/merkle_tree.test.ts(58,9): error TS2304: Cannot find name 'expect'.

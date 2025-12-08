@@ -50,6 +50,7 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
 
             // Merge consent into user profile
             await setDoc(doc(db, 'users', auth.currentUser.uid), {
+                uid: auth.currentUser.uid, // Required by Firestore 'create' rule if doc is missing
                 consents: {
                     cloudStorage: consentRecord
                 }

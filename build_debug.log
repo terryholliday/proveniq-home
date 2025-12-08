@@ -1,0 +1,25 @@
+
+> nextn@0.1.0 build
+> next build
+
+ Γ¿» Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error
+
+> Build error occurred
+[Error: Cannot find module './IsArray'
+Require stack:
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\es-abstract\2024\Call.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\string.prototype.matchall\implementation.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\string.prototype.matchall\index.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\@surma\rollup-plugin-off-main-thread\index.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\workbox-webpack-plugin\node_modules\workbox-build\build\lib\bundle.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\workbox-webpack-plugin\build\generate-sw.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\workbox-webpack-plugin\build\index.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\node_modules\@ducanh2912\next-pwa\dist\index.cjs
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\app\next.config.compiled.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\node_modules\next\dist\server\config.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\node_modules\next\dist\cli\next-test.js
+- C:\Users\TERRYHOLLIDAY\Dropbox\TrueARK Technologies\MyArk\App-main\node_modules\next\dist\bin\next] {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}

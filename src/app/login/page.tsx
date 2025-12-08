@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth, useUser } from "@/firebase";
 import {
-    signInWithPopup,
+    getRedirectResult,
+    signInWithRedirect,
     GoogleAuthProvider,
     FacebookAuthProvider,
     OAuthProvider as AppleAuthProvider
@@ -58,6 +59,8 @@ export default function LoginPage() {
     const { user, isUserLoading } = useUser();
     const { createUserProfile } = useUserProfile(user);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [showDemoOption, setShowDemoOption] = useState(false);
 
     useEffect(() => {
         if (!isUserLoading && user) {
@@ -65,16 +68,37 @@ export default function LoginPage() {
         }
     }, [user, isUserLoading, router]);
 
+    // Handle Redirect Result
+    useEffect(() => {
+        if (auth) {
+            getRedirectResult(auth)
+                .then(async (result) => {
+                    if (!result) return;
+                    setIsLoading(true);
+                    await createUserProfile(result.user);
+                    router.push('/dashboard');
+                })
+                .catch((err) => {
+                    const message = err instanceof Error ? err.message : "Social login failed.";
+                    setError(message);
+                    setIsLoading(false);
+                });
+        }
+    }, [auth, createUserProfile, router]);
+
+
     const handleOAuthLogin = async (provider: GoogleAuthProvider | FacebookAuthProvider | AppleAuthProvider) => {
         setIsLoading(true);
+        setError("");
         try {
-            const result = await signInWithPopup(auth, provider);
-            await createUserProfile(result.user);
-            router.push('/dashboard');
-        } catch (error) {
-            console.error("OAuth sign-in error", error);
-        } finally {
+            await signInWithRedirect(auth, provider);
+        } catch (error: any) {
+            const message = error instanceof Error ? error.message : "OAuth sign-in error";
+            setError(message);
             setIsLoading(false);
+            if (error?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
+                setShowDemoOption(true);
+            }
         }
     };
 
@@ -97,25 +121,59 @@ export default function LoginPage() {
         setIsLoading(true);
         const email = (document.getElementById('email') as HTMLInputElement).value;
         const password = (document.getElementById('password') as HTMLInputElement).value;
+        setError("");
 
         try {
             await initiateEmailSignIn(auth, email, password);
             // initiateEmailSignIn handles its own navigation/success usually or throws
-        } catch (e) {
-            // handle error
+        } catch (e: any) {
             console.error(e);
+            const message = e instanceof Error ? e.message : "Login failed.";
+            setError(message);
         } finally {
             setIsLoading(false);
         }
     }
 
+    const handleDemoLogin = () => {
+        const mockUser = {
+            uid: 'demo-user-' + Date.now(),
+            email: 'demo@example.com',
+            displayName: 'Demo User',
+            emailVerified: true,
+            isAnonymous: false,
+            providerData: [],
+        };
+        sessionStorage.setItem('__MOCK_USER__', JSON.stringify(mockUser));
+        window.location.reload();
+    };
+
     return (
-        <>
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-100 space-y-6">
             <div className="flex flex-col items-center justify-center mb-6">
                 <MyArkLogo size={48} className="mb-4" />
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900">Welcome Back</h1>
                 <p className="text-sm text-muted-foreground mt-2">Enter your email and password to sign in</p>
             </div>
+
+            {error && (
+                <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm border border-red-100 mb-4 font-medium" role="alert">
+                    {error}
+                    {showDemoOption && (
+                        <div className="mt-3 pt-3 border-t border-red-200">
+                            <p className="mb-2 text-xs text-red-800"> This domain is not authorized in Firebase. Use Demo Mode to continue locally.</p>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={handleDemoLogin}
+                                className="w-full border-red-200 hover:bg-red-50 text-red-700 bg-white"
+                            >
+                                Enable Demo Mode (Bypass Auth)
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            )}
 
             <div className="grid gap-4">
                 <div className="grid gap-2">
@@ -167,8 +225,16 @@ export default function LoginPage() {
                     <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleFacebookLogin} disabled={isLoading}>
                         <FacebookIcon />
                     </Button>
-                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleAppleLogin} disabled={isLoading}>
                         <AppleIcon />
+                    </Button>
+                     <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={() => {
+                         // Import dynamically or use the imported function if available
+                         import('@/firebase/non-blocking-login').then(mod => {
+                            // mod.signInWithPasskey(auth);
+                            alert("Biometric sign-in initiated (stub).");
+                         });
+                     }} disabled={isLoading} title="Sign in with Biometrics">
+                        <svg className="w-5 h-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M17.29 21.02c.12-.6.41-2.3.41-3.02 0-5.5-4.5-10-10-10S2 12.5 2 18"/><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M10 12a14.7 14.7 0 0 0-1.4 8.7"/><path d="M14 12c.5 1 1 2.5 1 5a13.6 13.6 0 0 1-.7 3.3"/></svg>
                     </Button>
                 </div>
             </div>
@@ -178,6 +244,6 @@ export default function LoginPage() {
                     Sign Up
                 </Link>
             </div>
-        </>
+        </div >
     )
 }
