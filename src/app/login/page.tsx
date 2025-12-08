@@ -149,7 +149,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-100 space-y-6">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8 border border-gray-100 space-y-6">
             <div className="flex flex-col items-center justify-center mb-6">
                 <MyArkLogo size={48} className="mb-4" />
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900">Welcome Back</h1>
