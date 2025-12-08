@@ -6,11 +6,6 @@ import {
   signInWithEmailAndPassword,
   UserCredential,
   // Assume getAuth and app are initialized elsewhere
-  signInAnonymously,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  UserCredential,
-  // Assume getAuth and app are initialized elsewhere
 } from 'firebase/auth';
 
 /** Initiate anonymous sign-in (non-blocking). */
