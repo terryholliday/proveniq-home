@@ -18,7 +18,7 @@ import {
 } from "firebase/auth";
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { Loader2 } from "lucide-react";
-import { MyArkLogo } from "@/components/onboarding/MyArkLogo";
+import { AuthPageFrame } from "@/components/auth/AuthPageFrame";
 
 // --- Social Icons ---
 const GoogleIcon = () => (
@@ -159,13 +159,18 @@ export default function SignupPage() {
   const handleAppleSignup = () => handleOAuthSignup(new AppleAuthProvider("apple.com"));
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center mb-6">
-        <MyArkLogo size={48} className="mb-4" />
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Create an account</h1>
-        <p className="text-sm text-muted-foreground mt-2">Enter your information below to get started</p>
-      </div>
-
+    <AuthPageFrame
+      title="Create an account"
+      subtitle="Enter your information below to get started"
+      footer={(
+        <>
+          Already have an account?{" "}
+          <Link href="/login" className="font-bold text-indigo-600 hover:underline">
+            Sign In
+          </Link>
+        </>
+      )}
+    >
       {error && (
         <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm border border-red-100 mb-4 font-medium" role="alert">
           {error}
@@ -263,13 +268,7 @@ export default function SignupPage() {
             <AppleIcon />
           </Button>
         </div>
-      </div >
-      <div className="mt-8 text-center text-sm text-gray-600">
-        Already have an account?{" "}
-        <Link href="/login" className="font-bold text-indigo-600 hover:underline">
-          Sign In
-        </Link>
       </div>
-    </>
+    </AuthPageFrame>
   );
 }

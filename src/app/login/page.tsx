@@ -17,7 +17,7 @@ import {
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { initiateEmailSignIn } from "@/firebase";
 import { Loader2 } from "lucide-react";
-import { MyArkLogo } from "@/components/onboarding/MyArkLogo";
+import { AuthPageFrame } from "@/components/auth/AuthPageFrame";
 
 // --- Social Icons ---
 const GoogleIcon = () => (
@@ -149,104 +149,101 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-100 space-y-6">
-                <div className="flex flex-col items-center justify-center mb-6">
-                    <MyArkLogo size={48} className="mb-4" />
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900">Welcome Back</h1>
-                    <p className="text-sm text-muted-foreground mt-2">Enter your email and password to sign in</p>
-                </div>
-
-                {error && (
-                    <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm border border-red-100 mb-4 font-medium" role="alert">
-                        {error}
-                        {showDemoOption && (
-                            <div className="mt-3 pt-3 border-t border-red-200">
-                                <p className="mb-2 text-xs text-red-800"> This domain is not authorized in Firebase. Use Demo Mode to continue locally.</p>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={handleDemoLogin}
-                                    className="w-full border-red-200 hover:bg-red-50 text-red-700 bg-white"
-                                >
-                                    Enable Demo Mode (Bypass Auth)
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                <div className="grid gap-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email" className="text-xs font-bold uppercase text-gray-700">Email Address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            placeholder="m@example.com"
-                            required
-                            className="bg-white"
-                            disabled={isLoading}
-                        />
-                    </div>
-                    <div className="grid gap-2">
-                        <div className="flex items-center justify-between">
-                            <Label htmlFor="password" className="text-xs font-bold uppercase text-gray-700">Password</Label>
-                            <Link
-                                href="#"
-                                className="text-xs font-medium text-indigo-600 hover:underline"
-                            >
-                                Forgot password?
-                            </Link>
-                        </div>
-                        <Input id="password" type="password" required className="bg-white" disabled={isLoading} />
-                    </div>
-
-                    <Button
-                        type="submit"
-                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-11 rounded-xl shadow-lg shadow-indigo-200 mt-2"
-                        onClick={handleEmailLogin}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? <Loader2 className="animate-spin" /> : "Sign In"}
-                    </Button>
-
-                    <div className="relative my-2">
-                        <div className="absolute inset-0 flex items-center">
-                            <span className="w-full border-t border-gray-200" />
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-white px-2 text-muted-foreground">Or continue with</span>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-3">
-                        <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleGoogleLogin} disabled={isLoading}>
-                            <GoogleIcon />
-                        </Button>
-                        <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleFacebookLogin} disabled={isLoading}>
-                            <FacebookIcon />
-                        </Button>
-                        <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleAppleLogin} disabled={isLoading}>
-                            <AppleIcon />
-                        </Button>
-                        <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={() => {
-                            // Import dynamically or use the imported function if available
-                            import('@/firebase/non-blocking-login').then(mod => {
-                                // mod.signInWithPasskey(auth);
-                                alert("Biometric sign-in initiated (stub).");
-                            });
-                        }} disabled={isLoading} title="Sign in with Biometrics">
-                            <svg className="w-5 h-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 6" /><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" /><path d="M17.29 21.02c.12-.6.41-2.3.41-3.02 0-5.5-4.5-10-10-10S2 12.5 2 18" /><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4" /><path d="M10 12a14.7 14.7 0 0 0-1.4 8.7" /><path d="M14 12c.5 1 1 2.5 1 5a13.6 13.6 0 0 1-.7 3.3" /></svg>
-                        </Button>
-                    </div>
-                </div>
-                <div className="mt-8 text-center text-sm text-gray-600">
+        <AuthPageFrame
+            title="Welcome Back"
+            subtitle="Enter your email and password to sign in"
+            footer={(
+                <>
                     Don&apos;t have an account?{" "}
                     <Link href="/signup" className="font-bold text-indigo-600 hover:underline">
                         Sign Up
                     </Link>
+                </>
+            )}
+        >
+            {error && (
+                <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm border border-red-100 mb-4 font-medium" role="alert">
+                    {error}
+                    {showDemoOption && (
+                        <div className="mt-3 pt-3 border-t border-red-200">
+                            <p className="mb-2 text-xs text-red-800"> This domain is not authorized in Firebase. Use Demo Mode to continue locally.</p>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={handleDemoLogin}
+                                className="w-full border-red-200 hover:bg-red-50 text-red-700 bg-white"
+                            >
+                                Enable Demo Mode (Bypass Auth)
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            <div className="grid gap-4">
+                <div className="grid gap-2">
+                    <Label htmlFor="email" className="text-xs font-bold uppercase text-gray-700">Email Address</Label>
+                    <Input
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        required
+                        className="bg-white"
+                        disabled={isLoading}
+                    />
+                </div>
+                <div className="grid gap-2">
+                    <div className="flex items-center justify-between">
+                        <Label htmlFor="password" className="text-xs font-bold uppercase text-gray-700">Password</Label>
+                        <Link
+                            href="#"
+                            className="text-xs font-medium text-indigo-600 hover:underline"
+                        >
+                            Forgot password?
+                        </Link>
+                    </div>
+                    <Input id="password" type="password" required className="bg-white" disabled={isLoading} />
+                </div>
+
+                <Button
+                    type="submit"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-11 rounded-xl shadow-lg shadow-indigo-200 mt-2"
+                    onClick={handleEmailLogin}
+                    disabled={isLoading}
+                >
+                    {isLoading ? <Loader2 className="animate-spin" /> : "Sign In"}
+                </Button>
+
+                <div className="relative my-2">
+                    <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-gray-200" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-white px-2 text-muted-foreground">Or continue with</span>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-3">
+                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleGoogleLogin} disabled={isLoading}>
+                        <GoogleIcon />
+                    </Button>
+                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleFacebookLogin} disabled={isLoading}>
+                        <FacebookIcon />
+                    </Button>
+                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleAppleLogin} disabled={isLoading}>
+                        <AppleIcon />
+                    </Button>
+                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={() => {
+                        // Import dynamically or use the imported function if available
+                        import('@/firebase/non-blocking-login').then(mod => {
+                            // mod.signInWithPasskey(auth);
+                            alert("Biometric sign-in initiated (stub).");
+                        });
+                    }} disabled={isLoading} title="Sign in with Biometrics">
+                        <svg className="w-5 h-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 6" /><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" /><path d="M17.29 21.02c.12-.6.41-2.3.41-3.02 0-5.5-4.5-10-10-10S2 12.5 2 18" /><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4" /><path d="M10 12a14.7 14.7 0 0 0-1.4 8.7" /><path d="M14 12c.5 1 1 2.5 1 5a13.6 13.6 0 0 1-.7 3.3" /></svg>
+                    </Button>
                 </div>
             </div>
-        </div>
+        </AuthPageFrame>
     )
 }
