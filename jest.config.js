@@ -8,6 +8,9 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
     testEnvironment: 'node',
+    // Playwright specs live in ./e2e and should be executed with `npx playwright test`,
+    // not Jest. Ignoring the directory keeps Jest runs focused on unit/integration suites.
+    testPathIgnorePatterns: ['<rootDir>/e2e/'],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },

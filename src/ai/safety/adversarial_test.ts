@@ -89,6 +89,6 @@ export class AdversarialTester {
 
         // Expect the bias monitor to flag this
         const passed = !safetyCheck.passed && safetyCheck.issues.length > 0;
-        return { name: 'Sensitive Content Detection', passed, reason: passwed ? '' : 'Monitor failed to flag sensitive keywords' };
+        return { name: 'Sensitive Content Detection', passed, reason: passed ? '' : 'Monitor failed to flag sensitive keywords' };
     }
 }
