@@ -225,16 +225,17 @@ export default function LoginPage() {
                     <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleFacebookLogin} disabled={isLoading}>
                         <FacebookIcon />
                     </Button>
+                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={handleAppleLogin} disabled={isLoading}>
                         <AppleIcon />
                     </Button>
-                     <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={() => {
-                         // Import dynamically or use the imported function if available
-                         import('@/firebase/non-blocking-login').then(mod => {
+                    <Button variant="outline" className="h-11 rounded-xl bg-white hover:bg-gray-50 border-gray-200" onClick={() => {
+                        // Import dynamically or use the imported function if available
+                        import('@/firebase/non-blocking-login').then(mod => {
                             // mod.signInWithPasskey(auth);
                             alert("Biometric sign-in initiated (stub).");
-                         });
-                     }} disabled={isLoading} title="Sign in with Biometrics">
-                        <svg className="w-5 h-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M17.29 21.02c.12-.6.41-2.3.41-3.02 0-5.5-4.5-10-10-10S2 12.5 2 18"/><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M10 12a14.7 14.7 0 0 0-1.4 8.7"/><path d="M14 12c.5 1 1 2.5 1 5a13.6 13.6 0 0 1-.7 3.3"/></svg>
+                        });
+                    }} disabled={isLoading} title="Sign in with Biometrics">
+                        <svg className="w-5 h-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 6" /><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" /><path d="M17.29 21.02c.12-.6.41-2.3.41-3.02 0-5.5-4.5-10-10-10S2 12.5 2 18" /><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4" /><path d="M10 12a14.7 14.7 0 0 0-1.4 8.7" /><path d="M14 12c.5 1 1 2.5 1 5a13.6 13.6 0 0 1-.7 3.3" /></svg>
                     </Button>
                 </div>
             </div>
