@@ -119,7 +119,8 @@ export type LegalDocType =
   | 'internal_only'
   | 'published'
   | 'archived'
-  | 'regulatory_risk_assessment';
+  | 'regulatory_risk_assessment'
+  | 'cpvl_framework';
 
 export type LegalDocument = {
   id: LegalDocType;
