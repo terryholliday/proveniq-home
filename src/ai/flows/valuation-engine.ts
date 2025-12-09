@@ -43,6 +43,8 @@ const CONDITION_FACTORS: Record<string, number> = {
     "For Parts": 0.10
 };
 
+import { ValuationSafetyEngine } from "../safety/valuation_monitor";
+
 export class ValuationEngine {
 
     /**
@@ -71,13 +73,27 @@ export class ValuationEngine {
         // Round to nearest dollar
         depreciatedValue = Math.round(depreciatedValue);
 
-        // 4. Generate Explanation
-        const explanation = this.generateExplanation(item, ageYears, item.condition || "Good");
+        // --- AI SAFETY CHECKS ---
+        // 1. Bias/Fairness Check
+        const fairness = ValuationSafetyEngine.checkFairness(depreciatedValue, item, {});
+
+        // 2. Drift Check (vs Historical Category Baseline)
+        const drift = ValuationSafetyEngine.checkDrift(depreciatedValue, category);
+
+        // 4. Generate Explanation (Enhanced with Safety Context)
+        let explanation = this.generateExplanation(item, ageYears, item.condition || "Good");
+
+        if (!fairness.isFair) {
+            explanation += ` [SAFETY WARNING: ${fairness.reason}]`;
+        }
+        if (drift.hasDrift) {
+            explanation += ` [DRIFT WARNING: Valuation deviates ${drift.deviationPercentage.toFixed(0)}% from category norms.]`;
+        }
 
         return {
             estimatedValue: depreciatedValue,
             currency: "USD",
-            confidence: 0.85, // Heuristic model confidence
+            confidence: drift.hasDrift ? 0.5 : 0.85, // Lower confidence if drift detected
             explanation,
             valuationDate: new Date().toISOString(),
             marketTrend: {
