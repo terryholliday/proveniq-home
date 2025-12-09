@@ -10,14 +10,18 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+
   // Required for Next.js 16+ when using webpack-based plugins like next-pwa
-  turbopack: {},
+  // turbopack: {}, // Removed to avoid conflict with next-pwa
+
 
   outputFileTracingRoot: path.join(__dirname), // Silences lockfile warning
+
+  // @ts-expect-error: Next.js 15 type definition might be missing allowedDevOrigins
+  allowedDevOrigins: ['localhost:9003', '192.168.86.104:9003'],
+
   experimental: {
     externalDir: true,
-    // @ts-expect-error: Next.js 15 type definition might be missing allowedDevOrigins
-    allowedDevOrigins: ['localhost:9003', '192.168.86.104:9003'],
   },
   images: {
     remotePatterns: [
