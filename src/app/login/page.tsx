@@ -196,8 +196,10 @@ export default function LoginPage() {
                         <Label htmlFor="email" className="text-xs font-bold uppercase text-gray-700">Email Address</Label>
                         <Input
                             id="email"
+                            name="email"
                             type="email"
                             placeholder="m@example.com"
+                            autoComplete="email"
                             required
                             className="bg-white"
                             disabled={isLoading}
@@ -215,7 +217,17 @@ export default function LoginPage() {
                                 Forgot password?
                             </Link>
                         </div>
-                        <Input id="password" type="password" required className="bg-white" disabled={isLoading} value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <Input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            className="bg-white"
+                            disabled={isLoading}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                     </div>
 
                     <Button

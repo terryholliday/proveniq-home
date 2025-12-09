@@ -12,8 +12,21 @@ test.describe('Multi-Tenant Isolation', () => {
         const contextA = await browser.newContext();
         const pageA = await contextA.newPage();
         await pageA.goto('/login');
-        await pageA.fill('input[name="email"]', tenantA.email); // Assume signup flow logic exists
+
+        // Tenant A Login with explicit clear to handle prefill
+        await pageA.click('input[name="email"]');
+        await pageA.press('input[name="email"]', 'Control+A');
+        await pageA.press('input[name="email"]', 'Backspace');
+        await pageA.fill('input[name="email"]', tenantA.email);
+
+        await pageA.click('input[name="password"]');
+        await pageA.press('input[name="password"]', 'Control+A');
+        await pageA.press('input[name="password"]', 'Backspace');
+        await pageA.fill('input[name="password"]', tenantA.password);
+
         await pageA.click('button[type="submit"]');
+
+        await pageA.waitForURL('/dashboard'); // Wait for login to complete
 
         await pageA.goto('/inventory/new');
         await pageA.fill('input[name="title"]', 'Top Secret Prototype');
@@ -25,7 +38,20 @@ test.describe('Multi-Tenant Isolation', () => {
         const contextB = await browser.newContext();
         const pageB = await contextB.newPage();
         await pageB.goto('/login');
-        // Login as B...
+
+        // Tenant B Login with explicit clear
+        await pageB.click('input[name="email"]');
+        await pageB.press('input[name="email"]', 'Control+A');
+        await pageB.press('input[name="email"]', 'Backspace');
+        await pageB.fill('input[name="email"]', tenantB.email);
+
+        await pageB.click('input[name="password"]');
+        await pageB.press('input[name="password"]', 'Control+A');
+        await pageB.press('input[name="password"]', 'Backspace');
+        await pageB.fill('input[name="password"]', tenantB.password);
+
+        await pageB.click('button[type="submit"]');
+        await pageB.waitForURL('/dashboard');
 
         // 3. Tenant B views list
         await pageB.goto('/inventory');
