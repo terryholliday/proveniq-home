@@ -67,8 +67,35 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     userError: null,
   });
 
+  // Fix Bug 2: Handle Mock User via Effect instead of useMemo to prevent hydration errors
+  const [mockUser, setMockUser] = useState<User | null>(null);
+  const [mockUserChecked, setMockUserChecked] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ((window as any).__MOCK_USER__) {
+        setMockUser((window as any).__MOCK_USER__);
+      } else {
+        const stored = sessionStorage.getItem('__MOCK_USER__');
+        if (stored) {
+          try {
+            setMockUser(JSON.parse(stored));
+          } catch (e) {
+            console.error("Failed to parse mock user", e);
+          }
+        }
+      }
+    }
+    setMockUserChecked(true);
+  }, []);
+
   // Effect to subscribe to Firebase auth state changes
   useEffect(() => {
+    // Skip real auth if mock user is active
+    if (mockUser) {
+      return;
+    }
+
     if (!auth) { // If no Auth service instance, cannot determine user state
       setUserAuthState({ user: null, isUserLoading: false, userError: new Error("Auth service not provided.") });
       return;
@@ -87,27 +114,10 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       }
     );
     return () => unsubscribe(); // Cleanup
-  }, [auth]); // Depends on the auth instance
+  }, [auth, mockUser]); // Depends on the auth instance and mockUser
 
   // Memoize the context value
   const contextValue = useMemo((): FirebaseContextState => {
-    // E2E Test Hook: Mock User
-    let mockUser = null;
-    if (typeof window !== 'undefined') {
-      if ((window as any).__MOCK_USER__) {
-        mockUser = (window as any).__MOCK_USER__;
-      } else {
-        const stored = sessionStorage.getItem('__MOCK_USER__');
-        if (stored) {
-          try {
-            mockUser = JSON.parse(stored);
-          } catch (e) {
-            console.error("Failed to parse mock user", e);
-          }
-        }
-      }
-    }
-
     const servicesAvailable = !!(firebaseApp && firestore && auth);
     return {
       areServicesAvailable: servicesAvailable,
@@ -115,10 +125,10 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       firestore: servicesAvailable ? firestore : null,
       auth: servicesAvailable ? auth : null,
       user: mockUser || userAuthState.user,
-      isUserLoading: mockUser ? false : userAuthState.isUserLoading,
+      isUserLoading: mockUser ? false : (!mockUserChecked || userAuthState.isUserLoading),
       userError: userAuthState.userError,
     };
-  }, [firebaseApp, firestore, auth, userAuthState]);
+  }, [firebaseApp, firestore, auth, userAuthState, mockUser, mockUserChecked]);
 
   return (
     <FirebaseContext.Provider value={contextValue}>

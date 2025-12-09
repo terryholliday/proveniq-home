@@ -31,8 +31,8 @@ export function useUserProfile(user?: User | null) {
                 firstName,
                 lastName,
                 profilePicture: photoURL,
-                oauthProvider: providerData[0]?.providerId || 'password',
-                oauthId: providerData[0]?.uid || uid,
+                oauthProvider: providerData?.[0]?.providerId || 'password',
+                oauthId: providerData?.[0]?.uid || uid,
                 permissions: {
                     camera: 'prompt',
                     microphone: 'prompt',

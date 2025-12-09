@@ -39,7 +39,7 @@ export async function sendToAuction(item: InventoryItem, user: User) {
     .update(body)
     .digest('hex');
 
-  const targetUrl = 'http://localhost:3001/api/webhooks/myark';
+  const targetUrl = process.env.AUCTION_WEBHOOK_URL || 'http://localhost:3001/api/webhooks/myark';
 
   try {
     const response = await fetch(targetUrl, {
@@ -61,6 +61,11 @@ export async function sendToAuction(item: InventoryItem, user: User) {
       } catch (e) {
         throw new Error(`Webhook failed with status ${response.status}: ${errorText}`);
       }
+    }
+
+    // Handle 204 No Content response (common for webhooks)
+    if (response.status === 204 || response.headers.get('content-length') === '0') {
+      return { success: true };
     }
 
     const data = await response.json();

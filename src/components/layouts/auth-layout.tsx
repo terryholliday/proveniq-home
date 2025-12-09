@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MyArkLogo } from '../onboarding/MyArkLogo';
-import { login, signup } from '../../services/authService';
+import { login, signup } from '../../services/mockAuthService';
 import { User, AppView } from '../../lib/types';
 import { Timestamp } from 'firebase/firestore';
 import { Loader2, ArrowRight, Mail, Lock, User as UserIcon } from 'lucide-react';

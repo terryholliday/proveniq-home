@@ -61,30 +61,43 @@ export default function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [showDemoOption, setShowDemoOption] = useState(false);
+    // Fix Bug 1: Prevent premature redirect during OAuth processing
+    const [isProcessingRedirect, setIsProcessingRedirect] = useState(true);
+    // Fix Bug 3: Use controlled inputs instead of document.getElementById
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    useEffect(() => {
-        if (!isUserLoading && user) {
-            router.push('/dashboard');
-        }
-    }, [user, isUserLoading, router]);
-
-    // Handle Redirect Result
+    // 1. Handle Redirect Result FIRST
     useEffect(() => {
         if (auth) {
             getRedirectResult(auth)
                 .then(async (result) => {
-                    if (!result) return;
-                    setIsLoading(true);
-                    await createUserProfile(result.user);
-                    router.push('/dashboard');
+                    if (result) {
+                        setIsLoading(true);
+                        // Await profile creation BEFORE allowing any redirect
+                        await createUserProfile(result.user);
+                    }
                 })
                 .catch((err) => {
-                    const message = err instanceof Error ? err.message : "Social login failed.";
-                    setError(message);
+                    setError(err instanceof Error ? err.message : "Social login failed.");
+                })
+                .finally(() => {
+                    // Only release the lock once processing is done (success or no result)
+                    setIsProcessingRedirect(false);
                     setIsLoading(false);
                 });
+        } else {
+            setIsProcessingRedirect(false);
         }
-    }, [auth, createUserProfile, router]);
+    }, [auth, createUserProfile]);
+
+    // 2. Handle Navigation (Only when we are sure we aren't processing a creation)
+    useEffect(() => {
+        // user exists + not loading auth + NOT processing the Google Redirect result
+        if (!isUserLoading && user && !isProcessingRedirect) {
+            router.push('/dashboard');
+        }
+    }, [user, isUserLoading, router, isProcessingRedirect]);
 
 
     const handleOAuthLogin = async (provider: GoogleAuthProvider | FacebookAuthProvider | AppleAuthProvider) => {
@@ -119,11 +132,10 @@ export default function LoginPage() {
 
     const handleEmailLogin = async () => {
         setIsLoading(true);
-        const email = (document.getElementById('email') as HTMLInputElement).value;
-        const password = (document.getElementById('password') as HTMLInputElement).value;
         setError("");
 
         try {
+            // Bug 3 fix: Use controlled state variables directly
             await initiateEmailSignIn(auth, email, password);
             // initiateEmailSignIn handles its own navigation/success usually or throws
         } catch (e: any) {
@@ -186,6 +198,8 @@ export default function LoginPage() {
                             required
                             className="bg-white"
                             disabled={isLoading}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="grid gap-2">
@@ -198,7 +212,7 @@ export default function LoginPage() {
                                 Forgot password?
                             </Link>
                         </div>
-                        <Input id="password" type="password" required className="bg-white" disabled={isLoading} />
+                        <Input id="password" type="password" required className="bg-white" disabled={isLoading} value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
 
                     <Button

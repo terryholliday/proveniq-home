@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Alert,
   AlertDescription,
@@ -17,11 +18,13 @@ import {
   Plus,
   Shield,
   Truck,
+  Loader2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { StatCard } from '@/components/dashboard/stat-card';
 import { ItemCard } from '@/components/inventory/item-card';
 import OnboardingTour from '@/components/onboarding/OnboardingTour';
+import { useUser } from '@/firebase';
 
 const DashboardActionCard = ({
   icon,
@@ -47,19 +50,45 @@ const DashboardActionCard = ({
 );
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const { user, isUserLoading } = useUser();
   const [showTour, setShowTour] = useState(false);
 
+  // Auth guard: Redirect unauthenticated users to login
   useEffect(() => {
-    const tourCompleted = localStorage.getItem('myark_onboarding_tour_completed');
-    if (tourCompleted !== 'true') {
-      setShowTour(true);
+    if (!isUserLoading && !user) {
+      router.push('/login');
     }
-  }, []);
+  }, [user, isUserLoading, router]);
+
+  useEffect(() => {
+    // Only check tour completion after auth is confirmed
+    if (user) {
+      const tourCompleted = localStorage.getItem('myark_onboarding_tour_completed');
+      if (tourCompleted !== 'true') {
+        setShowTour(true);
+      }
+    }
+  }, [user]);
 
   const handleTourComplete = () => {
     localStorage.setItem('myark_onboarding_tour_completed', 'true');
     setShowTour(false);
   };
+
+  // Show loading state during auth check
+  if (isUserLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // Don't render dashboard content if not authenticated (redirect in progress)
+  if (!user) {
+    return null;
+  }
 
   const totalValue = mockInventory.reduce(
     (sum, item) => sum + (item.marketValue || 0) * item.quantity,

@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head></head>
-      <body className={`font-sans font-body antialiased`} suppressHydrationWarning>
+      <body className={`font-sans font-body antialiased`}>
         <FirebaseClientProvider>
           {children}
           <ConsentModal />
