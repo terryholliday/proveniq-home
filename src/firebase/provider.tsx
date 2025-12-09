@@ -91,29 +91,48 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
 
   // Effect to subscribe to Firebase auth state changes
   useEffect(() => {
+    console.log('FirebaseProvider: Auth state effect triggered', { mockUser: !!mockUser, auth: !!auth });
+    
     // Skip real auth if mock user is active
     if (mockUser) {
+      console.log('FirebaseProvider: Using mock user');
       return;
     }
 
     if (!auth) { // If no Auth service instance, cannot determine user state
+      console.error('FirebaseProvider: No auth instance provided');
       setUserAuthState({ user: null, isUserLoading: false, userError: new Error("Auth service not provided.") });
       return;
     }
 
+    console.log('FirebaseProvider: Setting up auth listener');
     setUserAuthState({ user: null, isUserLoading: true, userError: null }); // Reset on auth instance change
+
+    // Safety timeout - if auth doesn't resolve in 3 seconds, stop loading
+    const timeoutId = setTimeout(() => {
+      console.warn("FirebaseProvider: Auth state check timed out after 3 seconds");
+      setUserAuthState(prev => prev.isUserLoading ? { ...prev, isUserLoading: false } : prev);
+    }, 3000);
 
     const unsubscribe = onAuthStateChanged(
       auth,
       (firebaseUser) => { // Auth state determined
+        console.log('FirebaseProvider: Auth state resolved', { user: !!firebaseUser });
+        clearTimeout(timeoutId);
         setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
       },
       (error) => { // Auth listener error
+        console.error('FirebaseProvider: Auth state error', error);
+        clearTimeout(timeoutId);
         console.error("FirebaseProvider: onAuthStateChanged error:", error);
         setUserAuthState({ user: null, isUserLoading: false, userError: error });
       }
     );
-    return () => unsubscribe(); // Cleanup
+    return () => {
+      console.log('FirebaseProvider: Cleaning up auth listener');
+      clearTimeout(timeoutId);
+      unsubscribe();
+    }; // Cleanup
   }, [auth, mockUser]); // Depends on the auth instance and mockUser
 
   // Memoize the context value
