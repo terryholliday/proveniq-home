@@ -1,4 +1,3 @@
-/// <reference types="node" />
 'use server';
 
 import crypto from 'node:crypto';
@@ -39,8 +38,8 @@ export async function sendToAuction(item: InventoryItem, user: User) {
     .update(body)
     .digest('hex');
 
-  // Use production URL from env, fallback to localhost for development
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.AUCTION_WEBHOOK_URL || 'http://localhost:3001';
+  // FIX: Use environment variable for the URL, fallback to localhost only for dev
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const targetUrl = `${baseUrl}/api/webhooks/myark`;
 
   try {
@@ -55,7 +54,6 @@ export async function sendToAuction(item: InventoryItem, user: User) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      // Try to parse JSON error if possible
       try {
         const errorJson = JSON.parse(errorText);
         console.error('Webhook returned error:', errorJson);
@@ -65,8 +63,8 @@ export async function sendToAuction(item: InventoryItem, user: User) {
       }
     }
 
-    // Handle 204 No Content response (common for webhooks)
-    if (response.status === 204 || response.headers.get('content-length') === '0') {
+    // Handle 204 No Content gracefully
+    if (response.status === 204) {
       return { success: true };
     }
 
