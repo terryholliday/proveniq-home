@@ -90,9 +90,11 @@ export class AIOrchestrator {
         workflowId: string,
         itemId?: string
     ): Promise<T> {
-        if (SANDBOX_CONFIG.enabled && itemId && SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs]) {
-            // @ts-expect-error
-            const mockData = SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs];
+        const mockData = itemId
+            ? SANDBOX_CONFIG.guaranteedOutputs[itemId as keyof typeof SANDBOX_CONFIG.guaranteedOutputs]
+            : undefined;
+
+        if (SANDBOX_CONFIG.enabled && mockData) {
             // Simulate step-specific return if needed
             if (stepName === 'image_analysis') return mockData.attributes as unknown as T; // Mapping old attributes to image analysis for now
             if (stepName === 'metadata_normalization') return mockData.attributes as unknown as T;

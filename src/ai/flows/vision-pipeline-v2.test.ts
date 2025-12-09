@@ -43,8 +43,8 @@ describe('visionPipelineV2', () => {
         };
 
         // Since we mocked defineFlow to return the handler, visionPipelineV2 is the handler function
-        // @ts-expect-error
-        const result = await visionPipelineV2(input);
+        const handler = visionPipelineV2 as unknown as (payload: typeof input) => Promise<any>;
+        const result = await handler(input);
 
         expect(result.quality).toHaveLength(2);
         expect(result.quality[0].sharpness).toBe(0.9);

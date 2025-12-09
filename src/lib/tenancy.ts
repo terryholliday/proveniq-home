@@ -5,15 +5,18 @@ export interface TenantContext {
     userId?: string;
     roles: string[];
     isSystem: boolean;
+    traceId?: string;
 }
 
 /**
  * Standardizes the extraction of TenantContext from different sources (HTTP headers, CallableContext).
  */
 export function extractTenantContext(auth: any | undefined, headers?: Record<string, string>): TenantContext {
+    const traceId = headers?.['x-trace-id'] || headers?.['x-request-id'];
+
     // 1. System / Internal calls (e.g. PubSub cron) may not have auth, assume system if specific header present
     if (headers?.['x-myark-internal'] === 'true') {
-        return { tenantId: 'system', isSystem: true, roles: ['admin'] };
+        return { tenantId: 'system', isSystem: true, roles: ['admin'], traceId };
     }
 
     // 2. Authenticated User / API Client
@@ -24,12 +27,13 @@ export function extractTenantContext(auth: any | undefined, headers?: Record<str
             tenantId,
             userId: auth.uid,
             roles: auth.token.roles || [],
-            isSystem: false
+            isSystem: false,
+            traceId
         };
     }
 
     // 3. Fallback (Guest/Public) - usually restricted
-    return { tenantId: 'public', isSystem: false, roles: [] };
+    return { tenantId: 'public', isSystem: false, roles: [], traceId };
 }
 
 /**
