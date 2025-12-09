@@ -74,8 +74,11 @@ export default function LoginPage() {
                 .then(async (result) => {
                     if (result) {
                         setIsLoading(true);
-                        // Await profile creation BEFORE allowing any redirect
+                        // Await profile creation BEFORE redirecting
                         await createUserProfile(result.user);
+                        // FIX: Redirect DIRECTLY here after profile is created
+                        // Don't rely on the navigation effect which races with onAuthStateChanged
+                        router.push('/dashboard');
                     }
                 })
                 .catch((err) => {
@@ -89,11 +92,11 @@ export default function LoginPage() {
         } else {
             setIsProcessingRedirect(false);
         }
-    }, [auth, createUserProfile]);
+    }, [auth, createUserProfile, router]);
 
-    // 2. Handle Navigation (Only when we are sure we aren't processing a creation)
+    // 2. Handle Navigation for ALREADY logged-in users (not from redirect)
     useEffect(() => {
-        // user exists + not loading auth + NOT processing the Google Redirect result
+        // Only redirect if user exists, NOT from a redirect (which handles its own redirect above)
         if (!isUserLoading && user && !isProcessingRedirect) {
             router.push('/dashboard');
         }
