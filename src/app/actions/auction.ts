@@ -1,3 +1,4 @@
+/// <reference types="node" />
 'use server';
 
 import crypto from 'node:crypto';
@@ -19,7 +20,7 @@ export async function sendToAuction(item: InventoryItem, user: User) {
     type: 'ITEM_LISTED',
     payload: {
       myarkId: item.id,
-      sellerId: user.id, 
+      sellerId: user.id,
       title: item.name,
       description: item.description,
       images: item.imageUrl ? [item.imageUrl] : [],
@@ -51,15 +52,15 @@ export async function sendToAuction(item: InventoryItem, user: User) {
     });
 
     if (!response.ok) {
-        const errorText = await response.text();
-        // Try to parse JSON error if possible
-        try {
-            const errorJson = JSON.parse(errorText);
-            console.error('Webhook returned error:', errorJson);
-            throw new Error(errorJson.message || errorJson.error || `Webhook failed: ${response.statusText}`);
-        } catch (e) {
-             throw new Error(`Webhook failed with status ${response.status}: ${errorText}`);
-        }
+      const errorText = await response.text();
+      // Try to parse JSON error if possible
+      try {
+        const errorJson = JSON.parse(errorText);
+        console.error('Webhook returned error:', errorJson);
+        throw new Error(errorJson.message || errorJson.error || `Webhook failed: ${response.statusText}`);
+      } catch (e) {
+        throw new Error(`Webhook failed with status ${response.status}: ${errorText}`);
+      }
     }
 
     const data = await response.json();

@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
 
   outputFileTracingRoot: path.join(__dirname), // Silences lockfile warning
 
-  // @ts-expect-error: Next.js 15 type definition might be missing allowedDevOrigins
   allowedDevOrigins: ['localhost:9003', '192.168.86.104:9003'],
 
   experimental: {
