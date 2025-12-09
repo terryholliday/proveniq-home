@@ -143,8 +143,13 @@ export function useCollection<T = DocumentData>(
 
     return () => unsubscribe();
   }, [memoizedTargetRefOrQuery]); // Re-run if the target query/reference changes.
+  // FIX: Changed from throw Error to console.warn to prevent accidental app crashes
+  // when developers use standard useMemo instead of custom useMemoFirebase
   if (memoizedTargetRefOrQuery && !memoizedTargetRefOrQuery.__memo) {
-    throw new Error(memoizedTargetRefOrQuery + ' was not properly memoized using useMemoFirebase');
+    console.warn(
+      '[useCollection] Query was not memoized with useMemoFirebase. ' +
+      'This may cause performance issues. Use useMemoFirebase() for stable query references.'
+    );
   }
   return { data, isLoading, error };
 }
