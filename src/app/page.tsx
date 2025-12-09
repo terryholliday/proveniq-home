@@ -210,7 +210,8 @@ export default function LandingPage() {
                   alt="Happy user"
                   width={32}
                   height={32}
-                  className="rounded-full border-2 border-background"
+                  className="rounded-full border-2 border-background object-cover aspect-square"
+                  style={{ width: 32, height: 32 }}
                 />
               ))}
             </div>
