@@ -21,6 +21,7 @@
     }
   ],
   "hosting": {
+    "target": "arkive-auctions",
     "source": ".",
     "ignore": [
       "firebase.json",

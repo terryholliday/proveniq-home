@@ -3,6 +3,14 @@
     "default": "arkive-auctions-70102726-f9642",
     "myark-prod": "studio-2016353273-627b9"
   },
-  "targets": {},
+  "targets": {
+    "arkive-auctions-70102726-f9642": {
+      "hosting": {
+        "arkive-auctions": [
+          "arkive-auctions-70102726-f9642"
+        ]
+      }
+    }
+  },
   "etags": {}
 }
