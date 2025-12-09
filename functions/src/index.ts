@@ -96,7 +96,9 @@ export const auditBidWrites = onDocumentWritten(
       operationType = "DELETE";
     }
 
-    const userId = event.data?.after.data()?.bidderUid ?? "system";
+    // FIX: Use before data on DELETE to avoid losing record of whose bid was deleted
+    const dataSnapshot = after ? event.data?.after : event.data?.before;
+    const userId = dataSnapshot?.data()?.bidderUid ?? "system";
 
     const auditEntry = {
       domain: "auctions",
