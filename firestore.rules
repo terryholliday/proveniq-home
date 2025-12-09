@@ -86,7 +86,7 @@ service cloud.firestore {
     // 3. Admin has full access
     match /legal_docs/{docId} {
       // Allow public get for known public docs (prevents 403 if doc is missing/unseeded)
-      allow get: if docId in ['privacy', 'tos', 'eula'];
+      allow read: if docId in ['privacy', 'tos', 'eula'];
       
       // Allow public read for any EXISTING document marked as published
       allow read: if resource != null && resource.data.status == 'published';
@@ -98,7 +98,7 @@ service cloud.firestore {
     // Legal Documents (alternate collection name used by ConsentModal):
     match /legal_documents/{docId} {
       // Explicitly allow public read for these known documents
-      allow get: if docId in ['privacy', 'tos', 'eula'];
+      allow read: if docId in ['privacy', 'tos', 'eula'];
       
       // Also allow read if the document exists and is published (for others)
       allow read: if resource != null && resource.data.status == 'published';
