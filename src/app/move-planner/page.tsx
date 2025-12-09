@@ -6,7 +6,7 @@ import { useUser } from '@/firebase';
 import { Move, InventoryItem, Box, PackingPlan, GroupingSuggestion } from '@/lib/types';
 import { getBoxes, saveBox, deleteBox, updateItem } from '@/lib/data';
 import { generatePackingPlan } from '@/lib/backend';
-import { ArrowLeft, Plus, Printer, Trash2, Loader2, Sparkles, Check, Crown } from 'lucide-react';
+import { ArrowLeft, Plus, Printer, Trash2, Loader2, Sparkles, Check, Crown, Box as BoxIcon } from 'lucide-react';
 import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 
 const PackingPlanModal = ({ plan, onClose, onCreateBox }: { plan: PackingPlan, onClose: () => void, onCreateBox: (group: GroupingSuggestion) => void }) => {
@@ -243,14 +243,176 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
 
 export default function MovePlannerPage() {
   const [selectedMove, setSelectedMove] = useState<Move | null>(null);
+  const [moves, setMoves] = useState<Move[]>([]);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newMoveName, setNewMoveName] = useState('');
+  const [newMoveDate, setNewMoveDate] = useState('');
+  const [newMoveOrigin, setNewMoveOrigin] = useState('');
+  const [newMoveDestination, setNewMoveDestination] = useState('');
+
+  const handleCreateMove = () => {
+    if (!newMoveName.trim() || !newMoveDate) return;
+
+    const newMove: Move = {
+      id: `move_${Date.now()}`,
+      name: newMoveName.trim(),
+      date: newMoveDate,
+      origin: newMoveOrigin.trim() || undefined,
+      destination: newMoveDestination.trim() || undefined,
+      status: 'planning'
+    };
+
+    setMoves(prev => [...prev, newMove]);
+    setNewMoveName('');
+    setNewMoveDate('');
+    setNewMoveOrigin('');
+    setNewMoveDestination('');
+    setShowCreateForm(false);
+  };
+
+  const handleDeleteMove = (moveId: string) => {
+    if (window.confirm('Delete this move and all its boxes?')) {
+      setMoves(prev => prev.filter(m => m.id !== moveId));
+    }
+  };
 
   if (selectedMove) {
-    return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => { }} onPrintLabel={() => { }} onUpgradeReq={() => { }} isLandscape={false} />
+    return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => { }} onPrintLabel={() => { }} onUpgradeReq={() => { }} isLandscape={false} />;
   }
 
   return (
-    <div>
-      {/* Move creation UI will be here */}
+    <div className="container mx-auto p-6 max-w-4xl">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Move Planner</h1>
+          <p className="text-muted-foreground mt-1">Organize your items into boxes for an upcoming move</p>
+        </div>
+        <button
+          onClick={() => setShowCreateForm(!showCreateForm)}
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold flex items-center gap-2 hover:bg-indigo-700"
+        >
+          <Plus size={18} />
+          New Move
+        </button>
+      </div>
+
+      {showCreateForm && (
+        <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
+          <h2 className="text-lg font-bold mb-4">Create New Move</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Move Name *</label>
+              <input
+                value={newMoveName}
+                onChange={e => setNewMoveName(e.target.value)}
+                placeholder="e.g., Spring 2024 Move"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Move Date *</label>
+              <input
+                type="date"
+                value={newMoveDate}
+                onChange={e => setNewMoveDate(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Origin Address</label>
+              <input
+                value={newMoveOrigin}
+                onChange={e => setNewMoveOrigin(e.target.value)}
+                placeholder="123 Current Street"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Destination Address</label>
+              <input
+                value={newMoveDestination}
+                onChange={e => setNewMoveDestination(e.target.value)}
+                placeholder="456 New Street"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-3 mt-6">
+            <button
+              onClick={() => setShowCreateForm(false)}
+              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreateMove}
+              disabled={!newMoveName.trim() || !newMoveDate}
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Create Move
+            </button>
+          </div>
+        </div>
+      )}
+
+      {moves.length === 0 ? (
+        <div className="bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-12 text-center">
+          <BoxIcon size={48} className="mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-700 mb-2">No moves yet</h3>
+          <p className="text-gray-500 mb-4">Create a move to start organizing your items into boxes</p>
+          <button
+            onClick={() => setShowCreateForm(true)}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700"
+          >
+            Create Your First Move
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {moves.map(move => (
+            <div
+              key={move.id}
+              className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => setSelectedMove(move)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                    <BoxIcon size={24} className="text-indigo-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">{move.name}</h3>
+                    <p className="text-sm text-gray-500">
+                      {new Date(move.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`px-2 py-1 text-xs font-bold rounded-full ${move.status === 'completed' ? 'bg-green-100 text-green-700' :
+                    move.status === 'in-progress' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                    {move.status === 'in-progress' ? 'In Progress' : move.status === 'completed' ? 'Completed' : 'Planning'}
+                  </span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleDeleteMove(move.id); }}
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+              {(move.origin || move.destination) && (
+                <div className="mt-3 pt-3 border-t border-gray-100 text-sm text-gray-500">
+                  {move.origin && <span>From: {move.origin}</span>}
+                  {move.origin && move.destination && <span className="mx-2">→</span>}
+                  {move.destination && <span>To: {move.destination}</span>}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  )
+  );
 }
