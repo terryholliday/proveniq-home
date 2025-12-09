@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withTenancy } from '@/lib/tenancy';
 import { ValuationEngine } from '@/ai/valuation_engine';
 import { logger } from '@/lib/logger';
+import { adminAuth } from '@/lib/firebase-admin';
 
 // Initialize Engine (Singleton-ish)
 const engine = new ValuationEngine();
@@ -26,19 +27,34 @@ const securePost = withTenancy(async (data: any, context) => {
 });
 
 export async function POST(req: NextRequest) {
-    // Adapter to parse body and headers for the generic middleware
-    const body = await req.json();
+    // SECURITY FIX: Verify Firebase Auth token instead of trusting x-tenant-id header
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+        return NextResponse.json({ error: 'Unauthorized: Missing bearer token' }, { status: 401 });
+    }
 
-    // We mock the 'req' object expected by withTenancy generic
-    // In a real app we'd make the middleware strictly typed for NextRequest
-    const compatibleReq = {
-        headers: Object.fromEntries(req.headers),
-        body,
-        auth: {
-            // Mock auth extraction - in real Internal API this comes from Gateway/Middleware
-            token: { tid: req.headers.get('x-tenant-id') }
-        }
-    };
+    try {
+        const token = authHeader.split('Bearer ')[1];
+        const decodedToken = await adminAuth.verifyIdToken(token);
 
-    return securePost(compatibleReq as any);
+        // Extract tenant ID from verified token claims or fallback to uid
+        const tenantId = decodedToken.tid || decodedToken.uid;
+
+        const body = await req.json();
+
+        // Build request with verified tenant ID
+        const compatibleReq = {
+            headers: Object.fromEntries(req.headers),
+            body,
+            auth: {
+                token: { tid: tenantId, uid: decodedToken.uid }
+            }
+        };
+
+        return securePost(compatibleReq as any);
+    } catch (error: any) {
+        logger.error('API Auth Error', error);
+        return NextResponse.json({ error: 'Unauthorized: Invalid token' }, { status: 401 });
+    }
 }
+

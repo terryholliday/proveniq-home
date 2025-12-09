@@ -1,3 +1,14 @@
+/**
+ * MOCK AUTH SERVICE - FOR TESTING/DEVELOPMENT ONLY
+ * 
+ * This file contains simulated authentication functions that bypass Firebase Auth.
+ * DO NOT use these functions in production flows. They are intended for:
+ * - Local development without Firebase
+ * - E2E testing scenarios
+ * - Demo mode functionality
+ * 
+ * For real authentication, use the Firebase Auth SDK directly via the hooks in @/firebase
+ */
 
 import { User } from '../lib/types';
 import { Timestamp } from 'firebase/firestore';
