@@ -1,4 +1,6 @@
 
+import type { InventoryItem } from '@/lib/types';
+
 export interface ValuationInput {
     category: string;
     brand?: string;
@@ -10,6 +12,57 @@ export interface ValuationInput {
     originalPrice?: number;
     listingPrice?: number; // If comparing to a specific listing
     provenanceScore?: number; // 0-100
+}
+
+/**
+ * Maps an InventoryItem to ValuationInput for the valuation engine.
+ * Bridges the gap between inventory data model and AI valuation requirements.
+ */
+export function mapInventoryToValuationInput(item: InventoryItem): ValuationInput {
+    // Calculate age from purchase date
+    let ageYears: number | undefined;
+    if (item.purchaseDate) {
+        const purchaseYear = new Date(item.purchaseDate).getFullYear();
+        ageYears = new Date().getFullYear() - purchaseYear;
+    }
+
+    // Try to parse brand/model from EXIF data or item name
+    let brand = item.exif?.Make;
+    let model = item.exif?.Model;
+
+    // Fallback: parse from name (e.g., "Fender Stratocaster" -> brand: "Fender", model: "Stratocaster")
+    if (!brand && item.name) {
+        const parts = item.name.split(' ');
+        if (parts.length >= 2) {
+            brand = parts[0];
+            model = parts.slice(1).join(' ');
+        }
+    }
+
+    // Convert material string to array if present
+    const materials = item.material ? [item.material] : undefined;
+
+    // Normalize condition to expected format
+    const conditionMap: Record<string, string> = {
+        'New': 'New',
+        'Used - Like New': 'Excellent',
+        'Used - Good': 'Good',
+        'Used - Fair': 'Fair',
+        'For Parts/Not Working': 'Poor'
+    };
+    const condition = conditionMap[item.condition || ''] || item.condition || 'Good';
+
+    return {
+        category: item.category,
+        brand,
+        model,
+        condition,
+        ageYears,
+        materials,
+        description: item.description,
+        originalPrice: item.purchasePrice,
+        provenanceScore: item.provenanceScore
+    };
 }
 
 export interface ValuationResult {
@@ -47,10 +100,13 @@ class AIDescriptionModel {
         // analyzing the description text.
         if (!input.description) return null;
 
-        // Simple heuristic for demo: length of description * multiplier + base
+        // FIX: Use keyword matching instead of description length
+        // (length-based was exploitable - users could just type "blah" repeatedly)
         const baseValue = 50;
-        const complexityBonus = input.description.length * 0.5;
-        return baseValue + complexityBonus;
+        const keywords = ['rare', 'vintage', 'signed', 'limited', 'antique', 'collectible', 'mint', 'original'];
+        const desc = input.description.toLowerCase();
+        const keywordBonus = keywords.filter(k => desc.includes(k)).length * 50;
+        return baseValue + keywordBonus;
     }
 }
 
@@ -68,15 +124,22 @@ class PriceHistoryModel {
 class MarketplaceComparisonModel {
     async estimate(input: ValuationInput): Promise<number | null> {
         // Placeholder: External API call to eBay/Reverb/etc.
-        // For demo, return a random value within a range for the category
         const basePrices: Record<string, number> = {
             'guitar': 800,
             'electronics': 300,
             'furniture': 150,
+            'jewelry': 500,
+            'art': 400,
             'default': 100
         };
         const base = basePrices[input.category.toLowerCase()] || basePrices['default'];
-        return base * (0.8 + Math.random() * 0.4); // +/- 20%
+
+        // FIX: Use deterministic hash instead of Math.random()
+        // This ensures the same item always gets the same "variation"
+        const hashSource = `${input.category}|${input.brand || ''}|${input.model || ''}|${input.description || ''}`;
+        const hash = hashSource.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const variation = (hash % 40) / 100; // 0.00 to 0.40 deterministically
+        return base * (0.8 + variation);
     }
 }
 
