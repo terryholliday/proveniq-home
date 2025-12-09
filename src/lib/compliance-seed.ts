@@ -1,6 +1,7 @@
 import { LegalDocument, ComplianceTask, LegalDocType } from './types';
 import { Timestamp } from 'firebase/firestore';
 import PHASE_4_ROLES_JSON from './true_manifest_roles.json';
+import { CPVL_CONTENT } from './compliance/cpvl-content';
 
 export const SEED_LEGAL_DOCS: Partial<LegalDocument>[] = [
     {
@@ -115,6 +116,15 @@ The classification of this sector as Medium Risk is accurate but contingent on t
         `,
         lastUpdated: Timestamp.now(),
         updatedBy: 'system',
+    },
+    {
+        id: 'cpvl_framework' as LegalDocType,
+        title: 'CPVL Regulatory Framework',
+        version: '1.0',
+        status: 'published',
+        content: CPVL_CONTENT,
+        lastUpdated: Timestamp.now(),
+        updatedBy: 'Legal Compliance Officer',
     },
 ];
 
