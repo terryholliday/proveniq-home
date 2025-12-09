@@ -218,15 +218,15 @@ export default function SignupPage() {
             className="text-xs text-muted-foreground leading-normal"
           >
             I agree to the{" "}
-            <Link href="/settings/legaldocs" className="underline underline-offset-4 hover:text-primary" target="_blank">
+            <Link href="/settings?doc=tos" className="underline underline-offset-4 hover:text-primary" target="_blank">
               Terms of Service
             </Link>
             ,{" "}
-            <Link href="/settings/legaldocs" className="underline underline-offset-4 hover:text-primary" target="_blank">
+            <Link href="/settings?doc=privacy" className="underline underline-offset-4 hover:text-primary" target="_blank">
               Privacy Policy
             </Link>
             , and{" "}
-            <Link href="/settings/legaldocs" className="underline underline-offset-4 hover:text-primary" target="_blank">
+            <Link href="/settings?doc=ai" className="underline underline-offset-4 hover:text-primary" target="_blank">
               AI Disclosure
             </Link>
 
