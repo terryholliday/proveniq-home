@@ -33,6 +33,14 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized: Missing bearer token' }, { status: 401 });
     }
 
+    // Parse JSON body with proper error handling
+    let body;
+    try {
+        body = await req.json();
+    } catch (e) {
+        return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
+
     try {
         const token = authHeader.split('Bearer ')[1];
         const decodedToken = await adminAuth.verifyIdToken(token);
@@ -40,11 +48,14 @@ export async function POST(req: NextRequest) {
         // Extract tenant ID from verified token claims or fallback to uid
         const tenantId = decodedToken.tid || decodedToken.uid;
 
-        const body = await req.json();
+        // SECURITY FIX: Sanitize headers to prevent privilege escalation
+        const safeHeaders = { ...Object.fromEntries(req.headers) };
+        delete safeHeaders['x-myark-internal']; // PREVENT SPOOFING
+        delete safeHeaders['x-tenant-id']; // Already extracted from token
 
-        // Build request with verified tenant ID
+        // Build request with verified tenant ID and sanitized headers
         const compatibleReq = {
-            headers: Object.fromEntries(req.headers),
+            headers: safeHeaders,
             body,
             auth: {
                 token: { tid: tenantId, uid: decodedToken.uid }

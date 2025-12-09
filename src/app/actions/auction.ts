@@ -39,7 +39,9 @@ export async function sendToAuction(item: InventoryItem, user: User) {
     .update(body)
     .digest('hex');
 
-  const targetUrl = process.env.AUCTION_WEBHOOK_URL || 'http://localhost:3001/api/webhooks/myark';
+  // Use production URL from env, fallback to localhost for development
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.AUCTION_WEBHOOK_URL || 'http://localhost:3001';
+  const targetUrl = `${baseUrl}/api/webhooks/myark`;
 
   try {
     const response = await fetch(targetUrl, {
