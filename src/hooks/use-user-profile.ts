@@ -23,9 +23,10 @@ export function useUserProfile(user?: User | null) {
         if (!userDoc.exists()) {
             const { uid, email, displayName, photoURL, providerData } = user;
             const [firstName, lastName] = displayName?.split(' ') || ['', ''];
-            
+
             await setDoc(userDocRef, {
                 id: uid,
+                uid: uid, // Required for Firestore security rules
                 email,
                 firstName,
                 lastName,
