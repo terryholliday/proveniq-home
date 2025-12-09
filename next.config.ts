@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -12,8 +13,11 @@ const nextConfig: NextConfig = {
   // Required for Next.js 16+ when using webpack-based plugins like next-pwa
   turbopack: {},
 
+  outputFileTracingRoot: path.join(__dirname), // Silences lockfile warning
   experimental: {
     externalDir: true,
+    // @ts-expect-error: Next.js 15 type definition might be missing allowedDevOrigins
+    allowedDevOrigins: ['localhost:9003', '192.168.86.104:9003'],
   },
   images: {
     remotePatterns: [
