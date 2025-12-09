@@ -15,6 +15,7 @@ export const MyArkLogo: React.FC<MyArkLogoProps> = ({ size = 64, className = '',
       width={size}
       height={size}
       className={className}
+      style={{ width: size, height: size, objectFit: 'contain' }}
       {...props}
     />
   );
