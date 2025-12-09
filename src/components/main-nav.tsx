@@ -77,9 +77,21 @@ export function MainNav() {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <SidebarMenuSub>
-                <SidebarMenuSubItem><SidebarMenuSubButton>AI Scanner</SidebarMenuSubButton></SidebarMenuSubItem>
-                <SidebarMenuSubItem><SidebarMenuSubButton>Space Mapper</SidebarMenuSubButton></SidebarMenuSubItem>
-                <SidebarMenuSubItem><SidebarMenuSubButton>Sales Ad Generator</SidebarMenuSubButton></SidebarMenuSubItem>
+                <SidebarMenuSubItem>
+                  <Link href="/inventory/add" passHref>
+                    <SidebarMenuSubButton>AI Scanner</SidebarMenuSubButton>
+                  </Link>
+                </SidebarMenuSubItem>
+                <SidebarMenuSubItem>
+                  <Link href="/field-mode" passHref>
+                    <SidebarMenuSubButton>Space Mapper</SidebarMenuSubButton>
+                  </Link>
+                </SidebarMenuSubItem>
+                <SidebarMenuSubItem>
+                  <Link href="/inventory" passHref>
+                    <SidebarMenuSubButton>Sales Ad Generator</SidebarMenuSubButton>
+                  </Link>
+                </SidebarMenuSubItem>
               </SidebarMenuSub>
             </CollapsibleContent>
           </SidebarMenuItem>
