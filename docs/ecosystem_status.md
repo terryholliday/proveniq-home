@@ -118,68 +118,68 @@
 ## 📦 Phase 3 Roles
 
 ### AI Safety Specialist
-- [ ] Define and implement bias checks on valuation and Visual Truth models.
-- [ ] Set up basic drift monitoring keyed off historical valuation traces.
-- [ ] Work with Frontend to design user-facing confidence and explanation UI patterns.
-- [ ] Document an internal AI safety policy covering acceptable use and review requirements.
+- [x] Define and implement bias checks on valuation and Visual Truth models.
+- [x] Set up basic drift monitoring keyed off historical valuation traces.
+- [x] Work with Frontend to design user-facing confidence and explanation UI patterns.
+- [x] Document an internal AI safety policy covering acceptable use and review requirements.
 
 ### Backend/DevOps Engineer
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 - [x] **MyARK Webhook / Sell on Auction** (Completed via chat)
 
 ### Compliance Officer
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 
 ### Data Scientist & Analytics Lead
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 
 ### Frontend Specialist
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 
 ### Growth Engineer
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 
 ### Lead Architect
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
-- [ ] Propose a multi-region and sharding strategy for the highest-volume data sets.
-- [ ] Define a minimal set of shared platform services (identity, audit, notifications).
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Propose a multi-region and sharding strategy for the highest-volume data sets.
+- [x] Define a minimal set of shared platform services (identity, audit, notifications).
 
 ### Mobile Experience Architect
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 
 ### QA Specialist
-- [ ] Document current architecture, data flows, and risks for this role’s domain.
-- [ ] Introduce basic monitoring and feedback loops for the most critical workflows.
-- [ ] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
-- [ ] Create a short roadmap for Phase 4 requirements related to this role.
+- [x] Document current architecture, data flows, and risks for this role’s domain.
+- [x] Introduce basic monitoring and feedback loops for the most critical workflows.
+- [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
+- [x] Create a short roadmap for Phase 4 requirements related to this role.
 - [x] **Fix E2E Tests / Multi-tenant spec** (Completed via chat)
 
 ### Strategic Partnerships Manager
-- [ ] Identify and categorize potential partners (carriers, adjusters, restoration, IoT, marketplaces).
-- [ ] Draft initial one-pagers and pitch materials tailored to each partner category.
-- [ ] Collaborate with technical teams on a first-cut public API and white-label concept.
-- [ ] Support legal/compliance in drafting early data-sharing templates.
+- [x] Identify and categorize potential partners (carriers, adjusters, restoration, IoT, marketplaces).
+- [x] Draft initial one-pagers and pitch materials tailored to each partner category.
+- [x] Collaborate with technical teams on a first-cut public API and white-label concept.
+- [x] Support legal/compliance in drafting early data-sharing templates.
 
 ## 📦 Phase 5 Roles
 
