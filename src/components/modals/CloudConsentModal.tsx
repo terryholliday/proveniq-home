@@ -88,38 +88,40 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
                         <ShieldCheck className="h-6 w-6" />
                         Important Update: Data Storage & Privacy
                     </DialogTitle>
-                    <DialogDescription className="pt-4 space-y-4 text-slate-700">
-                        <p>
-                            To enable real-time auctions, disaster recovery, and multi-device access, MyARK is updating its infrastructure.
-                        </p>
+                    <DialogDescription asChild>
+                        <div className="pt-4 space-y-4 text-slate-700">
+                            <p>
+                                To enable real-time auctions, disaster recovery, and multi-device access, MyARK is updating its infrastructure.
+                            </p>
 
-                        <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100 space-y-3">
-                            <div className="flex gap-3">
-                                <Cloud className="h-5 w-5 text-indigo-600 flex-shrink-0" />
-                                <div className="text-sm">
-                                    <strong>Cloud Synchronization:</strong> Your inventory items, photos, and documents are no longer stored solely on your device. They are synchronized to our secure Google Cloud Firestore database (US Region).
+                            <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100 space-y-3">
+                                <div className="flex gap-3">
+                                    <Cloud className="h-5 w-5 text-indigo-600 flex-shrink-0" />
+                                    <div className="text-sm">
+                                        <strong>Cloud Synchronization:</strong> Your inventory items, photos, and documents are no longer stored solely on your device. They are synchronized to our secure Google Cloud Firestore database (US Region).
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3">
+                                    <Gavel className="h-5 w-5 text-indigo-600 flex-shrink-0" />
+                                    <div className="text-sm">
+                                        <strong>Auction Transactions:</strong> By participating in auctions, you acknowledge MyARK acts as a "Marketplace Facilitator" responsible for collecting Sales Tax on your behalf.
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex gap-3">
-                                <Gavel className="h-5 w-5 text-indigo-600 flex-shrink-0" />
-                                <div className="text-sm">
-                                    <strong>Auction Transactions:</strong> By participating in auctions, you acknowledge MyARK acts as a "Marketplace Facilitator" responsible for collecting Sales Tax on your behalf.
-                                </div>
-                            </div>
+                            <p className="text-xs text-muted-foreground">
+                                By clicking "I Agree", you consent to the transfer of your data to cloud servers and accept the updated{" "}
+                                <Link href="/settings?doc=privacy" target="_blank" className="underline text-indigo-600">
+                                    Privacy Policy (v2.0)
+                                </Link>{" "}
+                                and{" "}
+                                <Link href="/settings?doc=tos" target="_blank" className="underline text-indigo-600">
+                                    Terms of Service
+                                </Link>
+                                .
+                            </p>
                         </div>
-
-                        <p className="text-xs text-muted-foreground">
-                            By clicking "I Agree", you consent to the transfer of your data to cloud servers and accept the updated{" "}
-                            <Link href="/settings?doc=privacy" target="_blank" className="underline text-indigo-600">
-                                Privacy Policy (v2.0)
-                            </Link>{" "}
-                            and{" "}
-                            <Link href="/settings?doc=tos" target="_blank" className="underline text-indigo-600">
-                                Terms of Service
-                            </Link>
-                            .
-                        </p>
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="sm:justify-between items-center mt-4">
