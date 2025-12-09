@@ -3,7 +3,6 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
 // import { Inter } from 'next/font/google';
-import { ConsentModal } from '@/components/compliance/ConsentModal';
 
 export const metadata: Metadata = {
   title: 'MyARK',
@@ -25,7 +24,6 @@ export default function RootLayout({
       <body className={`font-sans font-body antialiased`} suppressHydrationWarning>
         <FirebaseClientProvider>
           {children}
-          <ConsentModal />
           <Toaster />
         </FirebaseClientProvider>
       </body>

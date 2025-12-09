@@ -72,8 +72,25 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
   const handleLegalNav = (view: AppView) => {
     if (onNavigateToLegal) {
       onNavigateToLegal(view);
-    } else {
-      router.push(`/legal/${view}`);
+      return;
+    }
+
+    const legalDocMap: Record<AppView, string | undefined> = {
+      'legal-terms': 'tos',
+      'legal-privacy': 'privacy',
+      'legal-eula': 'eula',
+      login: undefined,
+      landing: undefined,
+      dashboard: undefined,
+      inventory: undefined,
+      'move-planner': undefined,
+      'pitch-deck': undefined,
+      permissions: undefined,
+    };
+
+    const doc = legalDocMap[view];
+    if (doc) {
+      router.push(`/settings/legaldocs?doc=${doc}`);
     }
   };
 
