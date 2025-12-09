@@ -22,6 +22,8 @@ import { Button } from '@/components/ui/button';
 import { ProvenanceTimeline } from '@/components/inventory/ProvenanceTimeline';
 import { ProvenanceEngine, ProvenanceSummary } from '@/ai/provenance_engine';
 
+import { sendToAuction } from '@/app/actions/auction';
+
 export default function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [unwrappedParams, setUnwrappedParams] = useState<{ id: string } | null>(null);
   const [item, setItem] = useState<InventoryItem | null>(null);
@@ -31,6 +33,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
   const { toast } = useToast();
   const [upgradeModal, setUpgradeModal] = useState<{ isOpen: boolean, feature: string }>({ isOpen: false, feature: '' });
   const [showAuctionWizard, setShowAuctionWizard] = useState(false);
+  const [isSendingToAuction, setIsSendingToAuction] = useState(false);
 
   useEffect(() => {
     params.then(setUnwrappedParams);
@@ -78,6 +81,19 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
     setUpgradeModal({ isOpen: true, feature });
   }
 
+  const handleSendToAuction = async () => {
+    if (!item || !user) return;
+    try {
+      setIsSendingToAuction(true);
+      await sendToAuction(item, user);
+      toast({ title: "Success", description: "Item sent to auction platform." });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } finally {
+      setIsSendingToAuction(false);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>; // Replace with a proper skeleton loader
   }
@@ -98,9 +114,17 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
             <div className="md:hidden">
               <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             </div>
-            <div className="md:hidden">
+            <div className="md:hidden space-y-2">
               <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
                 Sell via myarkauctions
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleSendToAuction}
+                disabled={isSendingToAuction}
+              >
+                {isSendingToAuction ? "Sending..." : "Send to Auction"}
               </Button>
             </div>
             <DescriptionSection item={item} onUpdate={handleUpdate} />
@@ -115,9 +139,19 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
           <aside className="hidden md:block">
             <div className="sticky top-24 space-y-6">
               <ItemQuickActions item={item} user={user} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
-              <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
-                Sell via myarkauctions
-              </Button>
+              <div className="space-y-2">
+                <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
+                  Sell via myarkauctions
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleSendToAuction}
+                  disabled={isSendingToAuction}
+                >
+                  {isSendingToAuction ? "Sending..." : "Send to Auction"}
+                </Button>
+              </div>
             </div>
           </aside>
         </main>
