@@ -29,7 +29,7 @@
       "firebase-functions/logger": [
         "./types/firebase-functions-logger.d.ts"
       ]
-    },
+    }
   },
   "include": [
     "next-env.d.ts",
