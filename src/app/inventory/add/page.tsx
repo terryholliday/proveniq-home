@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import { useFirebase, useUser } from '@/firebase/provider';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-// import { visionPipelineV2 } from '@/ai/flows/vision-pipeline-v2'; // Uncomment when ready to use AI
 
 export default function AddItemPage() {
     const { toast } = useToast();
@@ -17,7 +16,6 @@ export default function AddItemPage() {
     const { firebaseApp, firestore } = useFirebase();
     const [isUploading, setIsUploading] = useState(false);
 
-    // Dynamic import for storage to ensure client-side execution
     const getStorage = async () => {
         const { getStorage } = await import('firebase/storage');
         return getStorage(firebaseApp!);
@@ -35,38 +33,26 @@ export default function AddItemPage() {
             const snapshot = await uploadBytes(storageRef, file);
             const downloadURL = await getDownloadURL(snapshot.ref);
 
-            // 2. Create Initial Firestore Record
+            // 2. Create Firestore Record
             const docRef = await addDoc(collection(firestore, 'items'), {
                 userId: user.uid,
-                name: file.name.split('.')[0] || 'New Item', // Default name from file
+                name: file.name.split('.')[0] || 'New Item',
                 description: 'Processing image...',
                 imageUrl: downloadURL,
                 createdAt: serverTimestamp(),
                 updatedAt: serverTimestamp(),
                 category: 'Uncategorized',
                 quantity: 1,
-                tenantId: 'consumer', // Default tenant
+                tenantId: 'consumer',
                 status: 'draft'
             });
 
-            toast({
-                title: "Image Uploaded",
-                description: "Analyzing item...",
-            });
-
-            // 3. (Optional) Trigger AI Pipeline here or via Firestore trigger
-            // await visionPipelineV2({ images: [{ url: downloadURL, id: docRef.id }] });
-
-            // 4. Redirect to Detail Page
+            toast({ title: "Image Uploaded", description: "Analyzing item..." });
             router.push(`/inventory/${docRef.id}`);
 
         } catch (error: any) {
             console.error("Upload failed", error);
-            toast({
-                title: "Error",
-                description: error.message || "Failed to upload image.",
-                variant: "destructive"
-            });
+            toast({ title: "Error", description: error.message, variant: "destructive" });
         } finally {
             setIsUploading(false);
         }
@@ -78,12 +64,9 @@ export default function AddItemPage() {
                 <div className="flex items-center justify-between mb-8">
                     <h1 className="text-2xl font-bold">Add New Item</h1>
                     <Link href="/inventory" passHref>
-                        <Button variant="ghost" size="icon" aria-label="Close">
-                            <span className="text-xl">×</span>
-                        </Button>
+                        <Button variant="ghost" size="icon"><span className="text-xl">×</span></Button>
                     </Link>
                 </div>
-
                 <div className="space-y-6">
                     {isUploading ? (
                         <div className="flex flex-col items-center justify-center h-52 bg-card rounded-lg border">
@@ -94,7 +77,7 @@ export default function AddItemPage() {
                         <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-52 border-2 border-dashed rounded-lg cursor-pointer bg-card hover:bg-secondary transition-colors">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
                                 <UploadCloud className="w-8 h-8 mb-4 text-muted-foreground" />
-                                <p className="mb-2 text-sm text-foreground font-semibold">Drag & drop images here</p>
+                                <p className="mb-2 text-sm font-semibold">Drag & drop images here</p>
                                 <p className="text-sm text-muted-foreground">or <span className="text-primary font-semibold hover:underline">Browse files</span></p>
                             </div>
                             <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
