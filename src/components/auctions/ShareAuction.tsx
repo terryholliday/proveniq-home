@@ -67,7 +67,7 @@ export function generateAuctionDeepLink(auctionId: string): string {
     // In production, this would be the actual domain
     const baseUrl = typeof window !== 'undefined'
         ? window.location.origin
-        : 'https://myark.app';
+        : 'https://proveniq.app';
 
     return `${baseUrl}/auctions/${auctionId}?ref=share`;
 }

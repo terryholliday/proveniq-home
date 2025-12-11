@@ -185,7 +185,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ currentUser, onClose, onUpg
                                 <div>
                                     <p className="font-bold text-gray-800">Secure & Transparent Pricing</p>
                                     <p>
-                                        All new accounts start with a 14-day free trial of MyARK Pro.
+                                        All new accounts start with a 14-day free trial of Proveniq Home Pro.
                                         Payments are processed securely. No hidden fees.
                                     </p>
                                 </div>

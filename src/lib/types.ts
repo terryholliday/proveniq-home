@@ -72,7 +72,7 @@ export type EmployeeProfile = UserProfile & {
 export type CompanyAssetMetadata = {
   createdById: string;
   createdAt: string;
-  copyrightHolder: 'MyARK Inc.';
+  copyrightHolder: 'Proveniq Home Inc.';
   inventionType: 'code' | 'algorithm' | 'process' | 'list';
   isProprietary: boolean;
 };

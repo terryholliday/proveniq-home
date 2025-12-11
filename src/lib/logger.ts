@@ -1,5 +1,5 @@
 /**
- * @fileOverview Structured logging abstraction for MyARK.
+ * @fileOverview Structured logging abstraction for Proveniq Home.
  * Logs domain events in JSON format for production observability.
  */
 

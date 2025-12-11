@@ -20,8 +20,8 @@ export class PartnerReferralEngine {
      */
     generateAgentLink(partnerId: string, agentId: string): string {
         const baseUrl = 'https://proveniq.io/start';
-        // Format: myark.io/start?ref=PAR-{partnerId}-{agentId}
-        return `${baseUrl}?ref=PAR-${partnerId}-${agentId}`;
+        // Format: proveniq.io/start?ref=PROVENIQ-{partnerId}-{agentId}
+        return `${baseUrl}?ref=PROVENIQ-${partnerId}-${agentId}`;
     }
 
     /**
@@ -29,14 +29,14 @@ export class PartnerReferralEngine {
      * In a real app, this would write to a 'referrals' table.
      */
     async trackConversion(referralCode: string, newUserId: string) {
-        if (!referralCode.startsWith('PAR-')) {
+        if (!referralCode.startsWith('PROVENIQ-')) {
             return; // Not a partner referral
         }
 
         const [, partnerId, agentId] = referralCode.split('-');
 
         logger.info('Partner Referral Conversion', {
-            event: 'PARTNER_CONVERSION',
+            event: 'PROVENIQ_PARTNER_CONVERSION',
             partnerId,
             agentId,
             newUserId

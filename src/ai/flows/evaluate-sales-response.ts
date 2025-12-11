@@ -30,12 +30,12 @@ const prompt = ai.definePrompt({
   name: 'evaluateSalesResponsePrompt',
   input: { schema: EvaluateSalesResponseInputSchema },
   output: { schema: EvaluateSalesResponseOutputSchema },
-  prompt: `You are a sales enablement coach for MyARK, a home inventory application. Your task is to evaluate a sales representative's response to a customer objection.
+  prompt: `You are a sales enablement coach for Proveniq Home, a home inventory application. Your task is to evaluate a sales representative's response to a customer objection.
 
 Rate the response on a scale of 1 to 10 and provide concise, constructive feedback. Your feedback should focus on:
 1.  **Empathy:** Did the rep acknowledge the customer's point of view?
 2.  **Clarity:** Was the response easy to understand?
-3.  **Value Proposition:** Did the rep effectively communicate MyARK's unique value and features to counter the objection?
+3.  **Value Proposition:** Did the rep effectively communicate Proveniq Home's unique value and features to counter the objection?
 
 **Customer Scenario:**
 "{{{scenario}}}"

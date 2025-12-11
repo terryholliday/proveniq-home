@@ -197,7 +197,7 @@ export default function LandingPage() {
 
           <Link href="/signup" passHref>
             <Button size="lg" className="w-full sm:w-auto">
-              Build Your Proveniq <ArrowRight className="ml-2" />
+              Prove What's Yours <ArrowRight className="ml-2" />
             </Button>
           </Link>
 

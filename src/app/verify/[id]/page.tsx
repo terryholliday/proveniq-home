@@ -77,7 +77,7 @@ export default function VerifyItemPage() {
                     <div className="inline-flex items-center justify-center p-3 bg-green-100 rounded-full mb-4">
                         <ShieldCheck className="h-8 w-8 text-green-600" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900">MyARK Verified Item</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">Proveniq Home Verified Item</h1>
                     <p className="text-gray-500 mt-2">Digital Registry Verification</p>
                 </div>
 
@@ -161,7 +161,7 @@ export default function VerifyItemPage() {
                         </div>
 
                         <div className="mt-8 pt-6 border-t text-center text-xs text-gray-400">
-                            Verified by MyARK Digital Registry • {new Date().getFullYear()}
+                            Verified by Proveniq Home Digital Registry • {new Date().getFullYear()}
                         </div>
                     </CardContent>
                 </Card>

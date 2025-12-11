@@ -21,7 +21,7 @@
     }
   ],
   "hosting": {
-    "target": "arkive-auctions",
+    "site": "home-proveniq",
     "source": ".",
     "ignore": [
       "firebase.json",

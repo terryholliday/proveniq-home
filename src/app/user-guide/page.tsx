@@ -133,7 +133,7 @@ export default function UserGuidePage() {
 
   return (
     <>
-    <PageHeader title="User Guide" description="Find answers and learn how to use MyARK." />
+    <PageHeader title="User Guide" description="Find answers and learn how to use Proveniq Home." />
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 h-[calc(100vh-10rem)]">
       {/* Sidebar */}
       <aside className="md:col-span-1 flex flex-col gap-6">

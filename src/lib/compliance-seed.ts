@@ -50,19 +50,19 @@ You have the right to access, correct, or delete your personal data. You can req
 **Last Updated:** ${new Date().toISOString().split('T')[0]}
 
 ## 1. Acceptance of Terms
-By accessing or using MyARK, you agree to be bound by these Terms.
+By accessing or using Proveniq Home, you agree to be bound by these Terms.
 
 ## 2. User Accounts
 You are responsible for safeguarding your account credentials.
 
 ## 3. Cloud Services
-You acknowledge that MyARK uses cloud-based services for data storage and processing.
+You acknowledge that Proveniq Home uses cloud-based services for data storage and processing.
 
 ## 4. AI Disclaimers
 AI-generated content is for informational purposes only and should be verified.
 
 ## 5. Limitation of Liability
-MyARK is provided "as is" without warranties of any kind.
+Proveniq Home is provided "as is" without warranties of any kind.
     `,
         lastUpdated: Timestamp.now(),
         updatedBy: 'system',

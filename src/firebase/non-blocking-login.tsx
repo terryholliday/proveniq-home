@@ -67,7 +67,7 @@ export async function registerPasskey(authInstance: Auth, user: { email?: string
           publicKey: {
             challenge,
             rp: {
-              name: "MyArk App",
+              name: "Proveniq Home",
               id: window.location.hostname // Must match current domain
             },
             user: {

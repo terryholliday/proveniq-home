@@ -128,21 +128,21 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     title: 'Privacy Policy (Cloud-Native Revised)',
     status: 'published',
     version: '2.0',
-    content: `<h1>Privacy Policy</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Data Storage and Synchronization</h3><p><strong>Cloud-First Architecture:</strong> Unlike legacy applications that may store data solely on your device, MyARK uses <strong>Google Cloud Firestore</strong>, a secure cloud database provided by Google LLC, to store, synchronize, and backup your data. This allows you to access your inventory across multiple devices and participate in real-time auctions.</p><h3>4. Third-Party Sharing</h3><p>We do not sell your personal data. We share data with infrastructure providers solely to operate the service: Google Cloud (Firebase), Stripe.</p>`
+    content: `<h1>Privacy Policy</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Data Storage and Synchronization</h3><p><strong>Cloud-First Architecture:</strong> Unlike legacy applications that may store data solely on your device, Proveniq Home uses <strong>Google Cloud Firestore</strong>, a secure cloud database provided by Google LLC, to store, synchronize, and backup your data. This allows you to access your inventory across multiple devices and participate in real-time auctions.</p><h3>4. Third-Party Sharing</h3><p>We do not sell your personal data. We share data with infrastructure providers solely to operate the service: Google Cloud (Firebase), Stripe.</p>`
   },
   {
     id: 'tos',
     title: 'Terms of Service (Marketplace Facilitator Update)',
     status: 'published',
     version: '2.0',
-    content: `<h1>Terms of Service</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Marketplace Facilitator Role</h3><p>MyARK operates as a "Marketplace Facilitator" for auction transactions. We are responsible for calculating, collecting, and remitting applicable Sales Tax on items sold through our platform, as required by state law.</p>`
+    content: `<h1>Terms of Service</h1><p><strong>Last Updated: ${new Date().toLocaleDateString()}</strong></p><h3>2. Marketplace Facilitator Role</h3><p>Proveniq Home operates as a "Marketplace Facilitator" for auction transactions. We are responsible for calculating, collecting, and remitting applicable Sales Tax on items sold through our platform, as required by state law.</p>`
   },
   {
     id: 'eula',
     title: 'End User License Agreement (EULA)',
     status: 'published',
     version: '1.0',
-    content: `<h1>End User License Agreement</h1><p>This EULA governs your use of the MyARK software.</p>`
+    content: `<h1>End User License Agreement</h1><p>This EULA governs your use of the Proveniq Home software.</p>`
   },
   {
     id: 'compliance_notice',
@@ -165,14 +165,14 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     title: 'MARKETPLACE FACILITATOR LAWS & TAX STRATEGY',
     status: 'internal_only',
     version: '1.0',
-    content: `<h1>Compliance Architecture for Digital Auction Platforms</h1><p><strong>Executive Summary:</strong> MyARK is likely a "Marketplace Facilitator" due to our role in listing items and processing payments (Stripe). This creates a mandatory obligation to collect/remit Sales Tax once thresholds (e.g., $100k or 200 txns) are met.</p>`
+    content: `<h1>Compliance Architecture for Digital Auction Platforms</h1><p><strong>Executive Summary:</strong> Proveniq Home is likely a "Marketplace Facilitator" due to our role in listing items and processing payments (Stripe). This creates a mandatory obligation to collect/remit Sales Tax once thresholds (e.g., $100k or 200 txns) are met.</p>`
   },
   {
     id: 'legacy_strategy',
     title: 'WV RUFADAA COMPLIANCE REPORT',
     status: 'internal_only',
     version: '1.0',
-    content: `<h1>STRATEGIC COMPLIANCE REPORT: MyARK "LEGACY" FEATURE</h1><p><strong>Executive Summary:</strong> MyARK must not view the "Legacy" feature merely as a convenience, but as a robust legal instrument under WV Code §44-5B-1.</p><h3>The Privacy Paradox</h3><p>Federal statutes like the SCA criminalize unauthorized access. WV-UFADAA resolves this via the 'Online Tool'.</p>`
+    content: `<h1>STRATEGIC COMPLIANCE REPORT: Proveniq Home "LEGACY" FEATURE</h1><p><strong>Executive Summary:</strong> Proveniq Home must not view the "Legacy" feature merely as a convenience, but as a robust legal instrument under WV Code §44-5B-1.</p><h3>The Privacy Paradox</h3><p>Federal statutes like the SCA criminalize unauthorized access. WV-UFADAA resolves this via the 'Online Tool'.</p>`
   },
   {
     id: 'business_plan',
@@ -193,7 +193,7 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     title: 'Trademark Strategy Memo',
     status: 'internal_only',
     version: '1.0',
-    content: `<h1>Trademark Strategy</h1><p>Strategy for protecting the MyARK brand and marks.</p>`
+    content: `<h1>Trademark Strategy</h1><p>Strategy for protecting the Proveniq Home brand and marks.</p>`
   },
 
   // CORP GOVERNANCE & TEMPLATES
@@ -244,6 +244,6 @@ export const SEED_DOCS: Partial<LegalDocument>[] = [
     title: 'TECHNOLOGY TRANSFER AGREEMENT',
     status: 'internal_only',
     version: '1.0',
-    content: `<h1>Technology Transfer and Assignment Agreement</h1><p>This Agreement is made by and between Terry L. Holliday (“Assignor”) and TrueArk Technologies, Inc. (“Assignee”).</p><h3>1. Assignment</h3><p>Assignor hereby irrevocably sells, transfers, conveys, assigns, and delivers to the Company all right, title, and interest in and to the Technology (VinoVision, MyARK, TrueManifest, etc.).</p>`
+    content: `<h1>Technology Transfer and Assignment Agreement</h1><p>This Agreement is made by and between Terry L. Holliday (“Assignor”) and TrueArk Technologies, Inc. (“Assignee”).</p><h3>1. Assignment</h3><p>Assignor hereby irrevocably sells, transfers, conveys, assigns, and delivers to the Company all right, title, and interest in and to the Technology (VinoVision, Proveniq Home, TrueManifest, etc.).</p>`
   }
 ];

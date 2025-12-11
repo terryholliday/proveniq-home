@@ -9,7 +9,7 @@ export default function FieldModePage() {
     return (
         <div className="min-h-screen bg-zinc-900 text-white p-4">
             <header className="flex justify-between items-center mb-8">
-                <h1 className="text-2xl font-bold text-yellow-500">MyARK Field Ops</h1>
+                <h1 className="text-2xl font-bold text-yellow-500">Proveniq Home Field Ops</h1>
                 <div className="bg-green-600 px-3 py-1 rounded-full text-xs font-mono">
                     ONLINE (SYNCED)
                 </div>

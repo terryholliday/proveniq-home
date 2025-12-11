@@ -20,7 +20,7 @@ export function ProvenanceCertificate({ item }: ProvenanceCertificateProps) {
         <div className="bg-white p-8 max-w-2xl mx-auto border-4 border-double border-gray-300 shadow-lg print:shadow-none print:border-4">
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-serif font-bold text-gray-900 mb-2">Certificate of Provenance</h1>
-                <p className="text-sm text-gray-500 uppercase tracking-widest">MyARK Digital Registry</p>
+                <p className="text-sm text-gray-500 uppercase tracking-widest">Proveniq Home Digital Registry</p>
             </div>
 
             <div className="flex gap-6 mb-8">
@@ -95,7 +95,7 @@ export function ProvenanceCertificate({ item }: ProvenanceCertificateProps) {
                         />
                     </div>
                     <p className="text-[10px] text-gray-400 max-w-[200px]">
-                        This certificate is a digital representation of records held in the MyARK secure registry.
+                        This certificate is a digital representation of records held in the Proveniq Home secure registry.
                     </p>
                 </div>
             </div>

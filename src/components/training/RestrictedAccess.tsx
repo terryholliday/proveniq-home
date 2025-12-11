@@ -13,7 +13,7 @@ export function RestrictedAccess() {
           </div>
           <CardTitle>Access Denied</CardTitle>
           <CardDescription>
-            This training area is restricted to MyARK internal team members.
+            This training area is restricted to Proveniq Home internal team members.
           </CardDescription>
         </CardHeader>
         <CardContent>

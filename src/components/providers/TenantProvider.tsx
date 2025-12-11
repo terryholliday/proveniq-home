@@ -16,7 +16,7 @@ interface TenantConfig {
 
 const defaultTenant: TenantConfig = {
     id: 'consumer',
-    name: 'MyARK',
+    name: 'Proveniq Home',
     primaryColor: '#000000', // Default Black
     logoUrl: '/logo.png',
     features: {
@@ -35,7 +35,7 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         // In a real implementation, we would fetch this from an API
-        // based on the subdomain (e.g., statefarm.myark.io)
+        // based on the subdomain (e.g., statefarm.proveniq.io)
         const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
 
         async function fetchTenantConfig() {

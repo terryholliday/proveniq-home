@@ -57,7 +57,7 @@ const SalesTrainingApp: React.FC<SalesTrainingAppProps> = ({ onBack }) => {
                         <div className="mt-6 bg-white p-8 rounded-xl border border-gray-200 text-center">
                             <Award size={48} className="mx-auto text-indigo-500 mb-4" />
                             <h2 className="text-xl font-bold">Ready to certify?</h2>
-                            <p className="text-gray-600 my-4 max-w-md mx-auto">This exam consists of 50 questions covering the entire MyARK ecosystem. You need 80% to pass.</p>
+                            <p className="text-gray-600 my-4 max-w-md mx-auto">This exam consists of 50 questions covering the entire Proveniq Home ecosystem. You need 80% to pass.</p>
                             <button className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors">Start Exam</button>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ const SalesTrainingApp: React.FC<SalesTrainingAppProps> = ({ onBack }) => {
                             ))}
                         </nav>
                         <div className="mt-8 border-t border-gray-100 pt-4">
-                             <button onClick={onBack} className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"><ArrowLeft size={16} /> Exit to MyARK</button>
+                             <button onClick={onBack} className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"><ArrowLeft size={16} /> Exit to Proveniq Home</button>
                         </div>
                     </div>
                 </div>

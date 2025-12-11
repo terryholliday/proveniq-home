@@ -1,5 +1,5 @@
 /**
- * MyARK Analytics Schema
+ * Proveniq Home Analytics Schema
  * Defines the contract for all telemetry and tracking within the application.
  */
 

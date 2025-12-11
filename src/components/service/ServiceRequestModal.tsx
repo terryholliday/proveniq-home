@@ -55,7 +55,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, onClose
           setStep('submitting');
           setFinalMessage({
               title: "Request Sent for Bids!",
-              body: "Local MyARK Pros have been notified. You&apos;ll receive bids in your service dashboard shortly."
+              body: "Local Proveniq Home Pros have been notified. You&apos;ll receive bids in your service dashboard shortly."
           });
           // Simulate submission
           setTimeout(() => setStep('success'), 1500);
@@ -113,12 +113,12 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, onClose
                           <p className="text-xs text-gray-600 px-4">{estimate.reasoning}</p>
                       </div>
                       <div className="bg-green-50 text-green-800 text-xs p-3 rounded-lg border border-green-100">
-                          <strong>Platform Fee:</strong> MyARK will take a {estimate.commissionRate}% commission from the provider&apos;s final fee. This helps us maintain a network of trusted professionals.
+                          <strong>Platform Fee:</strong> Proveniq Home will take a {estimate.commissionRate}% commission from the provider&apos;s final fee. This helps us maintain a network of trusted professionals.
                       </div>
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <button onClick={() => handleChooseOption('choose')} className="p-4 border-2 border-indigo-200 rounded-xl text-left hover:bg-indigo-50 hover:border-indigo-500 transition-all group">
                                 <UserCheck size={24} className="text-indigo-600 mb-2"/>
-                                <h4 className="font-bold text-gray-900">Choose a MyARK Pro</h4>
+                                <h4 className="font-bold text-gray-900">Choose a Proveniq Home Pro</h4>
                                 <p className="text-sm text-gray-600">Select from a list of our top-rated, certified service providers.</p>
                             </button>
                              <button onClick={() => handleChooseOption('bid')} className="p-4 border-2 border-gray-200 rounded-xl text-left hover:bg-gray-50 hover:border-gray-500 transition-all group">
@@ -132,7 +132,7 @@ const ServiceRequestModal: React.FC<ServiceRequestModalProps> = ({ item, onClose
           case 'provider_list':
               return (
                   <div className="p-6 space-y-4">
-                      <h3 className="text-xl font-bold text-gray-900">Choose a MyARK Pro</h3>
+                      <h3 className="text-xl font-bold text-gray-900">Choose a Proveniq Home Pro</h3>
                       <div className="space-y-3">
                           {mockProviders.map(pro => (
                               <button key={pro.id} onClick={() => handleSelectProvider(pro)} className="w-full text-left p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">

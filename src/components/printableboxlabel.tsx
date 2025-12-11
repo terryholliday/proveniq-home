@@ -19,7 +19,7 @@ const PrintableBoxLabel: React.FC<PrintableBoxLabelProps> = ({ box, items, onDon
   }, [onDone]);
   
   const qrData = JSON.stringify({
-      type: 'MyARK_box',
+      type: 'Proveniq Home_box',
       boxId: box.id,
       moveId: box.moveId
   });
@@ -59,7 +59,7 @@ const PrintableBoxLabel: React.FC<PrintableBoxLabelProps> = ({ box, items, onDon
                     <QRCode value={qrData} size={200} />
                 </div>
                 <p className="mt-4 text-center font-semibold text-lg flex items-center gap-2">
-                    <Package size={24} /> Scan with MyARK
+                    <Package size={24} /> Scan with Proveniq Home
                 </p>
             </div>
         </div>

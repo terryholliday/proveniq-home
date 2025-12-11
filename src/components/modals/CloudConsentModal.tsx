@@ -91,7 +91,7 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
                     <DialogDescription asChild>
                         <div className="pt-4 space-y-4 text-slate-700">
                             <p>
-                                To enable real-time auctions, disaster recovery, and multi-device access, MyARK is updating its infrastructure.
+                                To enable real-time auctions, disaster recovery, and multi-device access, Proveniq Home is updating its infrastructure.
                             </p>
 
                             <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100 space-y-3">

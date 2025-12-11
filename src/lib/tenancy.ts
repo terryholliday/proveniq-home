@@ -47,7 +47,7 @@ export function extractTenantContext(auth: AuthContext | undefined, headers?: Re
  * HOF to enforce Tenancy on a function handler.
  * usage: export const myFunc = withTenancy(async (data, ctx) => { ... });
  */
-interface TenancyRequest {
+interface TenancyProveniqHomeRequest {
     auth?: AuthContext;
     context?: { auth?: AuthContext };
     headers?: Record<string, string>;
@@ -59,7 +59,7 @@ export function withTenancy<T>(
     handler: (data: unknown, context: TenantContext) => Promise<T>
 ) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return async (req: TenancyRequest, _res?: unknown) => { // Abstraction for HTTP/Callable
+    return async (req: TenancyProveniqHomeRequest, _res?: unknown) => { // Abstraction for HTTP/Callable
         let context: TenantContext;
 
         try {

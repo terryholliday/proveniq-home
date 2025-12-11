@@ -17,7 +17,7 @@ export function useTrainingAccess() {
     return { hasAccess: false, isLoading: false };
   }
 
-  const hasInternalEmail = user.email?.endsWith('@myark.internal') ?? false;
+  const hasInternalEmail = user.email?.endsWith('@proveniq.internal') ?? false;
 
   // In a real app, this might check for a specific claim or role.
   // For now, we're just checking the email domain.

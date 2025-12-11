@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     // SECURITY FIX: Sanitize headers to prevent privilege escalation
     const safeHeaders = { ...Object.fromEntries(req.headers) };
-    delete safeHeaders['x-myark-internal'];
+    delete safeHeaders['x-proveniq-internal'];
 
     // SECURITY FIX: Enforce safe default for auth
     const compatibleReq = {

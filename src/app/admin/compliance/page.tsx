@@ -75,7 +75,7 @@ export default function ComplianceDashboard() {
 
     const handleGenerateReport = () => {
         const reportContent = `
-MYARK COMPLIANCE REPORT
+Proveniq Home COMPLIANCE REPORT
 Generated: ${new Date().toLocaleString()}
 
 --- EXECUTIVE SUMMARY ---
