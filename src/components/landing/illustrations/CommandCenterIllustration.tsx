@@ -1,5 +1,5 @@
 import { Gift, Gavel, ShieldCheck, TrendingUp, Truck, Wrench } from 'lucide-react';
-import { MyArkLogo } from '@/components/onboarding/MyArkLogo';
+import { ProveniqLogo } from '@/components/onboarding/ProveniqLogo';
 
 export function CommandCenterIllustration(): JSX.Element {
     const icons = [
@@ -29,7 +29,7 @@ export function CommandCenterIllustration(): JSX.Element {
                 })}
             </div>
             <div className="bg-white rounded-full shadow-2xl p-4 pulse-grow">
-                <MyArkLogo size={64} />
+                <ProveniqLogo size={64} />
             </div>
         </div>
     );

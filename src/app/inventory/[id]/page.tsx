@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { notFound } from 'next/navigation';
 import { doc } from 'firebase/firestore';
 import { useFirestore, useUser } from '@/firebase/provider';
+import { useUserProfile } from '@/hooks/use-user-profile';
 import { useDoc } from '@/firebase/firestore/use-doc';
 import { InventoryItem, User, Beneficiary } from '@/lib/types';
 import { DUMMY_BENEFICIARIES } from '@/lib/dummy-data'; // Keep for beneficiaries for now
@@ -31,8 +32,18 @@ import { sendToAuction } from '@/app/actions/auction';
 export default function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [unwrappedParams, setUnwrappedParams] = useState<{ id: string } | null>(null);
   const firestore = useFirestore();
-  const { user } = useUser();
+  const { user: firebaseUser } = useUser();
+  const { userProfile } = useUserProfile(firebaseUser);
   const { toast } = useToast();
+
+  const appUser = useMemo<User | null>(() => {
+    if (!userProfile) return null;
+    return {
+      ...userProfile,
+      tier: userProfile.isPremium ? 'pro' : 'free',
+      subscriptionStatus: 'active',
+    } as User;
+  }, [userProfile]);
 
   // Unwrap params
   useEffect(() => {
@@ -97,13 +108,14 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
   }
 
   const handleSendToAuction = async () => {
-    if (!item || !user) return;
+    if (!item || !appUser) return;
     try {
       setIsSendingToAuction(true);
-      await sendToAuction(item, user as User); // Casting assuming User type match
+      await sendToAuction(item, appUser);
       toast({ title: "Success", description: "Item sent to auction platform." });
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Failed to send to auction";
+      toast({ title: "Error", description: message, variant: "destructive" });
     } finally {
       setIsSendingToAuction(false);
     }
@@ -135,7 +147,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
 
             {/* Mobile Actions */}
             <div className="md:hidden">
-              <ItemQuickActions item={item!} user={user as User} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+              <ItemQuickActions item={item!} user={appUser!} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             </div>
             <div className="md:hidden space-y-2">
               <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
@@ -149,16 +161,16 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
             <DescriptionSection item={item!} onUpdate={handleUpdate} />
             <FinancialsSection item={item!} onUpdate={handleUpdate} />
             <LocationSection item={item!} onUpdate={handleUpdate} />
-            <MaintenanceSection item={item!} user={user as User} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+            <MaintenanceSection item={item!} user={appUser!} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             {provenanceSummary && <ProvenanceTimeline summary={provenanceSummary} />}
-            <SalesTools item={item!} user={user as User} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+            <SalesTools item={item!} user={appUser!} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             <LegacySection item={item!} beneficiaries={beneficiaries} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             <QRCodeSection item={item!} />
           </div>
 
           <aside className="hidden md:block">
             <div className="sticky top-24 space-y-6">
-              <ItemQuickActions item={item!} user={user as User} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
+              <ItemQuickActions item={item!} user={appUser!} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
               <div className="space-y-2">
                 <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
                   Sell via myarkauctions

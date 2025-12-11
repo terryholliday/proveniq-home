@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'MyARK',
+  title: 'Proveniq Home',
   description: 'Your personal inventory, powered by AI.',
   manifest: '/manifest.json',
 };

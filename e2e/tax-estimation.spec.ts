@@ -4,7 +4,9 @@ test.describe('Compliance: Tax Estimation', () => {
     test('should display estimated tax for Florida auctions', async ({ page }) => {
         // Mock user and auction data
         await page.addInitScript(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_USER__ = { uid: 'test-user' };
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_FIRESTORE_DATA__ = {
                 'auctions': [
                     {

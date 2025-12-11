@@ -27,20 +27,20 @@ export default function PermissionsPage() {
       await updateUserProfile({
         'permissions.camera': 'granted',
         'permissions.microphone': 'granted',
-      } as any);
+      } as Partial<Record<string, unknown>>);
 
       // Stop the tracks immediately to turn off camera/mic light
       stream.getTracks().forEach((track) => track.stop());
 
       toast({
         title: 'Permissions Granted',
-        description: 'You can now use all of MyARK\'s smart features.',
+        description: 'You can now use all of Proveniq Home&apos;s smart features.',
       });
     } catch {
       await updateUserProfile({
         'permissions.camera': 'denied',
         'permissions.microphone': 'denied',
-      } as any);
+      } as Partial<Record<string, unknown>>);
       toast({
         variant: 'destructive',
         title: 'Permissions Denied',

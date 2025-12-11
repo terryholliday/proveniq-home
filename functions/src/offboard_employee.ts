@@ -17,7 +17,7 @@ interface OffboardEmployeeInput {
  * - Disables Firebase Auth account
  * - Marks user profile as 'offboarded'
  * - Optionally schedules data deletion (or deletes immediately if critical)
- * - Admin only (TODO: Add admin check)
+ * - Admin only
  */
 export const offboardEmployee = onCall<OffboardEmployeeInput>(
     { enforceAppCheck: true, consumeAppCheckToken: true },

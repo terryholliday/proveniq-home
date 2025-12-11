@@ -1,6 +1,6 @@
 import { LegalDocument, ComplianceTask, LegalDocType } from './types';
 import { Timestamp } from 'firebase/firestore';
-import PHASE_4_ROLES_JSON from './true_manifest_roles.json';
+import PHASE_4_ROLES_JSON from './proveniq_claimsiq_roles.json';
 import { CPVL_CONTENT } from './compliance/cpvl-content';
 
 export const SEED_LEGAL_DOCS: Partial<LegalDocument>[] = [
@@ -15,10 +15,10 @@ export const SEED_LEGAL_DOCS: Partial<LegalDocument>[] = [
 **Effective Date:** ${new Date().toISOString().split('T')[0]}
 
 ## 1. Introduction
-MyARK ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you use our mobile application and website (collectively, the "Service").
+Proveniq Home ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you use our mobile application and website (collectively, the "Service").
 
 ## 2. Data Collection & Cloud Storage
-**Important Update:** As of v2.0, MyARK utilizes Google Cloud Firestore for secure data storage. Your inventory data, including images and descriptions, is synchronized to the cloud to enable cross-device access and disaster recovery.
+**Important Update:** As of v2.0, Proveniq Home utilizes Google Cloud Firestore for secure data storage. Your inventory data, including images and descriptions, is synchronized to the cloud to enable cross-device access and disaster recovery.
 
 ## 3. Information We Collect
 - **Personal Data:** Name, email address, and profile information.
@@ -128,8 +128,22 @@ The classification of this sector as Medium Risk is accurate but contingent on t
     },
 ];
 
-const PHASE_4_TASKS: Partial<ComplianceTask>[] = PHASE_4_ROLES_JSON.flatMap((role: any) =>
-    role.tasks.map((task: any) => ({
+interface RoleTask {
+    title: string;
+    description: string;
+    security_level: string;
+    data_source: string;
+}
+
+interface RoleData {
+    id: string;
+    title: string;
+    description: string;
+    tasks: RoleTask[];
+}
+
+const PHASE_4_TASKS: Partial<ComplianceTask>[] = (PHASE_4_ROLES_JSON as RoleData[]).flatMap((role: RoleData) =>
+    role.tasks.map((task: RoleTask) => ({
         title: task.title,
         description: task.description,
         priority: task.security_level === 'L3_TRADE_SECRET' ? 'critical' :

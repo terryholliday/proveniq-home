@@ -72,9 +72,10 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
   const [mockUserChecked, setMockUserChecked] = useState(false);
 
   useEffect(() => {
+    const windowWithMock = window as Window & { __MOCK_USER__?: User };
     if (typeof window !== 'undefined') {
-      if ((window as any).__MOCK_USER__) {
-        setMockUser((window as any).__MOCK_USER__);
+      if (windowWithMock.__MOCK_USER__) {
+        setMockUser(windowWithMock.__MOCK_USER__);
       } else {
         const stored = sessionStorage.getItem('__MOCK_USER__');
         if (stored) {

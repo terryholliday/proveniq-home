@@ -3,7 +3,8 @@ import { describe, it, expect, jest } from '@jest/globals';
 // Mock Genkit flow execution
 jest.mock('@/ai/genkit', () => ({
     ai: {
-        definePrompt: () => async (input: any) => ({
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        definePrompt: () => async (_input: unknown) => ({
             output: {
                 documentType: 'receipt',
                 purchaseDate: '2023-01-01',
@@ -13,11 +14,12 @@ jest.mock('@/ai/genkit', () => ({
                 summary: 'Receipt for Test Item',
             }
         }),
-        defineFlow: (config: any, handler: any) => handler,
+        defineFlow: (_config: unknown, handler: unknown) => handler,
     },
 }));
 
-// Import after mock
+// Import after mock - require is needed for Jest mocking to work
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { documentExtraction } = require('@/ai/flows/document-extraction');
 
 describe('Document Extraction', () => {

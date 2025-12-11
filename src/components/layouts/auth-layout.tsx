@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MyArkLogo } from '../onboarding/MyArkLogo';
+import { ProveniqLogo } from '../onboarding/ProveniqLogo';
 import { login, signup } from '../../services/mockAuthService';
 import { User, AppView } from '../../lib/types';
 import { Timestamp } from 'firebase/firestore';
@@ -138,7 +138,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess, onNavigateToLegal }) => {
 
         <div className="text-center mb-8">
           <div className="mx-auto mb-4 flex justify-center">
-            <MyArkLogo size={64} />
+            <ProveniqLogo size={64} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">
             {isLogin ? 'Welcome Back' : 'Create Account'}

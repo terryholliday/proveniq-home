@@ -46,9 +46,10 @@ async function migrateProvenanceData() {
             });
             updatedCount++;
             console.log(`Updated item ${itemId}`);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`Failed to update item ${itemId}:`, error);
-            errors.push(`Item ${itemId}: ${error.message}`);
+            const message = error instanceof Error ? error.message : String(error);
+            errors.push(`Item ${itemId}: ${message}`);
         }
     }
 

@@ -35,7 +35,7 @@ export default function MigrationsPage() {
                         <h3 className="font-semibold mb-2">Provenance Data Population</h3>
                         <p className="text-sm text-gray-500 mb-4">
                             This migration will iterate through all inventory items. If an item has no provenance history,
-                            it will create a default "Acquisition" event based on the purchase date or added date.
+                            it will create a default &quot;Acquisition&quot; event based on the purchase date or added date.
                         </p>
 
                         <Button onClick={handleMigration} disabled={loading}>

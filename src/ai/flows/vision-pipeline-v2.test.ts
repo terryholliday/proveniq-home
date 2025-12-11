@@ -4,7 +4,7 @@ import { visionPipelineV2 } from './vision-pipeline-v2';
 jest.mock('@/ai/genkit', () => {
     return {
         ai: {
-            definePrompt: jest.fn((config) => {
+            definePrompt: jest.fn((config: { name?: string }) => {
                 // Return a mock function that simulates the prompt execution
                 return jest.fn(async () => {
                     if (config.name === 'visionQualityPrompt') {
@@ -27,12 +27,25 @@ jest.mock('@/ai/genkit', () => {
                     return { output: {} };
                 });
             }),
-            defineFlow: jest.fn((config, handler) => handler),
+            defineFlow: jest.fn((_config: unknown, handler: unknown) => handler),
         },
     };
 });
 
 describe('visionPipelineV2', () => {
+    beforeEach(() => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: true,
+                arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)),
+            })
+        ) as jest.Mock;
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it('should process images and return synthesized results', async () => {
         const input = {
             images: [
@@ -43,7 +56,6 @@ describe('visionPipelineV2', () => {
         };
 
         // Since we mocked defineFlow to return the handler, visionPipelineV2 is the handler function
-        // @ts-expect-error
         const result = await visionPipelineV2(input);
 
         expect(result.quality).toHaveLength(2);

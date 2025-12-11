@@ -24,7 +24,7 @@ export function ProvenanceTimeline({ summary, className }: ProvenanceTimelinePro
                     {merkleRoot && (
                         <Badge variant="outline" className="flex items-center gap-1 border-green-500 text-green-600 bg-green-50">
                             <ShieldCheck className="h-3 w-3" />
-                            TrueLedger Verified
+                            Proveniq Ledger Verified
                         </Badge>
                     )}
                     <Badge variant={confidenceScore > 70 ? "default" : "secondary"}>

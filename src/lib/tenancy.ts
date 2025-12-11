@@ -11,7 +11,17 @@ export interface TenantContext {
 /**
  * Standardizes the extraction of TenantContext from different sources (HTTP headers, CallableContext).
  */
-export function extractTenantContext(auth: any | undefined, headers?: Record<string, string>): TenantContext {
+interface AuthToken {
+    tid?: string;
+    roles?: string[];
+}
+
+interface AuthContext {
+    uid: string;
+    token: AuthToken;
+}
+
+export function extractTenantContext(auth: AuthContext | undefined, headers?: Record<string, string>): TenantContext {
     // 1. System / Internal calls (e.g. PubSub cron) may not have auth, assume system if specific header present
     if (headers?.['x-myark-internal'] === 'true') {
         return { tenantId: 'system', isSystem: true, roles: ['admin'] };
@@ -37,10 +47,19 @@ export function extractTenantContext(auth: any | undefined, headers?: Record<str
  * HOF to enforce Tenancy on a function handler.
  * usage: export const myFunc = withTenancy(async (data, ctx) => { ... });
  */
+interface TenancyRequest {
+    auth?: AuthContext;
+    context?: { auth?: AuthContext };
+    headers?: Record<string, string>;
+    body?: unknown;
+    data?: unknown;
+}
+
 export function withTenancy<T>(
-    handler: (data: any, context: TenantContext) => Promise<T>
+    handler: (data: unknown, context: TenantContext) => Promise<T>
 ) {
-    return async (req: any, res?: any) => { // Abstraction for HTTP/Callable
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return async (req: TenancyRequest, _res?: unknown) => { // Abstraction for HTTP/Callable
         let context: TenantContext;
 
         try {

@@ -67,7 +67,7 @@ export const createAuctionListing = onCall(
 
     // [COMPLIANCE] Calculate Tax via Stripe
     let estimatedTaxRate = 0.0;
-    let taxJurisdiction = "US";
+    const taxJurisdiction = "US";
 
     try {
       // In a real scenario, we'd need the buyer's address. 

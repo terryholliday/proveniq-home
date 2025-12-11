@@ -12,7 +12,7 @@ const db = admin.firestore();
 async function backupCollection(collectionName: string, backupDir: string) {
     console.log(`Backing up ${collectionName}...`);
     const snapshot = await db.collection(collectionName).get();
-    const data: any[] = [];
+    const data: Array<{ id: string; [key: string]: unknown }> = [];
 
     snapshot.forEach(doc => {
         data.push({ id: doc.id, ...doc.data() });

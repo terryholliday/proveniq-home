@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { ArrowRight, Check, Truck, Zap, ShieldCheck, Gavel } from 'lucide-react';
-import { MyArkLogo } from './MyArkLogo';
+import { ProveniqLogo } from './ProveniqLogo';
 
 interface OnboardingTourProps {
   show: boolean;
@@ -12,14 +12,14 @@ interface OnboardingTourProps {
 
 const steps = [
     {
-      icon: <MyArkLogo size={48} className="text-primary" />,
-      title: "Welcome to MyARK",
+      icon: <ProveniqLogo size={48} className="text-primary" />,
+      title: "Welcome to Proveniq Home",
       content: "Your intelligent, AI-powered home inventory solution. Let's get you set up in seconds."
     },
     {
       icon: <Zap size={48} className="text-primary" />,
       title: "Frictionless Capture",
-      content: "Scan items with your camera, or let MyARK do it for you. It finds purchases in your email and reminds you to scan after shopping trips."
+      content: "Scan items with your camera, or let Proveniq Home do it for you. It finds purchases in your email and reminds you to scan after shopping trips."
     },
     {
       icon: <Truck size={48} className="text-orange-500" />,
@@ -29,12 +29,12 @@ const steps = [
     {
       icon: <Gavel size={48} className="text-purple-500" />,
       title: "Monetize & Declutter",
-      content: "Turn unused items into cash. Let AI write your sales ads or host a private 'ArKive Auction' with minimum bids to get the best price."
+      content: "Turn unused items into cash. Let AI write your sales ads or host a private 'Proveniq Bids' auction with minimum bids to get the best price."
     },
     {
       icon: <ShieldCheck size={48} className="text-green-500" />,
       title: "Protect & Claim",
-      content: "When things go wrong, MyARK is your first responder. Instantly generate submission-ready warranty, P&C, and HO3 claims with one tap."
+      content: "When things go wrong, Proveniq Home is your first responder. Instantly generate submission-ready warranty, P&C, and HO3 claims with one tap."
     }
   ];
 

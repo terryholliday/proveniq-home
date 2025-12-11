@@ -97,7 +97,7 @@ export default function TechDocsPage() {
                             <strong>Authentication:</strong> Firebase Authentication manages identity, seamlessly integrated with the Next.js middleware for route protection.
                         </p>
                         <p>
-                            <strong>Edge Capabilities:</strong> The app leverages Vercel's edge network for static asset delivery and Next.js middleware execution.
+                            <strong>Edge Capabilities:</strong> The app leverages Vercel&apos;s edge network for static asset delivery and Next.js middleware execution.
                         </p>
                     </CardContent>
                 </Card>

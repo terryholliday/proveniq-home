@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { getFirestore, doc, setDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import {
     Dialog,
@@ -105,13 +105,13 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
                                 <div className="flex gap-3">
                                     <Gavel className="h-5 w-5 text-indigo-600 flex-shrink-0" />
                                     <div className="text-sm">
-                                        <strong>Auction Transactions:</strong> By participating in auctions, you acknowledge MyARK acts as a "Marketplace Facilitator" responsible for collecting Sales Tax on your behalf.
+                                        <strong>Auction Transactions:</strong> By participating in auctions, you acknowledge Proveniq acts as a &quot;Marketplace Facilitator&quot; responsible for collecting Sales Tax on your behalf.
                                     </div>
                                 </div>
                             </div>
 
                             <p className="text-xs text-muted-foreground">
-                                By clicking "I Agree", you consent to the transfer of your data to cloud servers and accept the updated{" "}
+                                By clicking &quot;I Agree&quot;, you consent to the transfer of your data to cloud servers and accept the updated{" "}
                                 <Link href="/settings?doc=privacy" target="_blank" className="underline text-indigo-600">
                                     Privacy Policy (v2.0)
                                 </Link>{" "}
@@ -126,7 +126,7 @@ export function CloudConsentModal({ isOpen, onConsentComplete }: CloudConsentMod
                 </DialogHeader>
                 <DialogFooter className="sm:justify-between items-center mt-4">
                     <span className="text-xs text-muted-foreground hidden sm:block">
-                        Acceptance is required to continue using MyARK.
+                        Acceptance is required to continue using Proveniq Home.
                     </span>
                     <Button onClick={handleAccept} disabled={loading} className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700">
                         {loading ? "Processing..." : "I Agree to Cloud Storage"}

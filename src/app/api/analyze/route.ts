@@ -5,13 +5,20 @@ import { logger } from '@/lib/logger';
 
 const engine = new ValuationEngine();
 
-const securePost = withTenancy(async (data: any, context) => {
+const securePost = withTenancy(async (data: unknown, context) => {
+    const inputData = data as { category?: string; condition?: string };
     logger.info('Valuation Requested', {
         tenantId: context.tenantId,
-        itemCategory: data.category
+        itemCategory: inputData.category
     });
 
-    const result = await engine.evaluate(data);
+    // Map to ValuationInput with required fields
+    const valuationInput = {
+        category: inputData.category || 'Other',
+        condition: inputData.condition || 'Good',
+        ...inputData
+    };
+    const result = await engine.evaluate(valuationInput);
 
     return NextResponse.json({
         data: result,
@@ -26,7 +33,7 @@ export async function POST(req: NextRequest) {
     let body;
     try {
         body = await req.json();
-    } catch (e) {
+    } catch {
         return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
@@ -38,10 +45,12 @@ export async function POST(req: NextRequest) {
     const compatibleReq = {
         headers: safeHeaders,
         body,
+        data: body,
         auth: {
+            uid: 'anonymous',
             token: { tid: 'consumer' } // Safe default, do not read from headers
         }
     };
 
-    return securePost(compatibleReq as any);
+    return securePost(compatibleReq);
 }

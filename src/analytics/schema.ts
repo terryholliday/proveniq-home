@@ -39,7 +39,7 @@ export interface VisualTruthVerifiedProperties extends BaseEventProperties {
 
 export interface TrackingSchema {
     eventName: EventName;
-    properties: Record<string, any>;
+    properties: Record<string, unknown>;
     userId?: string;
     userProperties?: {
         planTier: 'free' | 'pro' | 'enterprise';

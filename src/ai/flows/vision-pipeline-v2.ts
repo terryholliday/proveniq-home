@@ -32,13 +32,13 @@ const VisionPipelineOutputSchema = z.object({
 });
 
 // Placeholder prompts - replace with actual AI prompts
-const qualityPrompt = async (input: { url: string }) => ({ output: { isAcceptable: true, score: 0.9 } });
-const categoryPrompt = async (input: { url: string }) => ({ output: { category: 'general', confidence: 0.8 } });
-const smartCropPrompt = async (input: { url: string }) => ({ output: { x: 0, y: 0, width: 100, height: 100 } });
-const analysisPrompt = async (input: { images: string[], context?: any }) => ({
+const qualityPrompt = async (input: { url: string }) => ({ output: { isAcceptable: true, sharpness: 0.9, issues: [] } });
+const categoryPrompt = async (input: { url: string }) => ({ output: { category: 'front', confidence: 0.95 } });
+const smartCropPrompt = async (input: { url: string }) => ({ output: { ymin: 0.1, xmin: 0.1, ymax: 0.9, xmax: 0.9 } });
+const analysisPrompt = async (input: { images: string[], context?: unknown }) => ({
     output: {
-        details: {},
-        condition: { overallScore: 7, defects: [], wearLevel: 'good' }
+        details: { brand: 'TestBrand', modelNumber: 'TB-123' },
+        condition: { overallScore: 90, defects: [], wearLevel: 'like-new' }
     }
 });
 

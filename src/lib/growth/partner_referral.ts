@@ -1,5 +1,7 @@
 import { logger } from '../logger';
 
+// Interface for future use when campaign management is implemented
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ReferralCampaign {
     partnerId: string; // e.g. 'statefarm'
     campaignId: string; // e.g. 'spring25'
@@ -17,7 +19,7 @@ export class PartnerReferralEngine {
      * Generates a canonical referral link for a partner agent to share.
      */
     generateAgentLink(partnerId: string, agentId: string): string {
-        const baseUrl = 'https://myark.io/start';
+        const baseUrl = 'https://proveniq.io/start';
         // Format: myark.io/start?ref=PAR-{partnerId}-{agentId}
         return `${baseUrl}?ref=PAR-${partnerId}-${agentId}`;
     }
@@ -31,7 +33,7 @@ export class PartnerReferralEngine {
             return; // Not a partner referral
         }
 
-        const [_, partnerId, agentId] = referralCode.split('-');
+        const [, partnerId, agentId] = referralCode.split('-');
 
         logger.info('Partner Referral Conversion', {
             event: 'PARTNER_CONVERSION',

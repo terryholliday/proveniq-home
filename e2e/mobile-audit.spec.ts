@@ -7,7 +7,9 @@ test.describe('Mobile Audit', () => {
     test('should display consent modal correctly on mobile', async ({ page }) => {
         // Mock user as not having consented
         await page.addInitScript(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_USER__ = { uid: 'test-user' };
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_CONSENT_STATE__ = { accepted: false };
         });
 

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Bell, Search, ShieldCheck } from "lucide-react";
 import { Input } from "../ui/input";
 import { PermissionsInitializer } from "@/components/permissions-initializer";
-import { MyArkLogo } from "../onboarding/MyArkLogo";
+import { ProveniqLogo } from "../onboarding/ProveniqLogo";
 import { ErrorBoundary } from "@/components/error-boundary";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -22,8 +22,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-4">
           <div className="flex items-center gap-2">
-            <MyArkLogo size={32} priority />
-            <span className="text-lg font-semibold text-sidebar-primary">MyARK</span>
+            <ProveniqLogo size={32} priority />
+            <span className="text-lg font-semibold text-sidebar-primary">Proveniq Home</span>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -47,7 +47,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Input
               id="inventory-search"
               type="search"
-              placeholder="Ask your ARK..."
+              placeholder="Ask Proveniq..."
               className="w-full rounded-lg bg-background pl-8 md:w-[300px] lg:w-[400px]"
             />
           </div>

@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     logEvent('alexa_request', { type: request.type, intent: intentName, uid });
 
-    let responseText = "Welcome to My Ark. How can I help you today?";
+    let responseText = "Welcome to Proveniq Home. How can I help you today?";
     let shouldEndSession = false;
 
     if (request.type === 'IntentRequest') {

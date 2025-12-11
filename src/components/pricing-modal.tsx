@@ -37,7 +37,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ currentUser, onClose, onUpg
     const plans: PlanDetails[] = [
         {
             id: 'free',
-            name: "MyARK Free",
+            name: "Proveniq Free",
             priceStr: "$0",
             period: "Forever",
             icon: <Star size={24} className="text-gray-400" />,
@@ -46,7 +46,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ currentUser, onClose, onUpg
         },
         {
             id: 'plus',
-            name: "MyARK Premium",
+            name: "Proveniq Premium",
             priceStr: "$9.99",
             period: "/mo",
             icon: <Zap size={24} className="text-indigo-500" fill="currentColor" />,
@@ -56,12 +56,12 @@ const PricingModal: React.FC<PricingModalProps> = ({ currentUser, onClose, onUpg
         },
         {
             id: 'pro',
-            name: "MyARK Pro",
+            name: "Proveniq Pro",
             priceStr: "$19.99",
             period: "/mo",
             icon: <Crown size={24} className="text-amber-500" fill="currentColor" />,
             colorClass: "bg-amber-50 border-amber-200",
-            features: ["Everything in Premium", "ARKive Auctions Platform (15% commission)", "AI Risk Assessment & Disaster Sim", "Automated HO3 & Warranty Claims", "Advanced Market Valuation & Trends", "Email Purchase Importer", "AR Item Finder"]
+            features: ["Everything in Premium", "Proveniq Bids Platform (15% commission)", "AI Risk Assessment & Disaster Sim", "Automated HO3 & Warranty Claims", "Advanced Market Valuation & Trends", "Email Purchase Importer", "AR Item Finder"]
         }
     ];
 

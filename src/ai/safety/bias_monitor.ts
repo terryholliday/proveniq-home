@@ -30,7 +30,7 @@ export class BiasMonitor {
         result: ValuationResult
     ): Promise<BiasCheckResult> {
         const issues: string[] = [];
-        let categoryDisparity = 0;
+        const categoryDisparity = 0;
 
         // 1. Sensitivity Check (Basic Keyword Matching for minimal safety)
         if (input.description) {

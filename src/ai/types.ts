@@ -18,7 +18,7 @@ export interface AIImageAnalysis {
 
 export interface AIDocumentAnalysis {
     documentType: 'receipt' | 'appraisal' | 'certificate' | 'manual' | 'other';
-    extractedData: Record<string, any>;
+    extractedData: Record<string, unknown>;
     confidence: number;
     summary: string;
 }
@@ -28,7 +28,7 @@ export interface AIMetadata {
     subcategory: string;
     brand?: string;
     model?: string;
-    attributes: Record<string, any>;
+    attributes: Record<string, unknown>;
     confidence: number; // 0-100
     sources: string[]; // e.g., ['image', 'document']
 }

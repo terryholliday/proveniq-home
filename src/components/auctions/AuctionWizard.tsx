@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { InventoryItem } from '@/lib/types';
-import { createAuctionListing } from '@/services/arkiveClient';
+import { createAuctionListing } from '@/services/proveniqBidsClient';
 import type { CreateAuctionInput } from '@/lib/auction-types';
 import { AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react';
 
@@ -81,7 +81,7 @@ export function AuctionWizard({ item, onClose, onComplete }: AuctionWizardProps)
         return (
           <div className="space-y-4">
             <h3 className="text-xl font-bold">Confirm item details</h3>
-            <p className="text-sm text-muted-foreground">Listing will use your golden record from MyARK.</p>
+            <p className="text-sm text-muted-foreground">Listing will use your golden record from Proveniq Home.</p>
             <div className="rounded-lg border p-4 space-y-2 bg-muted/30">
               <p className="font-semibold">{item.name}</p>
               <p className="text-sm text-muted-foreground">{item.description}</p>

@@ -50,9 +50,10 @@ export default function AddItemPage() {
             toast({ title: "Image Uploaded", description: "Analyzing item..." });
             router.push(`/inventory/${docRef.id}`);
 
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Upload failed", error);
-            toast({ title: "Error", description: error.message, variant: "destructive" });
+            const message = error instanceof Error ? error.message : "Upload failed";
+            toast({ title: "Error", description: message, variant: "destructive" });
         } finally {
             setIsUploading(false);
         }

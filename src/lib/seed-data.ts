@@ -18,7 +18,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
   },
   {
     title: "Execute Tech Transfer Agreement",
-    description: "Sign Tech Transfer Agreement to assign pre-incorporation IP (VinoVision/MyARK code) to TrueArk Technologies, Inc.",
+    description: "Sign Tech Transfer Agreement to assign pre-incorporation IP (VinoVision/Proveniq code) to Proveniq Technologies, Inc.",
     dueDate: daysFromNow(7),
     status: 'pending',
     priority: 'critical',
@@ -28,7 +28,7 @@ export const SEED_TASKS: Omit<ComplianceTask, 'id'>[] = [
   },
   {
     title: "Foreign Qualification (WV)",
-    description: "Register TrueArk Technologies (Delaware) as a foreign corp in West Virginia to enforce contracts in HQ state.",
+    description: "Register Proveniq Technologies (Delaware) as a foreign corp in West Virginia to enforce contracts in HQ state.",
     dueDate: daysFromNow(14),
     priority: 'critical',
     status: 'pending',

@@ -4,6 +4,7 @@ test.describe('Smoke Test: Core Flows', () => {
     test('should allow user to initiate item addition via file upload', async ({ page }) => {
         // 1. Mock User State
         await page.addInitScript(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_USER__ = { uid: 'test-user' };
         });
 

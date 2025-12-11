@@ -102,7 +102,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
 
   const handleGeneratePlan = async () => {
     // Cast user to any to bypass type mismatch between Firebase User and Domain User for now
-    if (!checkPermission(user as any, PERMISSIONS.MOVE_AI)) {
+    if (!checkPermission(user as { tier?: string }, PERMISSIONS.MOVE_AI)) {
       onUpgradeReq('AI Move Planning');
       return;
     }
@@ -145,7 +145,7 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
           </div>
         </div>
         <button onClick={handleGeneratePlan} className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-indigo-100 border border-indigo-100 relative overflow-hidden">
-          {!checkPermission(user as any, PERMISSIONS.MOVE_AI) && <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10"><Crown size={14} className="text-amber-500" /></div>}
+          {!checkPermission(user as { tier?: string }, PERMISSIONS.MOVE_AI) && <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10"><Crown size={14} className="text-amber-500" /></div>}
           <Sparkles size={16} /> Get AI Packing Plan
         </button>
       </header>

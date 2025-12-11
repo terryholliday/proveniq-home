@@ -75,7 +75,7 @@ export class ValuationEngine {
 
         // --- AI SAFETY CHECKS ---
         // 1. Bias/Fairness Check
-        const fairness = ValuationSafetyEngine.checkFairness(depreciatedValue, item, {});
+        const fairness = ValuationSafetyEngine.checkFairness(depreciatedValue, { isCulturalArtifact: false, tags: [] });
 
         // 2. Drift Check (vs Historical Category Baseline)
         const drift = ValuationSafetyEngine.checkDrift(depreciatedValue, category);

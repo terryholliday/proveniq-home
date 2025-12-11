@@ -42,14 +42,14 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
     },
     {
       targetId: 'nav-auctions',
-      title: 'ARKive Auctions',
+      title: 'Proveniq Bids',
       content: 'Ready to declutter? Create private auctions for your items instantly with one tap.',
       view: 'dashboard',
       placement: isMobile ? 'top' : 'right'
     },
     {
       targetId: 'inventory-search',
-      title: 'Ask Your Ark',
+      title: 'Ask Proveniq',
       content: 'Type a natural question like "Show me tools in the garage" and the AI will find them instantly.',
       view: 'inventory',
       placement: 'bottom'
