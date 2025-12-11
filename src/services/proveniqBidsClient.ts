@@ -2,8 +2,8 @@ import { getIdToken, Auth } from "firebase/auth";
 import type { CreateAuctionInput, CreateAuctionResponse } from "@/lib/auction-types";
 
 const getBaseUrl = () =>
-  process.env.NEXT_PUBLIC_MYARKAUCTIONS_BASE_URL ||
-  process.env.MYARKAUCTIONS_BASE_URL ||
+  process.env.NEXT_PUBLIC_PROVENIQ_BIDS_BASE_URL ||
+  process.env.PROVENIQ_BIDS_BASE_URL ||
   "";
 
 export async function createAuctionListing(auth: Auth, payload: CreateAuctionInput): Promise<CreateAuctionResponse> {
@@ -13,7 +13,7 @@ export async function createAuctionListing(auth: Auth, payload: CreateAuctionInp
 
   const baseUrl = getBaseUrl();
   if (!baseUrl) {
-    throw new Error("MYARKAUCTIONS_BASE_URL is not configured");
+    throw new Error("PROVENIQ_BIDS_BASE_URL is not configured");
   }
 
   const token = await getIdToken(auth.currentUser, true);
@@ -28,7 +28,7 @@ export async function createAuctionListing(auth: Auth, payload: CreateAuctionInp
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`ARKive create auction failed (${res.status}): ${text}`);
+    throw new Error(`Proveniq Bids create auction failed (${res.status}): ${text}`);
   }
 
   return res.json();
@@ -41,7 +41,7 @@ export async function fetchMyAuctions(auth: Auth, ownerUid: string) {
 
   const baseUrl = getBaseUrl();
   if (!baseUrl) {
-    throw new Error("MYARKAUCTIONS_BASE_URL is not configured");
+    throw new Error("PROVENIQ_BIDS_BASE_URL is not configured");
   }
 
   const token = await getIdToken(auth.currentUser, true);
@@ -54,7 +54,7 @@ export async function fetchMyAuctions(auth: Auth, ownerUid: string) {
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`ARKive fetch auctions failed (${res.status}): ${text}`);
+    throw new Error(`Proveniq Bids fetch auctions failed (${res.status}): ${text}`);
   }
 
   return res.json();

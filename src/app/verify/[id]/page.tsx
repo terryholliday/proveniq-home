@@ -16,7 +16,7 @@ export default function VerifyItemPage() {
     const [item, setItem] = useState<InventoryItem | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [provenanceSummary, setProvenanceSummary] = useState<any>(null);
+    const [provenanceSummary, setProvenanceSummary] = useState<import('@/ai/provenance_engine').ProvenanceSummary | null>(null);
 
     useEffect(() => {
         async function fetchItem() {
@@ -118,10 +118,10 @@ export default function VerifyItemPage() {
                                     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                         <span className="text-sm text-gray-600">Confidence Score</span>
                                         <Badge className={
-                                            provenanceSummary?.confidenceScore > 70 ? 'bg-green-600' :
-                                                provenanceSummary?.confidenceScore > 40 ? 'bg-amber-500' : 'bg-red-500'
+                                            (provenanceSummary?.confidenceScore ?? 0) > 70 ? 'bg-green-600' :
+                                                (provenanceSummary?.confidenceScore ?? 0) > 40 ? 'bg-amber-500' : 'bg-red-500'
                                         }>
-                                            {provenanceSummary?.confidenceScore}/100
+                                            {provenanceSummary?.confidenceScore ?? 0}/100
                                         </Badge>
                                     </div>
                                     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -131,7 +131,7 @@ export default function VerifyItemPage() {
                                     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                         <span className="text-sm text-gray-600">Documented Years</span>
                                         <span className="font-semibold">
-                                            {provenanceSummary?.timeline.length > 0
+                                            {(provenanceSummary?.timeline?.length ?? 0) > 0 && provenanceSummary
                                                 ? (new Date().getFullYear() - new Date(provenanceSummary.timeline[provenanceSummary.timeline.length - 1].date).getFullYear())
                                                 : 0}
                                         </span>
@@ -144,7 +144,7 @@ export default function VerifyItemPage() {
                                     Latest Activity
                                 </h3>
                                 <div className="space-y-4 relative border-l-2 border-gray-100 ml-2">
-                                    {provenanceSummary?.timeline.slice(0, 3).map((event: any, idx: number) => (
+                                    {provenanceSummary?.timeline.slice(0, 3).map((event, idx: number) => (
                                         <div key={idx} className="ml-4 relative">
                                             <div className="absolute -left-[21px] top-1 bg-white rounded-full border border-gray-200">
                                                 {event.verified ?

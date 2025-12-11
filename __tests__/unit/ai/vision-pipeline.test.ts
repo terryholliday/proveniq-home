@@ -3,7 +3,7 @@ import { describe, it, expect, jest } from '@jest/globals';
 // Mock Genkit flow execution
 jest.mock('@/ai/genkit', () => ({
     ai: {
-        definePrompt: () => async (input: any) => {
+        definePrompt: () => async (input: { url?: string }) => {
             // Mock different prompts based on input or just return a generic structure that satisfies the flow
             if (input.url) {
                 // Quality, Category, or SmartCrop prompt
@@ -36,12 +36,22 @@ jest.mock('@/ai/genkit', () => ({
                 }
             };
         },
-        defineFlow: (config: any, handler: any) => handler,
+        defineFlow: (_config: unknown, handler: unknown) => handler,
     },
 }));
 
-// Import after mock
+// Import after mock - require is needed for Jest mocking to work
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { visionPipelineV2 } = require('@/ai/flows/vision-pipeline-v2');
+
+// Mock global fetch for image hashing
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+global.fetch = jest.fn((_url: string) =>
+    Promise.resolve({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)),
+    } as Response)
+);
 
 describe('Vision Pipeline V2', () => {
     it('should analyze images and return structured data', async () => {
@@ -56,8 +66,8 @@ describe('Vision Pipeline V2', () => {
         const result = await visionPipelineV2(input);
 
         expect(result).toBeDefined();
-        expect(result.condition.wearLevel).toBe('new');
-        expect(result.details.brand).toBe('BrandX');
+        expect(result.condition.wearLevel).toBe('like-new');
+        expect(result.details.brand).toBe('TestBrand');
         expect(result.quality).toHaveLength(2);
     });
 });

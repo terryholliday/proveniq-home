@@ -61,7 +61,7 @@ export class ValuationSafetyEngine {
      * In a real system, this would analyze model inputs vs. protected attributes.
      * Satisfies: "Define and implement bias checks"
      */
-    static checkFairness(valuation: number, itemMetadata: any, userProfile?: any): FairnessCheckResult {
+    static checkFairness(valuation: number, itemMetadata: { isCulturalArtifact?: boolean; tags?: string[] }, _userProfile?: unknown): FairnessCheckResult {
         // Simulation: Flag if "cultural" items are receiving unusually low valuations compared to generic items
         // This is a heuristic simulation for Phase 3.
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Camera, Shield, Check, Mic } from 'lucide-react';
-import { MyArkLogo } from './onboarding/MyArkLogo';
+import { ProveniqLogo } from './onboarding/ProveniqLogo';
 
 interface PermissionRequestProps {
   onComplete: () => void;
@@ -33,13 +33,13 @@ const PermissionRequest: React.FC<PermissionRequestProps> = ({ onComplete }) => 
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
         <div className="mx-auto mb-6 flex justify-center">
             <div className="w-24 h-24 flex items-center justify-center">
-                <MyArkLogo />
+                <ProveniqLogo />
             </div>
         </div>
 
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Enable Your Camera & Microphone</h2>
         <p className="text-gray-500 mb-6">
-          MyARK uses your camera and microphone for features like remote notary services and video confirmation for high-value transactions.
+          Proveniq Home uses your camera and microphone for features like remote notary services and video confirmation for high-value transactions.
         </p>
 
         <div className="space-y-4">

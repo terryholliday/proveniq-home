@@ -4,7 +4,7 @@ import { LayoutDashboard, BookOpen, FileText, Award, Menu, Briefcase, ArrowLeft,
 
 // --- STATIC DATA ---
 const MODULES = [
-  { id: 'module-1', title: 'Ecosystem Strategy', description: 'Understand how MyARK, TrueManifest, and ARKive Auctions work together.', duration: '60 min' },
+  { id: 'module-1', title: 'Ecosystem Strategy', description: 'Understand how Proveniq Home, Proveniq ClaimsIQ, and Proveniq Bids work together.', duration: '60 min' },
   { id: 'module-2', title: 'Product Deep Dives', description: 'Master the value proposition of each product in the ecosystem.', duration: '120 min' },
   { id: 'module-3', title: 'The Pitch', description: 'Learn discovery, practice pitches, and handle branching conversations.', duration: '90 min' },
   { id: 'module-4', title: 'Battle Cards', description: 'Prepare for competitive questions and common sales objections.', duration: '90 min' },

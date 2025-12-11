@@ -1,7 +1,21 @@
 import { LeadershipRole } from './types';
-import PHASE_4_ROLES_JSON from './true_manifest_roles.json';
+import PHASE_4_ROLES_JSON from './proveniq_claimsiq_roles.json';
 
-const PHASE_4_ROLES: LeadershipRole[] = PHASE_4_ROLES_JSON.map((role: any) => ({
+interface RoleTaskData {
+    title: string;
+    description: string;
+    security_level: string;
+    data_source: string;
+}
+
+interface RoleData {
+    id: string;
+    title: string;
+    description: string;
+    tasks: RoleTaskData[];
+}
+
+const PHASE_4_ROLES: LeadershipRole[] = (PHASE_4_ROLES_JSON as RoleData[]).map((role: RoleData) => ({
     id: role.id,
     title: role.title,
     category: role.id.includes('compliance') ? 'compliance' :
@@ -10,9 +24,9 @@ const PHASE_4_ROLES: LeadershipRole[] = PHASE_4_ROLES_JSON.map((role: any) => ({
     assigneeName: 'Vacant', // Default for new Phase 4 roles
     responsibilities: [
         role.description,
-        ...role.tasks.map((t: any) => t.title)
+        ...role.tasks.map((t: RoleTaskData) => t.title)
     ],
-    keyDeliverables: role.tasks.map((t: any) => t.data_source), // Using data_source as a proxy for deliverables
+    keyDeliverables: role.tasks.map((t: RoleTaskData) => t.data_source), // Using data_source as a proxy for deliverables
     status: 'vacant'
 }));
 

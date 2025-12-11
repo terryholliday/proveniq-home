@@ -22,9 +22,9 @@ We will treat the infrastructure as a collection of "Cells".
 
 ### 2.3 Database Sharding
 - **Firestore:** Use **Multiple Projects** or **Databases (named databases)** within Google Cloud.
-    - `myark-prod` (Consumer)
-    - `myark-prod-eu` (EU Partners)
-    - `myark-prod-enterprise-a` (Huge Carrier A)
+    - `proveniq-prod` (Consumer)
+    - `proveniq-prod-eu` (EU Partners)
+    - `proveniq-prod-enterprise-a` (Huge Carrier A)
 - **Shared Data:** "Market Value" data is replicated *read-only* to all cells from a central "Analytics" project.
 
 ## 3. Implementation Plan
@@ -36,7 +36,7 @@ Refactor `admin-sdk` initialization to accept a `databaseId` parameter based on 
 Implement middleware in Cloud Functions that extracts `X-Tenant-ID`, validates it, and initializes the correct database connection.
 
 ### Step 3: EU Region Cell (Q2)
-Deploy a full stack clone to `europe-west1` and configure the Global Load Balancer to route `eu.myark.io` traffic there.
+Deploy a full stack clone to `europe-west1` and configure the Global Load Balancer to route `eu.proveniq.io` traffic there.
 
 ## 4. Risks & Mitigations
 - **Complexity:** Deployment pipelines must manage N cells.

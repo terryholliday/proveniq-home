@@ -54,7 +54,7 @@ export class FirestoreRateLimiter implements RateLimiter {
                 const data = doc.data() as { timestamps: number[] } | undefined;
 
                 // Filter timestamps within the current window
-                let timestamps = data?.timestamps?.filter((t: number) => t > windowStart) || [];
+                const timestamps = data?.timestamps?.filter((t: number) => t > windowStart) || [];
 
                 const maxAllowed = this.config.maxRequests + (this.config.burstAllowance || 0);
 

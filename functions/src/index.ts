@@ -27,12 +27,12 @@ function nowISO(): string {
 
 /* ============================================================================
  * 1. AUDIT LOGGING
- *    - Items (MyARK golden records)
- *    - Bids (ARKIVE auctions)
+ *    - Items (Proveniq Home golden records)
+ *    - Bids (Proveniq Bids)
  * ==========================================================================*/
 
 /**
- * Audit writes to MyARK inventory items (golden record).
+ * Audit writes to Proveniq Home inventory items (golden record).
  * Path: users/{uid}/items/{itemId}
  */
 export const auditItemWrites = onDocumentWritten(
@@ -76,7 +76,7 @@ export const auditItemWrites = onDocumentWritten(
 );
 
 /**
- * Audit writes to ARKIVE bids.
+ * Audit writes to Proveniq Bids.
  * Path: auctions/{auctionId}/bids/{bidId}
  */
 export const auditBidWrites = onDocumentWritten(

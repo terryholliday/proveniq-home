@@ -17,8 +17,6 @@ const nextConfig: NextConfig = {
 
   outputFileTracingRoot: path.join(__dirname), // Silences lockfile warning
 
-  allowedDevOrigins: ['localhost:9003', '192.168.86.104:9003'],
-
   experimental: {
     externalDir: true,
   },
@@ -52,6 +50,7 @@ const nextConfig: NextConfig = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
   cacheOnFrontEndNav: true,

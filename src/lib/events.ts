@@ -1,7 +1,7 @@
 import { logger } from './logger';
 import { TenantContext } from './tenancy';
 
-export interface ArkEvent<T = any> {
+export interface ArkEvent<T = unknown> {
     type: string;
     source: string;
     data: T;

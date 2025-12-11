@@ -279,7 +279,7 @@ export type AuditLog = {
   userId: string;
   action: string;
   timestamp: Timestamp;
-  details?: Record<string, any>;
+  details?: Record<string, unknown>;
   rufadaa_class?: RufadaaClass;
 };
 
@@ -294,7 +294,7 @@ export type Beneficiary = {
   percentage?: number;
 };
 
-export type AIFlow = { id: string; name: string; description: string; inputSchema: any; outputSchema: any; companyMetadata?: CompanyAssetMetadata; };
+export type AIFlow = { id: string; name: string; description: string; inputSchema: unknown; outputSchema: unknown; companyMetadata?: CompanyAssetMetadata; };
 export type SalesChannel = { id: string; name: string; platform: string; url?: string; apiKey?: string; status: 'active' | 'inactive'; createdAt: Timestamp; updatedAt: Timestamp; };
 export type ServiceRequest = { id: string; itemId: string; itemSnapshot: InventoryItem; type: 'repair' | 'cleaning' | 'appraisal' | 'other'; description: string; status: 'pending' | 'in-progress' | 'completed' | 'cancelled'; requestedDate: Timestamp; completedDate?: Timestamp; serviceProvider?: string; cost?: number; notes?: string; attachments?: string[]; };
 export type Claim = { id: string; itemId: string; itemSnapshot: InventoryItem; type: 'damage' | 'loss' | 'theft'; description: string; status: 'pending' | 'submitted' | 'approved' | 'rejected'; dateOfIncident: Timestamp; submittedDate?: Timestamp; resolutionDate?: Timestamp; payoutAmount?: number; notes?: string; attachments?: string[]; };

@@ -2,7 +2,7 @@ import { logger } from '../lib/logger';
 
 interface AnalyticsEvent {
     eventName: string;
-    properties: Record<string, any>;
+    properties: Record<string, unknown>;
     tenantId: string;
     userId?: string;
 }

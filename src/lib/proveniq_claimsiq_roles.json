@@ -17,7 +17,7 @@
                 "data_source": "gcp_api_gateway_config"
             },
             {
-                "title": "Architect 'TrueManifest' Data Clean Room",
+                "title": "Architect 'Proveniq ClaimsIQ' Data Clean Room",
                 "description": "Design a secure, audit-logged environment using BigQuery Omni or similar tech for secure data exchange with insurers, minimizing PII exposure.",
                 "security_level": "L3_TRADE_SECRET",
                 "data_source": "clean_room_arch_doc"
@@ -37,7 +37,7 @@
             },
             {
                 "title": "Draft Partner Code of Conduct",
-                "description": "Create legally binding data usage agreements and ethical guidelines for third-party developers integrating with the MyARK platform.",
+                "description": "Create legally binding data usage agreements and ethical guidelines for third-party developers integrating with the Proveniq platform.",
                 "security_level": "L1_GENERAL",
                 "data_source": "legal_docs_repo"
             },
@@ -127,11 +127,11 @@
     {
         "id": "growth_engineer",
         "title": "Growth Engineer",
-        "description": "Drive B2B adoption and ecosystem expansion through 'MyARK for Business' and referral mechanics.",
+        "description": "Drive B2B adoption and ecosystem expansion through 'Proveniq Home for Business' and referral mechanics.",
         "tasks": [
             {
                 "title": "Develop B2B Landing Pages",
-                "description": "Build high-conversion landing pages and lead capture forms for the 'MyARK for Business' and 'TrueManifest' enterprise offerings.",
+                "description": "Build high-conversion landing pages and lead capture forms for the 'Proveniq Home for Business' and 'Proveniq ClaimsIQ' enterprise offerings.",
                 "security_level": "L1_GENERAL",
                 "data_source": "marketing_analytics"
             },
@@ -143,7 +143,7 @@
             },
             {
                 "title": "Implement Revenue Share Attribution",
-                "description": "Build backend logic to attribute suscripions and value-add services to specific partners for automated revenue share calculation.",
+                "description": "Build backend logic to attribute subscriptions and value-add services to specific partners for automated revenue share calculation.",
                 "security_level": "L2_SENSITIVE",
                 "data_source": "partner_attribution_db"
             }
@@ -217,8 +217,8 @@
                 "data_source": "ios_app_clip_target"
             },
             {
-                "title": "Design MyARK Mobile SDK",
-                "description": "Architect a distributable mobile SDK allowing partners to embed MyARK's scanning and valuation features directly into their own apps.",
+                "title": "Design Proveniq Home Mobile SDK",
+                "description": "Architect a distributable mobile SDK allowing partners to embed Proveniq Home's scanning and valuation features directly into their own apps.",
                 "security_level": "L2_SENSITIVE",
                 "data_source": "sdk_design_docs"
             }
@@ -231,13 +231,13 @@
         "tasks": [
             {
                 "title": "Secure Carrier Partnership Agreements",
-                "description": "Finalize negotiations and technical requirements for 'TrueManifest' pilots with top-tier insurance carriers.",
+                "description": "Finalize negotiations and technical requirements for 'Proveniq ClaimsIQ' pilots with top-tier insurance carriers.",
                 "security_level": "L3_TRADE_SECRET",
                 "data_source": "crm_enterprise_deals"
             },
             {
                 "title": "Launch Developer Marketplace",
-                "description": "Oversee the go-to-market strategy for the MyARK Developer Marketplace, including vetting and onboarding the initial cohort of 3rd party apps.",
+                "description": "Oversee the go-to-market strategy for the Proveniq Developer Marketplace, including vetting and onboarding the initial cohort of 3rd party apps.",
                 "security_level": "L2_SENSITIVE",
                 "data_source": "marketplace_admin_panel"
             },

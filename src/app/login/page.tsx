@@ -17,7 +17,7 @@ import {
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { initiateEmailSignIn } from "@/firebase";
 import { Loader2 } from "lucide-react";
-import { MyArkLogo } from "@/components/onboarding/MyArkLogo";
+import { ProveniqLogo } from "@/components/onboarding/ProveniqLogo";
 
 // --- Social Icons ---
 const GoogleIcon = () => (
@@ -108,11 +108,12 @@ export default function LoginPage() {
         setError("");
         try {
             await signInWithRedirect(auth, provider);
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const firebaseError = error as { code?: string };
             const message = error instanceof Error ? error.message : "OAuth sign-in error";
             setError(message);
             setIsLoading(false);
-            if (error?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
+            if (firebaseError?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
                 setShowDemoOption(true);
             }
         }
@@ -141,7 +142,7 @@ export default function LoginPage() {
             // Bug 3 fix: Use controlled state variables directly
             await initiateEmailSignIn(auth, email, password);
             // initiateEmailSignIn handles its own navigation/success usually or throws
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error(e);
             const message = e instanceof Error ? e.message : "Login failed.";
             setError(message);
@@ -167,7 +168,7 @@ export default function LoginPage() {
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 flex items-center justify-center p-4">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-100 space-y-6">
                 <div className="flex flex-col items-center justify-center mb-6">
-                    <MyArkLogo size={48} className="mb-4" />
+                    <ProveniqLogo size={48} className="mb-4" />
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Welcome Back</h1>
                     <p className="text-sm text-muted-foreground mt-2">Enter your email and password to sign in</p>
                 </div>

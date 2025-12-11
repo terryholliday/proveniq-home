@@ -18,7 +18,7 @@ import {
 } from "firebase/auth";
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { Loader2 } from "lucide-react";
-import { MyArkLogo } from "@/components/onboarding/MyArkLogo";
+import { ProveniqLogo } from "@/components/onboarding/ProveniqLogo";
 
 // --- Social Icons ---
 const GoogleIcon = () => (
@@ -143,10 +143,11 @@ export default function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await createUserProfile(userCredential.user, { firstName, lastName });
       router.push("/onboarding/permissions");
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const firebaseError = err as { code?: string; message?: string };
       const message = err instanceof Error ? err.message : "Could not create account.";
       setError(message);
-      if (err?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
+      if (firebaseError?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
         setShowDemoOption(true);
       }
     } finally {
@@ -161,7 +162,7 @@ export default function SignupPage() {
   return (
     <>
       <div className="flex flex-col items-center justify-center mb-6">
-        <MyArkLogo size={48} className="mb-4" />
+        <ProveniqLogo size={48} className="mb-4" />
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">Create an account</h1>
         <p className="text-sm text-muted-foreground mt-2">Enter your information below to get started</p>
       </div>

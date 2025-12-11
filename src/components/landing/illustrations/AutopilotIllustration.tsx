@@ -1,5 +1,5 @@
 import { Mail, MapPin } from 'lucide-react';
-import { MyArkLogo } from '@/components/onboarding/MyArkLogo';
+import { ProveniqLogo } from '@/components/onboarding/ProveniqLogo';
 
 export function AutopilotIllustration(): JSX.Element {
     return (
@@ -18,7 +18,7 @@ export function AutopilotIllustration(): JSX.Element {
                 </div>
             </div>
             <div className="z-10 bg-white rounded-full shadow-2xl p-4 pulse-grow">
-                <MyArkLogo size={48} />
+                <ProveniqLogo size={48} />
             </div>
             <div className="z-10 flex items-center gap-4 bg-white p-4 rounded-xl shadow-lg border border-gray-100 w-64">
                 <div className="p-2 bg-orange-100 rounded-lg">

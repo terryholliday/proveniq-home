@@ -1,4 +1,4 @@
-import { collectionGroup, getDocs, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collectionGroup, getDocs, updateDoc } from 'firebase/firestore';
 import { initializeFirebase } from '@/firebase';
 import { InventoryItem, ProvenanceEvent } from '@/lib/types';
 
@@ -36,9 +36,10 @@ export async function migrateProvenanceData() {
                 provenance: [acquisitionEvent]
             });
             updatedCount++;
-        } catch (error: any) {
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
             console.error(`Failed to update item ${itemId}:`, error);
-            errors.push(`Item ${itemId}: ${error.message}`);
+            errors.push(`Item ${itemId}: ${errorMessage}`);
         }
     }
 

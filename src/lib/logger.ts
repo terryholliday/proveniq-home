@@ -1,4 +1,3 @@
-'use server';
 /**
  * @fileOverview Structured logging abstraction for MyARK.
  * Logs domain events in JSON format for production observability.

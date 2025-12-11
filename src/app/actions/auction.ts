@@ -4,10 +4,10 @@ import crypto from 'node:crypto';
 import { InventoryItem, User } from '@/lib/types';
 
 export async function sendToAuction(item: InventoryItem, user: User) {
-  const secret = process.env.TRUEARK_WEBHOOK_SECRET;
+  const secret = process.env.PROVENIQ_WEBHOOK_SECRET;
 
   if (!secret) {
-    throw new Error('Server misconfiguration: TRUEARK_WEBHOOK_SECRET is missing');
+    throw new Error('Server misconfiguration: PROVENIQ_WEBHOOK_SECRET is missing');
   }
 
   const payload = {
@@ -15,7 +15,7 @@ export async function sendToAuction(item: InventoryItem, user: User) {
     timestamp: new Date().toISOString(),
     type: 'ITEM_LISTED',
     payload: {
-      myarkId: item.id,
+      proveniqId: item.id,
       sellerId: user.id,
       title: item.name,
       description: item.description,
@@ -36,14 +36,14 @@ export async function sendToAuction(item: InventoryItem, user: User) {
 
   // FIX: Dynamic URL for production support
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  const targetUrl = `${baseUrl}/api/webhooks/myark`;
+  const targetUrl = `${baseUrl}/api/webhooks/proveniq`;
 
   try {
     const response = await fetch(targetUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-myark-signature': signature
+        'x-proveniq-signature': signature
       },
       body
     });
@@ -57,8 +57,9 @@ export async function sendToAuction(item: InventoryItem, user: User) {
 
     const data = await response.json();
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Webhook execution failed:', error);
-    throw new Error(error.message || 'Failed to send to auction');
+    const message = error instanceof Error ? error.message : 'Failed to send to auction';
+    throw new Error(message);
   }
 }

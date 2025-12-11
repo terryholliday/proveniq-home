@@ -70,8 +70,9 @@ export function useCollection<T = DocumentData>(
     }
 
     // E2E Test Hook: Mock Firestore Data
-    if (typeof window !== 'undefined' && (window as any).__MOCK_FIRESTORE_DATA__) {
-      const mockData = (window as any).__MOCK_FIRESTORE_DATA__;
+    const windowWithMock = window as Window & { __MOCK_FIRESTORE_DATA__?: Record<string, unknown> | unknown[] };
+    if (typeof window !== 'undefined' && windowWithMock.__MOCK_FIRESTORE_DATA__) {
+      const mockData = windowWithMock.__MOCK_FIRESTORE_DATA__;
       // Simple mock: if any data is provided, use it. 
       // In a real scenario, we might match the collection path.
       // For now, we assume the test sets the data for the specific view.
@@ -82,7 +83,7 @@ export function useCollection<T = DocumentData>(
         path = memoizedTargetRefOrQuery.type === 'collection'
           ? (memoizedTargetRefOrQuery as CollectionReference).path
           : (memoizedTargetRefOrQuery as unknown as InternalQuery)._query.path.canonicalString();
-      } catch (e) {
+      } catch {
         // ignore
       }
 
@@ -91,15 +92,15 @@ export function useCollection<T = DocumentData>(
       // For simplicity, if mockData is an array, return it.
 
       if (Array.isArray(mockData)) {
-        setData(mockData as any);
+        setData(mockData as StateDataType);
         setIsLoading(false);
         return;
-      } else if (path && mockData[path]) {
-        setData(mockData[path]);
+      } else if (path && !Array.isArray(mockData) && (mockData as Record<string, unknown>)[path]) {
+        setData((mockData as Record<string, unknown>)[path] as StateDataType);
         setIsLoading(false);
         return;
-      } else if (mockData['default']) {
-        setData(mockData['default']);
+      } else if (!Array.isArray(mockData) && (mockData as Record<string, unknown>)['default']) {
+        setData((mockData as Record<string, unknown>)['default'] as StateDataType);
         setIsLoading(false);
         return;
       }

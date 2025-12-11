@@ -101,7 +101,7 @@ export function LegacyWizard() {
             </CardHeader>
             <CardContent className="space-y-4 text-center">
                 <p className="text-sm text-red-800/80">
-                    We recommend using our "Scrivener" service which connects you with a legal professional who can assist you in drafting your documents in compliance with {detectedState} state laws.
+                    We recommend using our &quot;Scrivener&quot; service which connects you with a legal professional who can assist you in drafting your documents in compliance with {detectedState} state laws.
                 </p>
                 <Button className="w-full mt-4" variant="default" onClick={() => window.location.href = '/scrivener-service'}>
                     Connect with a Scrivener

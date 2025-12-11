@@ -174,7 +174,7 @@ export class ValuationEngine {
         // 2. Ensemble Logic (Weighted Average)
         let totalValue = 0;
         let totalWeight = 0;
-        const breakdown: any = {};
+        const breakdown: Record<string, number> = {};
 
         if (aiVal !== null) {
             totalValue += aiVal * 0.2;

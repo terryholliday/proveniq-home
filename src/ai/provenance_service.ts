@@ -1,7 +1,7 @@
 import { ProvenanceEngine, ProvenanceSummary } from './provenance_engine';
 import { InventoryItem } from '@/lib/types';
 import { adminDb } from '@/lib/firebase-admin';
-import { ProvenanceLog, VisualTruthVerification } from '@/lib/types/true-ledger';
+import { ProvenanceLog, VisualTruthVerification } from '@/lib/types/proveniq-ledger';
 
 export class ProvenanceService {
     private engine: ProvenanceEngine;
@@ -30,7 +30,7 @@ export class ProvenanceService {
 
                 await adminDb.collection('provenance_logs').add(logEntry);
             } catch (error) {
-                console.error('Failed to log provenance to TrueLedger:', error);
+                console.error('Failed to log provenance to Proveniq Ledger:', error);
                 // Non-blocking error
             }
         }

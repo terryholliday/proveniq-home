@@ -2,7 +2,7 @@
 
 ## Overview
 
-MyARK uses Jest for testing. Tests are organized by type:
+Proveniq Home uses Jest for testing. Tests are organized by type:
 
 | Type | Location | Purpose |
 |------|----------|---------|

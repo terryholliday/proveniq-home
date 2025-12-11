@@ -28,9 +28,9 @@ export function initiateEmailSignIn(authInstance: Auth, email: string, password:
   // Code continues immediately. Auth state change is handled by onAuthStateChanged listener.
 }
 
-// Helper types for WebAuthn
-type PublicKeyCredentialCreationOptionsJSON = any; // Simplify for now
-type PublicKeyCredentialRequestOptionsJSON = any;
+// Helper types for WebAuthn (unused but kept for future reference)
+// type PublicKeyCredentialCreationOptionsJSON = unknown;
+// type PublicKeyCredentialRequestOptionsJSON = unknown;
 
 /**
  * Registers a new Passkey for the current user.
@@ -42,14 +42,17 @@ type PublicKeyCredentialRequestOptionsJSON = any;
  * HOWEVER, Firebase has a "WebAuthn" provider we can use!
  * Let's try to use the Firebase WebAuthnAuthProvider if it exists in the SDK (it should).
  */
-import {
-  getAuth,
-  linkWithPopup,
-  signInWithPopup,
-  OAuthProvider
-} from 'firebase/auth';
+// Unused imports kept for future WebAuthn implementation
+// import {
+//   getAuth,
+//   linkWithPopup,
+//   signInWithPopup,
+//   OAuthProvider
+// } from 'firebase/auth';
 
-export async function registerPasskey(authInstance: Auth, user: any) {
+export async function registerPasskey(authInstance: Auth, user: { email?: string; displayName?: string } | null) {
+  // authInstance is passed for future use when backend is ready
+  void authInstance;
   try {
     console.log("Registering passkey...");
 
@@ -92,6 +95,8 @@ export async function registerPasskey(authInstance: Auth, user: any) {
 }
 
 export async function signInWithPasskey(authInstance: Auth) {
+  // authInstance is passed for future use when backend is ready
+  void authInstance;
   try {
     console.log("Signing in with passkey...");
 

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { MyArkLogo } from "../onboarding/MyArkLogo";
+import { ProveniqLogo } from "../onboarding/ProveniqLogo";
 import { AdminAccessTrigger } from "@/components/admin/AdminAccessTrigger";
 import { TechDocsAccessTrigger } from "@/components/admin/TechDocsAccessTrigger";
 
@@ -10,8 +10,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="container flex h-14 items-center">
                     <Link href="/" className="flex items-center gap-2 font-semibold">
-                        <MyArkLogo size={24} />
-                        <span className="">MyARK</span>
+                        <ProveniqLogo size={24} />
+                        <span className="">Proveniq Home</span>
                     </Link>
                     <nav className="ml-auto flex items-center gap-2">
                         <Link href="/login" passHref>
@@ -27,7 +27,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <footer className="border-t">
                 <div className="container py-8 flex items-center justify-between text-sm text-muted-foreground">
                     <AdminAccessTrigger>
-                        <span>© {new Date().getFullYear()} MyARK, Inc.</span>
+                        <span>© {new Date().getFullYear()} Proveniq Technologies</span>
                     </AdminAccessTrigger>
                     <div className="flex gap-4">
                         <TechDocsAccessTrigger>

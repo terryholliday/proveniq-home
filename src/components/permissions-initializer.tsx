@@ -37,15 +37,15 @@ export function PermissionsInitializer() {
                             audio: permissionsToRequest.includes('microphone')
                         });
 
-                        if (permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'granted' } as any);
-                        if (permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'granted' } as any);
+                        if (permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'granted' } as Partial<Record<string, unknown>>);
+                        if (permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'granted' } as Partial<Record<string, unknown>>);
 
                         // Important: Stop the tracks immediately to turn off camera/mic light
                         stream.getTracks().forEach(track => track.stop());
                     }
                 } catch {
-                    if (permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'denied' } as any);
-                    if (permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'denied' } as any);
+                    if (permissionsToRequest.includes('camera')) await updateUserProfile({ 'permissions.camera': 'denied' } as Partial<Record<string, unknown>>);
+                    if (permissionsToRequest.includes('microphone')) await updateUserProfile({ 'permissions.microphone': 'denied' } as Partial<Record<string, unknown>>);
                     toast({
                         variant: 'destructive',
                         title: 'Permissions Denied',
@@ -58,11 +58,11 @@ export function PermissionsInitializer() {
                         await new Promise((resolve, reject) => {
                             navigator.geolocation.getCurrentPosition(
                                 async (position) => {
-                                    await updateUserProfile({ 'permissions.location': 'granted' } as any);
+                                    await updateUserProfile({ 'permissions.location': 'granted' } as Partial<Record<string, unknown>>);
                                     resolve(position);
                                 },
                                 async (error) => {
-                                    await updateUserProfile({ 'permissions.location': 'denied' } as any);
+                                    await updateUserProfile({ 'permissions.location': 'denied' } as Partial<Record<string, unknown>>);
                                     reject(error);
                                 }
                             );

@@ -4,7 +4,9 @@ test.describe('Consent Modal', () => {
     test('should display consent modal for new users', async ({ page }) => {
         // Mock user and consent state via window object (handled by DashboardLayout)
         await page.addInitScript(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_USER__ = { uid: 'test-user' };
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_CONSENT_STATE__ = { accepted: false };
         });
 
@@ -20,7 +22,9 @@ test.describe('Consent Modal', () => {
 
     test('should not display consent modal if already consented', async ({ page }) => {
         await page.addInitScript(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_USER__ = { uid: 'test-user' };
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).__MOCK_CONSENT_STATE__ = { accepted: true };
         });
 

@@ -1,5 +1,7 @@
 
 import { User } from '@/lib/types';
+import { collection, addDoc } from 'firebase/firestore';
+import { initializeFirebase } from '@/firebase'; // Ensure this initializes the app
 
 export enum AuditAction {
     VIEW = 'view',
@@ -20,20 +22,29 @@ export type AuditEvent = {
     action: AuditAction;
     resourceType: string;
     resourceId?: string;
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
     ipAddress?: string; // In a real app, captured from request
 };
 
 class AuditServiceImpl {
     private async persistLog(event: AuditEvent) {
-        // In strict Phase 4, this goes to Firestore/BigQuery.
-        // In Phase 3, console.log + mock persistence is sufficient to satisfy the architecture.
+        // Log to console for dev visibility
         console.log(`[AUDIT] ${event.timestamp} | ${event.actorId} | ${event.action} | ${event.resourceType}:${event.resourceId || 'N/A'}`, event.metadata || '');
 
-        // TODO: Write to 'audit_logs' collection in Firestore
+        try {
+            // Write to 'audit_logs' collection in Firestore
+            // Initialize Firebase if not already (safe to call multiple times if handled correctly, 
+            // but relying on app initialization at root is better. Here we assume Client SDK or Admin SDK context).
+            // Since this file seems to be used in Client context (based on imports), we use Client SDK.
+            const { firestore } = initializeFirebase();
+            await addDoc(collection(firestore, 'audit_logs'), event);
+        } catch (error) {
+            console.error("Failed to persist audit log to Firestore:", error);
+            // Don't throw, to avoid breaking the main flow
+        }
     }
 
-    async log(actor: User | { uid: string }, action: AuditAction, resourceType: string, resourceId?: string, metadata?: Record<string, any>) {
+    async log(actor: User | { uid: string }, action: AuditAction, resourceType: string, resourceId?: string, metadata?: Record<string, unknown>) {
         const event: AuditEvent = {
             id: crypto.randomUUID(),
             timestamp: new Date().toISOString(),

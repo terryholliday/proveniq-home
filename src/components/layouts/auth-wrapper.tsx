@@ -1,5 +1,5 @@
 import React from 'react';
-import { MyArkLogo } from '../onboarding/MyArkLogo';
+import { ProveniqLogo } from '../onboarding/ProveniqLogo';
 
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +7,7 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
         <div className="text-center mb-8">
           <div className="mx-auto mb-4 flex justify-center">
-             <MyArkLogo size={64} />
+             <ProveniqLogo size={64} />
           </div>
         </div>
         {children}

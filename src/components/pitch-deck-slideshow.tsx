@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import { AppView } from '@/lib/types';
-import { MyArkLogo } from './onboarding/MyArkLogo';
+import { ProveniqLogo } from './onboarding/ProveniqLogo';
 import { Camera, Sparkles, Shield, ArrowRight, ArrowLeft, AlertTriangle, Database, TrendingUp, Building2, X } from 'lucide-react';
 
 interface PitchDeckSlideshowProps {
@@ -26,7 +26,7 @@ const slides: Slide[] = [
   {
     id: 'cover',
     layout: 'cover',
-    title: "MyARK",
+    title: "Proveniq Home",
     subtitle: "The Operating System for Personal Assets",
     content: "Zero-friction inventory, real-time valuation, and automated legacy planning driven by Generative AI.",
     color: "bg-indigo-600"
@@ -85,7 +85,7 @@ const slides: Slide[] = [
     bullets: [
       "Gemini 2.5 AI Vision: Identify make, model, and condition from a single photo.",
       "Real-Time Valuation: Auto-estimation of market value and depreciation.",
-      "True Manifest™: Evidence-grade data structure ready for insurance claims.",
+      "Proveniq ClaimsIQ™: Evidence-grade data structure ready for insurance claims.",
       "We turn a weekend chore into a 10-minute game."
     ]
   },
@@ -118,8 +118,8 @@ const slides: Slide[] = [
     title: "Business Model",
     bullets: [
       "B2C Subscription: Freemium model. Pro tier ($19.99/mo) unlocks AI valuation, legacy videos, and cloud backups.",
-      "B2B API (True Manifest): Licensing data verification tools to Insurance Carriers and Warranty Providers.",
-      "Transaction Fees: 15% fee on items sold via 'ARKive Auctions' marketplace."
+      "B2B API (Proveniq ClaimsIQ): Licensing data verification tools to Insurance Carriers and Warranty Providers.",
+      "Transaction Fees: 15% fee on items sold via 'Proveniq Bids' marketplace."
     ]
   },
   {
@@ -136,7 +136,7 @@ const slides: Slide[] = [
   {
     id: 'ask',
     layout: 'cover',
-    title: "Join the Ark",
+    title: "Join Proveniq",
     subtitle: "Secure your peace of mind today.",
     content: "Ready to protect what matters most?",
     color: "bg-gray-900"
@@ -192,7 +192,7 @@ const PitchDeckSlideshow: React.FC<PitchDeckSlideshowProps> = ({ onNavigate }) =
         {slide.layout === 'cover' && (
              <div className={`w-full h-full flex flex-col items-center justify-center text-center p-6 md:p-12 text-white ${slide.color}`}>
                  <div className="mb-6 md:mb-8 p-4 bg-white/10 rounded-2xl backdrop-blur-sm">
-                    <MyArkLogo size={64} color="white" className="md:w-20 md:h-20" />
+                    <ProveniqLogo size={64} color="white" className="md:w-20 md:h-20" />
                  </div>
                  <h1 className="text-3xl md:text-7xl font-bold mb-4 tracking-tight">{slide.title}</h1>
                  <h2 className="text-xl md:text-3xl font-light opacity-90 mb-6 md:mb-8">{slide.subtitle}</h2>

@@ -22,7 +22,7 @@ const SearchEngineIllustration = dynamic(() => import('@/components/landing/illu
   loading: () => <div className="w-full max-w-sm h-48 bg-gray-50 rounded-2xl animate-pulse mx-auto" />
 });
 
-const AskYourArkIllustration = dynamic(() => import('@/components/landing/illustrations/AskYourArkIllustration').then(mod => mod.AskYourArkIllustration), {
+const AskYourProveniqIllustration = dynamic(() => import('@/components/landing/illustrations/AskYourProveniqIllustration').then(mod => mod.AskYourProveniqIllustration), {
   loading: () => <div className="w-full max-w-sm h-64 bg-gray-50 rounded-2xl animate-pulse mx-auto" />
 });
 
@@ -54,7 +54,7 @@ const features = [
   {
     id: 'command-center',
     title: 'Your Asset Command Center.',
-    description: 'MyARK is more than an inventory list. It\'s the operating system for everything you own, turning static possessions into dynamic, protected assets.',
+    description: 'Proveniq Home is more than an inventory list. It\'s the operating system for everything you own, turning static possessions into dynamic, protected assets.',
     illustration: <CommandCenterIllustration />
   },
   {
@@ -64,10 +64,10 @@ const features = [
     illustration: <SearchEngineIllustration />
   },
   {
-    id: 'ask-your-ark',
-    title: 'Ask Your Ark. Anytime.',
+    id: 'ask-your-proveniq',
+    title: 'Ask Proveniq. Anytime.',
     description: 'Integrate with Alexa and Google Home to find items, get reminders, or recall family stories with a simple voice command.',
-    illustration: <AskYourArkIllustration />
+    illustration: <AskYourProveniqIllustration />
   },
   {
     id: 'story',
@@ -84,25 +84,25 @@ const features = [
   {
     id: 'unlock-value',
     title: 'Unlock Hidden Value.',
-    description: 'Turn clutter into cash. Let our AI write your sales ads for Facebook Marketplace, or host a private \'ARKive Auction\' to get the best price for your items.',
+    description: 'Turn clutter into cash. Let our AI write your sales ads for Facebook Marketplace, or host a private \'Proveniq Bids\' auction to get the best price for your items.',
     illustration: <ValueIllustration />
   },
   {
     id: 'one-tap-claims',
     title: 'One-Tap Claims.',
-    description: 'When disaster strikes, MyARK generates submission-ready warranty and insurance claim documents instantly. Get your payout faster, with zero stress.',
+    description: 'When disaster strikes, Proveniq Home generates submission-ready warranty and insurance claim documents instantly. Get your payout faster, with zero stress.',
     illustration: <ClaimsIllustration />
   },
   {
     id: 'autopilot',
     title: 'Inventory on Autopilot.',
-    description: 'MyARK automatically detects new purchases from your email and reminds you to scan items after shopping trips. Zero manual entry required.',
+    description: 'Proveniq Home automatically detects new purchases from your email and reminds you to scan items after shopping trips. Zero manual entry required.',
     illustration: <AutopilotIllustration />
   },
   {
     id: 'move-smarter',
     title: 'Move Smarter, Not Harder.',
-    description: 'Planning a move or just spring cleaning? MyARK\'s AI suggests how to pack, what to declutter, and prints scannable QR labels for every box so you know what\'s where.',
+    description: 'Planning a move or just spring cleaning? Proveniq Home\'s AI suggests how to pack, what to declutter, and prints scannable QR labels for every box so you know what\'s where.',
     illustration: <MoveIllustration />
   },
 ];
@@ -197,7 +197,7 @@ export default function LandingPage() {
 
           <Link href="/signup" passHref>
             <Button size="lg" className="w-full sm:w-auto">
-              Build Your Ark <ArrowRight className="ml-2" />
+              Build Your Proveniq <ArrowRight className="ml-2" />
             </Button>
           </Link>
 

@@ -45,10 +45,10 @@ export async function POST(req: NextRequest) {
 
     logEvent('google_assistant_request', { intent, uid });
 
-    let fulfillmentText = "Welcome to My Ark on Google Assistant.";
+    let fulfillmentText = "Welcome to Proveniq Home on Google Assistant.";
 
     if (intent === 'Default Welcome Intent') {
-      fulfillmentText = "Hi! I'm your My Ark assistant. What can I do for you?";
+      fulfillmentText = "Hi! I'm your Proveniq Home assistant. What can I do for you?";
     } else {
       fulfillmentText = "I heard you, but I don't have a specific action for that yet.";
     }
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
           },
         },
       },
-      source: 'myark-voice-bridge',
+      source: 'proveniq-voice-bridge',
     };
 
     return NextResponse.json(response);

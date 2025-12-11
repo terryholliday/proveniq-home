@@ -6,9 +6,9 @@ export type AIEvent = {
     workflowId: string;
     stepName: string;
     itemId?: string;
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
     error?: string;
-    timestamp?: any;
+    timestamp?: unknown;
 };
 
 const EVENTS_COLLECTION = 'ai_events';
@@ -24,13 +24,13 @@ export async function logAIEvent(event: Omit<AIEvent, 'timestamp'>) {
         const safeMetadata = event.metadata ? JSON.parse(JSON.stringify(event.metadata)) : {};
 
         // Simple PII scrubber (expand as needed)
-        const scrubPII = (obj: any) => {
+        const scrubPII = (obj: Record<string, unknown>) => {
             if (typeof obj !== 'object' || obj === null) return;
             for (const key in obj) {
                 if (['email', 'phone', 'address', 'name'].includes(key.toLowerCase())) {
                     obj[key] = '[REDACTED]';
-                } else if (typeof obj[key] === 'object') {
-                    scrubPII(obj[key]);
+                } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    scrubPII(obj[key] as Record<string, unknown>);
                 }
             }
         };
