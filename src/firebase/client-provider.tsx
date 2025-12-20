@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useMemo, type ReactNode } from 'react';
+import React, { useMemo, useEffect, type ReactNode } from 'react';
 import { FirebaseProvider } from '@/firebase/provider';
 import { initializeFirebase } from '@/firebase';
+import { initializeFirebaseAppCheck } from '@/firebase/app-check';
 
 interface FirebaseClientProviderProps {
   children: ReactNode;
@@ -13,6 +14,14 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
     // Initialize Firebase on the client side, once per component mount.
     return initializeFirebase();
   }, []); // Empty dependency array ensures this runs only once on mount
+
+  // Initialize App Check after Firebase is ready
+  useEffect(() => {
+    const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    if (recaptchaSiteKey && firebaseServices.firebaseApp) {
+      initializeFirebaseAppCheck(firebaseServices.firebaseApp, recaptchaSiteKey);
+    }
+  }, [firebaseServices.firebaseApp]);
 
   return (
     <FirebaseProvider

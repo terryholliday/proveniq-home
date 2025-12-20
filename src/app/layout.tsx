@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Proveniq Home',
-  description: 'Your personal inventory, powered by AI.',
+  description: 'Know what you own. Prove what it\'s worth.',
   manifest: '/manifest.json',
 };
 

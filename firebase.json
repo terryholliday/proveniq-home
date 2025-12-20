@@ -21,7 +21,7 @@
     }
   ],
   "hosting": {
-    "site": "home-proveniq",
+    "site": "proveniq-home",
     "source": ".",
     "ignore": [
       "firebase.json",

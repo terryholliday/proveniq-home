@@ -11,7 +11,14 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:golden": "playwright test golden-path.spec.ts",
+    "test:e2e:auth": "playwright test auth-flow.spec.ts",
+    "test:rules": "firebase emulators:exec --only firestore 'jest __tests__/rules/'",
+    "test:api": "jest __tests__/api/",
+    "test:tier1": "npm run test:rules && npm run test:api && npm run test:e2e:golden && npm run test:e2e:auth",
+    "seed:test-users": "npx tsx scripts/seed-test-users.ts",
+    "seed:test-users:cleanup": "npx tsx scripts/seed-test-users.ts cleanup"
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
@@ -65,6 +72,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.0",
     "@playwright/test": "^1.57.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",

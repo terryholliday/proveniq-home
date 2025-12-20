@@ -1,7 +1,7 @@
 {
-    "name": "MyARK",
-    "short_name": "MyARK",
-    "description": "Your personal inventory, powered by AI.",
+    "name": "Proveniq Home",
+    "short_name": "Proveniq",
+    "description": "Know what you own. Prove what it's worth.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
