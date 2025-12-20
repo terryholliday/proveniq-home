@@ -151,7 +151,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
             </div>
             <div className="md:hidden space-y-2">
               <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
-                Sell via myarkauctions
+                Sell via PROVENIQ Bids
               </Button>
               <Button variant="outline" className="w-full" onClick={handleSendToAuction} disabled={isSendingToAuction}>
                 {isSendingToAuction ? "Sending..." : "Send to Auction"}
@@ -173,7 +173,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
               <ItemQuickActions item={item!} user={appUser!} onDelete={handleDelete} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
               <div className="space-y-2">
                 <Button variant="secondary" className="w-full" onClick={() => setShowAuctionWizard(true)}>
-                  Sell via myarkauctions
+                  Sell via PROVENIQ Bids
                 </Button>
                 <Button variant="outline" className="w-full" onClick={handleSendToAuction} disabled={isSendingToAuction}>
                   {isSendingToAuction ? "Sending..." : "Send to Auction"}

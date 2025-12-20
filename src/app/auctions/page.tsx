@@ -75,7 +75,7 @@ export default function AuctionsPage() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Start from an item detail page and click “Sell via myarkauctions” to publish your first listing.
+              Start from an item detail page and click "Sell via PROVENIQ Bids" to publish your first listing.
             </p>
           </CardContent>
         </Card>

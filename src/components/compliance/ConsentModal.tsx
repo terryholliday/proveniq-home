@@ -17,7 +17,7 @@ import { SEED_LEGAL_DOCS } from '@/lib/compliance-seed';
 import { LegalDocument } from '@/lib/types';
 import Link from 'next/link';
 
-const STORAGE_KEY = 'myark_consent_version';
+const STORAGE_KEY = 'proveniq_consent_version';
 
 export function ConsentModal() {
     const [isOpen, setIsOpen] = useState(false);
