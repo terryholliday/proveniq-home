@@ -64,7 +64,7 @@ export default function DashboardPage() {
   useEffect(() => {
     // Only check tour completion after auth is confirmed
     if (user) {
-      const tourCompleted = localStorage.getItem('myark_onboarding_tour_completed');
+      const tourCompleted = localStorage.getItem('proveniq_onboarding_tour_completed');
       if (tourCompleted !== 'true') {
         setShowTour(true);
       }
@@ -72,7 +72,7 @@ export default function DashboardPage() {
   }, [user]);
 
   const handleTourComplete = () => {
-    localStorage.setItem('myark_onboarding_tour_completed', 'true');
+    localStorage.setItem('proveniq_onboarding_tour_completed', 'true');
     setShowTour(false);
   };
 

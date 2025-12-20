@@ -23,7 +23,7 @@ interface AuthContext {
 
 export function extractTenantContext(auth: AuthContext | undefined, headers?: Record<string, string>): TenantContext {
     // 1. System / Internal calls (e.g. PubSub cron) may not have auth, assume system if specific header present
-    if (headers?.['x-myark-internal'] === 'true') {
+    if (headers?.['x-proveniq-internal'] === 'true') {
         return { tenantId: 'system', isSystem: true, roles: ['admin'] };
     }
 
