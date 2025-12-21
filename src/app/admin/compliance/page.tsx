@@ -75,7 +75,7 @@ export default function ComplianceDashboard() {
 
     const handleGenerateReport = () => {
         const reportContent = `
-Proveniq Home COMPLIANCE REPORT
+PROVENIQ Home COMPLIANCE REPORT
 Generated: ${new Date().toLocaleString()}
 
 --- EXECUTIVE SUMMARY ---

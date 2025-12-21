@@ -23,11 +23,11 @@ export const guideTopics: GuideTopic[] = [
   {
     id: 'welcome',
     category: 'Getting Started',
-    title: 'Welcome to Proveniq Home',
+    title: 'Welcome to PROVENIQ Home',
     summary: 'An overview of your new digital command center for all your assets.',
-    content: `Proveniq Home is more than just a home inventory app—it's the operating system for your physical world. It helps you document, value, protect, and manage the lifecycle of everything you own.
+    content: `PROVENIQ Home is more than just a home inventory app—it's the operating system for your physical world. It helps you document, value, protect, and manage the lifecycle of everything you own.
       
-      From creating a detailed inventory for insurance purposes to planning your estate, Proveniq Home provides the tools to turn your static possessions into dynamic, manageable assets.
+      From creating a detailed inventory for insurance purposes to planning your estate, PROVENIQ Home provides the tools to turn your static possessions into dynamic, manageable assets.
       
       Start by adding your first item to see how easy it is!`,
   },
@@ -83,8 +83,8 @@ export const guideTopics: GuideTopic[] = [
     id: 'market-trends',
     category: 'Value & Market',
     title: 'Understanding Market Value',
-    summary: 'How Proveniq Home provides real-time market data for your items.',
-    content: 'Proveniq Home uses AI to simulate searches across recent auction results and sales data to provide an estimated Market Value for your items. This helps you understand what your possessions are worth right now. For Pro users, we also provide Market Trend tags (e.g., "Trending Up," "Stable") and a list of comparable sales.',
+    summary: 'How PROVENIQ Home provides real-time market data for your items.',
+    content: 'PROVENIQ Home uses AI to simulate searches across recent auction results and sales data to provide an estimated Market Value for your items. This helps you understand what your possessions are worth right now. For Pro users, we also provide Market Trend tags (e.g., "Trending Up," "Stable") and a list of comparable sales.',
     isPro: true,
   },
   // Insurance & Risk

@@ -21,11 +21,9 @@ export function initiateEmailSignUp(authInstance: Auth, email: string, password:
   return createUserWithEmailAndPassword(authInstance, email, password);
 }
 
-/** Initiate email/password sign-in (non-blocking). */
-export function initiateEmailSignIn(authInstance: Auth, email: string, password: string): void {
-  // CRITICAL: Call signInWithEmailAndPassword directly. Do NOT use 'await signInWithEmailAndPassword(...)'.
-  signInWithEmailAndPassword(authInstance, email, password);
-  // Code continues immediately. Auth state change is handled by onAuthStateChanged listener.
+/** Initiate email/password sign-in. Returns Promise for error handling. */
+export function initiateEmailSignIn(authInstance: Auth, email: string, password: string): Promise<UserCredential> {
+  return signInWithEmailAndPassword(authInstance, email, password);
 }
 
 // Helper types for WebAuthn (unused but kept for future reference)
@@ -67,7 +65,7 @@ export async function registerPasskey(authInstance: Auth, user: { email?: string
           publicKey: {
             challenge,
             rp: {
-              name: "Proveniq Home",
+              name: "PROVENIQ Home",
               id: window.location.hostname // Must match current domain
             },
             user: {

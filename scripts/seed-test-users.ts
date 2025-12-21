@@ -1,13 +1,29 @@
 /**
  * Test User Seeding Script
- * Creates deterministic test users for E2E testing against real Firebase Auth.
+ * Creates deterministic test users for E2E testing.
  * 
- * Usage: npx tsx scripts/seed-test-users.ts
+ * Usage: 
+ *   npx tsx scripts/seed-test-users.ts           # Seed to emulator (default)
+ *   npx tsx scripts/seed-test-users.ts cleanup   # Remove test users
  * 
- * IMPORTANT: Run this against your staging/dev Firebase project, NEVER production.
+ * Requires Firebase Emulator to be running:
+ *   firebase emulators:start --only auth,firestore
  */
 
-import { adminAuth, adminDb } from '../src/lib/firebase-admin';
+import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
+import * as path from 'path';
+
+// Use service account for real Firebase
+const serviceAccountPath = path.join(__dirname, '..', 'service-account.json');
+
+// Initialize admin SDK with service account
+const app = getApps().length ? getApp() : initializeApp({
+    credential: cert(serviceAccountPath)
+});
+const adminAuth = getAuth(app);
+const adminDb = getFirestore(app);
 
 interface TestUser {
     email: string;

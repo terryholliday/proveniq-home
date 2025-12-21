@@ -54,7 +54,7 @@ const features = [
   {
     id: 'command-center',
     title: 'Your Asset Command Center.',
-    description: 'Proveniq Home is more than an inventory list. It\'s the operating system for everything you own, turning static possessions into dynamic, protected assets.',
+    description: 'PROVENIQ Home is more than an inventory list. It\'s the operating system for everything you own, turning static possessions into dynamic, protected assets.',
     illustration: <CommandCenterIllustration />
   },
   {
@@ -84,25 +84,25 @@ const features = [
   {
     id: 'unlock-value',
     title: 'Unlock Hidden Value.',
-    description: 'Turn clutter into cash. Let our AI write your sales ads for Facebook Marketplace, or host a private \'Proveniq Bids\' auction to get the best price for your items.',
+    description: 'Turn clutter into cash. Let our AI write your sales ads for Facebook Marketplace, or host a private \'PROVENIQ Bids\' auction to get the best price for your items.',
     illustration: <ValueIllustration />
   },
   {
     id: 'one-tap-claims',
     title: 'One-Tap Claims.',
-    description: 'When disaster strikes, Proveniq Home generates submission-ready warranty and insurance claim documents instantly. Get your payout faster, with zero stress.',
+    description: 'When disaster strikes, PROVENIQ Home generates submission-ready warranty and insurance claim documents instantly. Get your payout faster, with zero stress.',
     illustration: <ClaimsIllustration />
   },
   {
     id: 'autopilot',
     title: 'Inventory on Autopilot.',
-    description: 'Proveniq Home automatically detects new purchases from your email and reminds you to scan items after shopping trips. Zero manual entry required.',
+    description: 'PROVENIQ Home automatically detects new purchases from your email and reminds you to scan items after shopping trips. Zero manual entry required.',
     illustration: <AutopilotIllustration />
   },
   {
     id: 'move-smarter',
     title: 'Move Smarter, Not Harder.',
-    description: 'Planning a move or just spring cleaning? Proveniq Home\'s AI suggests how to pack, what to declutter, and prints scannable QR labels for every box so you know what\'s where.',
+    description: 'Planning a move or just spring cleaning? PROVENIQ Home\'s AI suggests how to pack, what to declutter, and prints scannable QR labels for every box so you know what\'s where.',
     illustration: <MoveIllustration />
   },
 ];

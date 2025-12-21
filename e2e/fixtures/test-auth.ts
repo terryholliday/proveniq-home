@@ -1,9 +1,12 @@
 /**
  * E2E Test Authentication Fixtures
  * Provides reusable authentication helpers for Playwright tests.
+ * 
+ * Works with Firebase Emulator for local testing.
  */
 
 import { Page, BrowserContext } from '@playwright/test';
+import { setupEmulatorInBrowser, createEmulatorUser, signInEmulatorUser } from './emulator-setup';
 
 export const TEST_USERS = {
     userA: {
@@ -95,3 +98,38 @@ export async function isAuthenticated(page: Page): Promise<boolean> {
     // If redirected to login, not authenticated
     return !page.url().includes('/login');
 }
+
+/**
+ * Setup page for emulator-based testing.
+ * Call this before any Firebase operations.
+ */
+export async function setupEmulatorPage(page: Page): Promise<void> {
+    await setupEmulatorInBrowser(page);
+}
+
+/**
+ * Ensure test user exists in emulator and login via UI.
+ * Creates user if not exists, then logs in.
+ */
+export async function ensureTestUserAndLogin(
+    page: Page,
+    userKey: TestUserKey
+): Promise<void> {
+    const user = TEST_USERS[userKey];
+    
+    // Try to create user in emulator (will fail silently if exists)
+    try {
+        await createEmulatorUser(user.email, user.password, user.displayName);
+    } catch {
+        // User likely already exists, continue
+    }
+    
+    // Setup emulator in browser
+    await setupEmulatorInBrowser(page);
+    
+    // Login via UI
+    await loginTestUser(page, userKey);
+}
+
+// Re-export emulator utilities for convenience
+export { setupEmulatorInBrowser, createEmulatorUser, signInEmulatorUser } from './emulator-setup';

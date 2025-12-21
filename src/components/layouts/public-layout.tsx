@@ -11,7 +11,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <div className="container flex h-14 items-center">
                     <Link href="/" className="flex items-center gap-2 font-semibold">
                         <ProveniqLogo size={24} />
-                        <span className="">Proveniq Home</span>
+                        <span className="">PROVENIQ Home</span>
                     </Link>
                     <nav className="ml-auto flex items-center gap-2">
                         <Link href="/login" passHref>
@@ -27,7 +27,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <footer className="border-t">
                 <div className="container py-8 flex items-center justify-between text-sm text-muted-foreground">
                     <AdminAccessTrigger>
-                        <span>© {new Date().getFullYear()} Proveniq Technologies</span>
+                        <span>© {new Date().getFullYear()} PROVENIQ Technologies</span>
                     </AdminAccessTrigger>
                     <div className="flex gap-4">
                         <TechDocsAccessTrigger>

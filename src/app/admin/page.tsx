@@ -10,7 +10,7 @@ export default function AdminPage() {
         <>
             <PageHeader
                 title="Admin Dashboard"
-                description="This is the central control panel for managing Proveniq Home."
+                description="This is the central control panel for managing PROVENIQ Home."
             />
             <div className="container py-8">
                 <h2 className="text-xl font-semibold mb-4">System Overview</h2>

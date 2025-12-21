@@ -34,7 +34,7 @@ export default function PermissionsPage() {
 
       toast({
         title: 'Permissions Granted',
-        description: 'You can now use all of Proveniq Home&apos;s smart features.',
+        description: 'You can now use all of PROVENIQ Home&apos;s smart features.',
       });
     } catch {
       await updateUserProfile({
@@ -66,7 +66,7 @@ export default function PermissionsPage() {
 
           <h1 className="text-2xl font-bold">Enable Smart Features</h1>
           <p className="mt-2 text-muted-foreground">
-            Proveniq Home uses your camera and microphone to power its AI scanner, room
+            PROVENIQ Home uses your camera and microphone to power its AI scanner, room
             audits, and legacy story recording.
           </p>
 

@@ -14,11 +14,15 @@
     "test:e2e": "playwright test",
     "test:e2e:golden": "playwright test golden-path.spec.ts",
     "test:e2e:auth": "playwright test auth-flow.spec.ts",
-    "test:rules": "firebase emulators:exec --only firestore 'jest __tests__/rules/'",
+    "test:rules": "firebase emulators:exec --only firestore \"jest __tests__/rules/\"",
     "test:api": "jest __tests__/api/",
     "test:tier1": "npm run test:rules && npm run test:api && npm run test:e2e:golden && npm run test:e2e:auth",
+    "emulators": "firebase emulators:start --only auth,firestore",
+    "emulators:seed": "firebase emulators:start --only auth,firestore --import=./emulator-data --export-on-exit",
+    "dev:emulator": "cross-env NEXT_PUBLIC_USE_EMULATORS=true next dev -p 9003",
     "seed:test-users": "npx tsx scripts/seed-test-users.ts",
-    "seed:test-users:cleanup": "npx tsx scripts/seed-test-users.ts cleanup"
+    "seed:test-users:cleanup": "npx tsx scripts/seed-test-users.ts cleanup",
+    "test:tier1:full": "firebase emulators:exec --only auth,firestore \"npm run seed:test-users && npm run test:api && npm run test:e2e\""
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
@@ -79,6 +83,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^9.39.1",
+    "cross-env": "^7.0.3",
     "eslint-config-next": "^15.5.6",
     "firebase-tools": "^14.27.0",
     "genkit-cli": "^1.20.0",

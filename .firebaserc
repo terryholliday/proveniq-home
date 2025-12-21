@@ -1,7 +1,6 @@
 {
   "projects": {
-    "default": "proveniq-home",
-    "proveniq-prod": "studio-2016353273-627b9"
+    "default": "proveniq-home-prod"
   },
   "etags": {}
 }

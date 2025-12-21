@@ -2,9 +2,9 @@ import { createHash } from 'crypto';
 
 /**
  * Generates a short, readable referral code from a user ID.
- * e.g., "MARK-X7B2"
+ * e.g., "PVQ-X7B2"
  */
-export function generateReferralCode(userId: string, prefix = 'ARK'): string {
+export function generateReferralCode(userId: string, prefix = 'PVQ'): string {
     // Determine a hash of the userId to ensure consistency
     // (Ideally specific codes are stored in DB, but this acts as algorithmic fallback)
     const hash = createHash('sha256').update(userId).digest('hex');

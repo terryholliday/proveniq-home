@@ -42,7 +42,7 @@ const GuidedTour: React.FC<GuidedTourProps> = ({ isActive, onComplete, onNavigat
     },
     {
       targetId: 'nav-auctions',
-      title: 'Proveniq Bids',
+      title: 'PROVENIQ Bids',
       content: 'Ready to declutter? Create private auctions for your items instantly with one tap.',
       view: 'dashboard',
       placement: isMobile ? 'top' : 'right'

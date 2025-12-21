@@ -16,7 +16,7 @@ interface TenantConfig {
 
 const defaultTenant: TenantConfig = {
     id: 'consumer',
-    name: 'Proveniq Home',
+    name: 'PROVENIQ Home',
     primaryColor: '#000000', // Default Black
     logoUrl: '/logo.png',
     features: {

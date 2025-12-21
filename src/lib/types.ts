@@ -72,7 +72,7 @@ export type EmployeeProfile = UserProfile & {
 export type CompanyAssetMetadata = {
   createdById: string;
   createdAt: string;
-  copyrightHolder: 'Proveniq Home Inc.';
+  copyrightHolder: 'PROVENIQ Home Inc.';
   inventionType: 'code' | 'algorithm' | 'process' | 'list';
   isProprietary: boolean;
 };

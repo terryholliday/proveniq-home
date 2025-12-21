@@ -28,7 +28,7 @@ export async function createAuctionListing(auth: Auth, payload: CreateAuctionInp
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Proveniq Bids create auction failed (${res.status}): ${text}`);
+    throw new Error(`PROVENIQ Bids create auction failed (${res.status}): ${text}`);
   }
 
   return res.json();
@@ -54,7 +54,7 @@ export async function fetchMyAuctions(auth: Auth, ownerUid: string) {
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Proveniq Bids fetch auctions failed (${res.status}): ${text}`);
+    throw new Error(`PROVENIQ Bids fetch auctions failed (${res.status}): ${text}`);
   }
 
   return res.json();

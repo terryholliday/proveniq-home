@@ -61,7 +61,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ currentUser, onClose, onUpg
             period: "/mo",
             icon: <Crown size={24} className="text-amber-500" fill="currentColor" />,
             colorClass: "bg-amber-50 border-amber-200",
-            features: ["Everything in Premium", "Proveniq Bids Platform (15% commission)", "AI Risk Assessment & Disaster Sim", "Automated HO3 & Warranty Claims", "Advanced Market Valuation & Trends", "Email Purchase Importer", "AR Item Finder"]
+            features: ["Everything in Premium", "PROVENIQ Bids Platform (15% commission)", "AI Risk Assessment & Disaster Sim", "Automated HO3 & Warranty Claims", "Advanced Market Valuation & Trends", "Email Purchase Importer", "AR Item Finder"]
         }
     ];
 
@@ -185,7 +185,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ currentUser, onClose, onUpg
                                 <div>
                                     <p className="font-bold text-gray-800">Secure & Transparent Pricing</p>
                                     <p>
-                                        All new accounts start with a 14-day free trial of Proveniq Home Pro.
+                                        All new accounts start with a 14-day free trial of PROVENIQ Home Pro.
                                         Payments are processed securely. No hidden fees.
                                     </p>
                                 </div>

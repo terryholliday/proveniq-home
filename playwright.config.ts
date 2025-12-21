@@ -22,9 +22,12 @@ export default defineConfig({
         },
     ],
     webServer: {
-        command: 'npm run dev',
+        command: 'npx cross-env NEXT_PUBLIC_USE_EMULATORS=true npm run dev',
         url: 'http://localhost:9003',
         reuseExistingServer: !process.env.CI,
         timeout: 120000, // 2 minutes for Next.js compilation
+        env: {
+            NEXT_PUBLIC_USE_EMULATORS: 'true',
+        },
     },
 });

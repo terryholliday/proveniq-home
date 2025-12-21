@@ -49,17 +49,17 @@ export function MainNav() {
         <SidebarGroupLabel>Inventory</SidebarGroupLabel>
         <SidebarMenuItem>
           <Link href="/inventory" passHref>
-            <SidebarMenuButton asChild isActive={pathname.startsWith('/inventory')} tooltip={{ children: 'Proveniq Home' }}>
+            <SidebarMenuButton asChild isActive={pathname.startsWith('/inventory')} tooltip={{ children: 'PROVENIQ Home' }}>
               <Archive />
-              <span>Proveniq Home</span>
+              <span>PROVENIQ Home</span>
             </SidebarMenuButton>
           </Link>
         </SidebarMenuItem>
         <SidebarMenuItem>
           <Link href="/lending" passHref>
-            <SidebarMenuButton asChild isActive={isActive('/lending')} tooltip={{ children: 'Proveniq Capital' }}>
+            <SidebarMenuButton asChild isActive={isActive('/lending')} tooltip={{ children: 'Lent Items' }}>
               <HeartHandshake />
-              <span>Proveniq Capital</span>
+              <span>Lent Items</span>
             </SidebarMenuButton>
           </Link>
         </SidebarMenuItem>
@@ -72,7 +72,7 @@ export function MainNav() {
             <CollapsibleTrigger asChild>
               <SidebarMenuButton>
                 <Sparkles />
-                <span>Proveniq Core</span>
+                <span>PROVENIQ Core</span>
               </SidebarMenuButton>
             </CollapsibleTrigger>
             <CollapsibleContent>
@@ -105,9 +105,9 @@ export function MainNav() {
           </Link>
         </SidebarMenuItem>
         <SidebarMenuItem>
-          <SidebarMenuButton id="nav-auctions" tooltip={{ children: 'Proveniq Bids' }}>
+          <SidebarMenuButton id="nav-auctions" tooltip={{ children: 'PROVENIQ Bids' }}>
             <GanttChartSquare />
-            <span>Proveniq Bids</span>
+            <span>PROVENIQ Bids</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <Collapsible asChild open={insuranceOpen} onOpenChange={setInsuranceOpen}>

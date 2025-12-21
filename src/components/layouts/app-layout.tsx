@@ -23,7 +23,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <SidebarHeader className="p-4">
           <div className="flex items-center gap-2">
             <ProveniqLogo size={32} priority />
-            <span className="text-lg font-semibold text-sidebar-primary">Proveniq Home</span>
+            <span className="text-lg font-semibold text-sidebar-primary">PROVENIQ Home</span>
           </div>
         </SidebarHeader>
         <SidebarContent>

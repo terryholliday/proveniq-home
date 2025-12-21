@@ -136,7 +136,7 @@ export default function DashboardPage() {
           <Info className="h-4 w-4" />
           <AlertTitle>Early Access Mode</AlertTitle>
           <AlertDescription>
-            You have full access to all Proveniq Home Pro features until we officially go
+            You have full access to all PROVENIQ Home Pro features until we officially go
             live. Enjoy!
           </AlertDescription>
         </Alert>

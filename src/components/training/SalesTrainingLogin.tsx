@@ -25,7 +25,7 @@ const SalesTrainingLogin: React.FC<SalesTrainingLoginProps> = ({ onLoginSuccess,
     <div className="w-full h-full flex items-center justify-center p-4 animate-fade-in bg-gray-50">
       <div className="max-w-md w-full">
          <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-800 mb-6 transition-colors">
-            <ArrowLeft size={16} /> Back to Proveniq Home
+            <ArrowLeft size={16} /> Back to PROVENIQ Home
         </button>
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 text-center">
             <div className="inline-flex p-4 bg-indigo-100 rounded-full mb-6">

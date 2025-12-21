@@ -17,7 +17,7 @@
                 "data_source": "gcp_api_gateway_config"
             },
             {
-                "title": "Architect 'Proveniq ClaimsIQ' Data Clean Room",
+                "title": "Architect 'PROVENIQ ClaimsIQ' Data Clean Room",
                 "description": "Design a secure, audit-logged environment using BigQuery Omni or similar tech for secure data exchange with insurers, minimizing PII exposure.",
                 "security_level": "L3_TRADE_SECRET",
                 "data_source": "clean_room_arch_doc"
@@ -127,11 +127,11 @@
     {
         "id": "growth_engineer",
         "title": "Growth Engineer",
-        "description": "Drive B2B adoption and ecosystem expansion through 'Proveniq Home for Business' and referral mechanics.",
+        "description": "Drive B2B adoption and ecosystem expansion through 'PROVENIQ Home for Business' and referral mechanics.",
         "tasks": [
             {
                 "title": "Develop B2B Landing Pages",
-                "description": "Build high-conversion landing pages and lead capture forms for the 'Proveniq Home for Business' and 'Proveniq ClaimsIQ' enterprise offerings.",
+                "description": "Build high-conversion landing pages and lead capture forms for the 'PROVENIQ Home for Business' and 'PROVENIQ ClaimsIQ' enterprise offerings.",
                 "security_level": "L1_GENERAL",
                 "data_source": "marketing_analytics"
             },
@@ -217,8 +217,8 @@
                 "data_source": "ios_app_clip_target"
             },
             {
-                "title": "Design Proveniq Home Mobile SDK",
-                "description": "Architect a distributable mobile SDK allowing partners to embed Proveniq Home's scanning and valuation features directly into their own apps.",
+                "title": "Design PROVENIQ Home Mobile SDK",
+                "description": "Architect a distributable mobile SDK allowing partners to embed PROVENIQ Home's scanning and valuation features directly into their own apps.",
                 "security_level": "L2_SENSITIVE",
                 "data_source": "sdk_design_docs"
             }
@@ -231,7 +231,7 @@
         "tasks": [
             {
                 "title": "Secure Carrier Partnership Agreements",
-                "description": "Finalize negotiations and technical requirements for 'Proveniq ClaimsIQ' pilots with top-tier insurance carriers.",
+                "description": "Finalize negotiations and technical requirements for 'PROVENIQ ClaimsIQ' pilots with top-tier insurance carriers.",
                 "security_level": "L3_TRADE_SECRET",
                 "data_source": "crm_enterprise_deals"
             },

@@ -1,5 +1,5 @@
 /**
- * @fileOverview Structured logging abstraction for Proveniq Home.
+ * @fileOverview Structured logging abstraction for PROVENIQ Home.
  * Logs domain events in JSON format for production observability.
  */
 

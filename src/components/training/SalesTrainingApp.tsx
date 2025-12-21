@@ -4,7 +4,7 @@ import { LayoutDashboard, BookOpen, FileText, Award, Menu, Briefcase, ArrowLeft,
 
 // --- STATIC DATA ---
 const MODULES = [
-  { id: 'module-1', title: 'Ecosystem Strategy', description: 'Understand how Proveniq Home, Proveniq ClaimsIQ, and Proveniq Bids work together.', duration: '60 min' },
+  { id: 'module-1', title: 'Ecosystem Strategy', description: 'Understand how PROVENIQ Home, PROVENIQ ClaimsIQ, and PROVENIQ Bids work together.', duration: '60 min' },
   { id: 'module-2', title: 'Product Deep Dives', description: 'Master the value proposition of each product in the ecosystem.', duration: '120 min' },
   { id: 'module-3', title: 'The Pitch', description: 'Learn discovery, practice pitches, and handle branching conversations.', duration: '90 min' },
   { id: 'module-4', title: 'Battle Cards', description: 'Prepare for competitive questions and common sales objections.', duration: '90 min' },
@@ -57,7 +57,7 @@ const SalesTrainingApp: React.FC<SalesTrainingAppProps> = ({ onBack }) => {
                         <div className="mt-6 bg-white p-8 rounded-xl border border-gray-200 text-center">
                             <Award size={48} className="mx-auto text-indigo-500 mb-4" />
                             <h2 className="text-xl font-bold">Ready to certify?</h2>
-                            <p className="text-gray-600 my-4 max-w-md mx-auto">This exam consists of 50 questions covering the entire Proveniq Home ecosystem. You need 80% to pass.</p>
+                            <p className="text-gray-600 my-4 max-w-md mx-auto">This exam consists of 50 questions covering the entire PROVENIQ Home ecosystem. You need 80% to pass.</p>
                             <button className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors">Start Exam</button>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ const SalesTrainingApp: React.FC<SalesTrainingAppProps> = ({ onBack }) => {
                             ))}
                         </nav>
                         <div className="mt-8 border-t border-gray-100 pt-4">
-                             <button onClick={onBack} className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"><ArrowLeft size={16} /> Exit to Proveniq Home</button>
+                             <button onClick={onBack} className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"><ArrowLeft size={16} /> Exit to PROVENIQ Home</button>
                         </div>
                     </div>
                 </div>

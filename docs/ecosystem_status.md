@@ -1,4 +1,4 @@
-# MyARK Ecosystem - Master Task Tracker
+# PROVENIQ Home Ecosystem - Master Task Tracker
 
 **Last Updated:** 2025-12-09
 **Status:** Living Document tracked by Agent.
@@ -21,7 +21,7 @@
   - Perform a comprehensive audit of current controls against SOC 2 Type II TSCs. Implement missing controls such as vendor risk management and incident response drills.
   - *Security:* `L2_SENSITIVE`
 - [ ] **Draft Partner Code of Conduct**
-  - Create legally binding data usage agreements and ethical guidelines for third-party developers integrating with the MyARK platform.
+  - Create legally binding data usage agreements and ethical guidelines for third-party developers integrating with the PROVENIQ Home platform.
   - *Security:* `L1_GENERAL`
 - [ ] **Establish Visual Truth Audit Cadence**
   - Set up a recurring external audit schedule for 'Visual Truth' and valuation algorithms to satisfy insurer due diligence requirements.
@@ -62,7 +62,7 @@
 
 ### Growth Engineer
 - [ ] **Develop B2B Landing Pages**
-  - Build high-conversion landing pages and lead capture forms for the 'MyARK for Business' and 'TrueManifest' enterprise offerings.
+  - Build high-conversion landing pages and lead capture forms for the 'PROVENIQ Home for Business' and 'TrueManifest' enterprise offerings.
   - *Security:* `L1_GENERAL`
 - [ ] **Analyze Partner-Driven Conversion**
   - Implement tracking to measure the conversion rate of end-users invited via partner channels (e.g., insurer invitation emails).
@@ -100,8 +100,8 @@
 - [ ] **Develop Instant App / App Clip**
   - Build lightweight 'App Clip' and 'Instant App' binaries to allow users to scan items without a full application install.
   - *Security:* `L1_GENERAL`
-- [ ] **Design MyARK Mobile SDK**
-  - Architect a distributable mobile SDK allowing partners to embed MyARK's scanning and valuation features directly into their own apps.
+- [ ] **Design PROVENIQ Home Mobile SDK**
+  - Architect a distributable mobile SDK allowing partners to embed PROVENIQ Home's scanning and valuation features directly into their own apps.
   - *Security:* `L2_SENSITIVE`
 
 ### Strategic Partnerships Manager
@@ -109,7 +109,7 @@
   - Finalize negotiations and technical requirements for 'TrueManifest' pilots with top-tier insurance carriers.
   - *Security:* `L3_TRADE_SECRET`
 - [ ] **Launch Developer Marketplace**
-  - Oversee the go-to-market strategy for the MyARK Developer Marketplace, including vetting and onboarding the initial cohort of 3rd party apps.
+  - Oversee the go-to-market strategy for the PROVENIQ Home Developer Marketplace, including vetting and onboarding the initial cohort of 3rd party apps.
   - *Security:* `L2_SENSITIVE`
 - [ ] **Structure Data Monetization Contracts**
   - Draft and finalize contracts for selling anonymized industry insight packages to financial institutions.
@@ -128,7 +128,7 @@
 - [x] Introduce basic monitoring and feedback loops for the most critical workflows.
 - [x] Collaborate with adjacent roles to close obvious gaps before enterprise pilots.
 - [x] Create a short roadmap for Phase 4 requirements related to this role.
-- [x] **MyARK Webhook / Sell on Auction** (Completed via chat)
+- [x] **PROVENIQ Home Webhook / Sell on Auction** (Completed via chat)
 
 ### Compliance Officer
 - [x] Document current architecture, data flows, and risks for this role’s domain.

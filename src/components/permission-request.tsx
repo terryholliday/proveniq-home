@@ -39,7 +39,7 @@ const PermissionRequest: React.FC<PermissionRequestProps> = ({ onComplete }) => 
 
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Enable Your Camera & Microphone</h2>
         <p className="text-gray-500 mb-6">
-          Proveniq Home uses your camera and microphone for features like remote notary services and video confirmation for high-value transactions.
+          PROVENIQ Home uses your camera and microphone for features like remote notary services and video confirmation for high-value transactions.
         </p>
 
         <div className="space-y-4">

@@ -76,7 +76,7 @@ const SalesChannelModal: React.FC<SalesChannelModalProps> = ({ items, onClose, o
                                 <Gavel size={24} />
                             </div>
                             <div>
-                                <h4 className="font-bold text-gray-900">Proveniq Bids</h4>
+                                <h4 className="font-bold text-gray-900">PROVENIQ Bids</h4>
                                 <p className="text-sm text-gray-500">Create a private online auction page to share with buyers.</p>
                             </div>
                         </button>

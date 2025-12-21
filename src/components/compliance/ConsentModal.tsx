@@ -64,7 +64,7 @@ export function ConsentModal() {
                                 This update covers our migration to cloud storage and how we handle your data.
                             </p>
                             <p>
-                                Please review the <Link href="/settings/legaldocs?doc=privacy" className="text-indigo-600 underline" target="_blank">new policy</Link> to continue using Proveniq Home.
+                                Please review the <Link href="/settings/legaldocs?doc=privacy" className="text-indigo-600 underline" target="_blank">new policy</Link> to continue using PROVENIQ Home.
                             </p>
                         </div>
                     </AlertDialogDescription>

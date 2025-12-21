@@ -81,7 +81,7 @@ export function AuctionWizard({ item, onClose, onComplete }: AuctionWizardProps)
         return (
           <div className="space-y-4">
             <h3 className="text-xl font-bold">Confirm item details</h3>
-            <p className="text-sm text-muted-foreground">Listing will use your golden record from Proveniq Home.</p>
+            <p className="text-sm text-muted-foreground">Listing will use your golden record from PROVENIQ Home.</p>
             <div className="rounded-lg border p-4 space-y-2 bg-muted/30">
               <p className="font-semibold">{item.name}</p>
               <p className="text-sm text-muted-foreground">{item.description}</p>

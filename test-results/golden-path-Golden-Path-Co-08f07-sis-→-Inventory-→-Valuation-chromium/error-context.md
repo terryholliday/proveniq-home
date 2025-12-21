@@ -1,0 +1,243 @@
+# Page snapshot
+
+```yaml
+- generic [active]:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - img
+              - generic: PROVENIQ Home
+          - generic:
+            - list:
+              - listitem:
+                - link:
+                  - /url: /dashboard
+                  - generic:
+                    - img
+                    - generic: Dashboard
+              - generic:
+                - generic: Inventory
+                - listitem:
+                  - link:
+                    - /url: /inventory
+                    - generic:
+                      - img
+                      - generic: PROVENIQ Home
+                - listitem:
+                  - link:
+                    - /url: /lending
+                    - generic:
+                      - img
+                      - generic: Lent Items
+              - generic:
+                - generic: Services
+                - listitem:
+                  - button:
+                    - generic:
+                      - img
+                      - generic: PROVENIQ Core
+                - listitem:
+                  - link:
+                    - /url: /move-planner
+                    - generic:
+                      - img
+                      - generic: Move Planner
+                - listitem:
+                  - button:
+                    - generic:
+                      - img
+                      - generic: PROVENIQ Bids
+                - listitem:
+                  - button:
+                    - generic:
+                      - img
+                      - generic: Insurance
+                - listitem:
+                  - link:
+                    - /url: /legacy-planner
+                    - generic:
+                      - img
+                      - generic: Legacy Planner
+              - generic:
+                - generic: Support
+                - listitem:
+                  - link:
+                    - /url: /user-guide
+                    - generic:
+                      - img
+                      - generic: User Guide
+              - generic:
+                - generic: System
+                - listitem:
+                  - link:
+                    - /url: /settings
+                    - generic:
+                      - img
+                      - generic: Settings
+          - generic:
+            - generic:
+              - link:
+                - /url: /admin
+                - img
+                - generic: Admin
+    - main:
+      - generic:
+        - generic:
+          - img
+          - searchbox
+        - button:
+          - img
+          - generic: Toggle notifications
+        - button:
+          - generic:
+            - generic: T
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+                    - generic: PROVENIQ Home
+                - generic:
+                  - list:
+                    - listitem:
+                      - link:
+                        - /url: /dashboard
+                        - generic:
+                          - img
+                          - generic: Dashboard
+                    - generic:
+                      - generic: Inventory
+                      - listitem:
+                        - link:
+                          - /url: /inventory
+                          - generic:
+                            - img
+                            - generic: PROVENIQ Home
+                      - listitem:
+                        - link:
+                          - /url: /lending
+                          - generic:
+                            - img
+                            - generic: Lent Items
+                    - generic:
+                      - generic: Services
+                      - listitem:
+                        - button:
+                          - generic:
+                            - img
+                            - generic: PROVENIQ Core
+                      - listitem:
+                        - link:
+                          - /url: /move-planner
+                          - generic:
+                            - img
+                            - generic: Move Planner
+                      - listitem:
+                        - button:
+                          - generic:
+                            - img
+                            - generic: PROVENIQ Bids
+                      - listitem:
+                        - button:
+                          - generic:
+                            - img
+                            - generic: Insurance
+                      - listitem:
+                        - link:
+                          - /url: /legacy-planner
+                          - generic:
+                            - img
+                            - generic: Legacy Planner
+                    - generic:
+                      - generic: Support
+                      - listitem:
+                        - link:
+                          - /url: /user-guide
+                          - generic:
+                            - img
+                            - generic: User Guide
+                    - generic:
+                      - generic: System
+                      - listitem:
+                        - link:
+                          - /url: /settings
+                          - generic:
+                            - img
+                            - generic: Settings
+                - generic:
+                  - generic:
+                    - link:
+                      - /url: /admin
+                      - img
+                      - generic: Admin
+          - main:
+            - generic:
+              - generic:
+                - img
+                - searchbox
+              - button:
+                - img
+                - generic: Toggle notifications
+              - button:
+                - generic:
+                  - generic: T
+            - main:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading [level=1]: Add New Item
+                    - link:
+                      - /url: /inventory
+                      - button:
+                        - generic: ×
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: Processing 1 of 1 items
+                          - generic: 0%
+                        - progressbar
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: test-item.jpg
+                            - generic: Uploading...
+                    - generic:
+                      - generic: OR
+                    - generic:
+                      - button:
+                        - img
+                        - generic: Use Camera
+                      - button:
+                        - img
+                        - generic: Scan QR Code
+  - list
+  - status [ref=e1]:
+    - generic [ref=e2]:
+      - img [ref=e4]
+      - generic [ref=e6]:
+        - text: Static route
+        - button [ref=e7] [cursor=pointer]:
+          - img [ref=e8]
+  - alert
+  - alertdialog "Update to Privacy Policy" [ref=e12]:
+    - generic [ref=e13]:
+      - heading "Update to Privacy Policy" [level=2] [ref=e14]
+      - generic [ref=e15]:
+        - paragraph [ref=e16]:
+          - text: We have updated our Privacy Policy to version
+          - strong [ref=e17]: 2.0-cloud-migration
+          - text: . This update covers our migration to cloud storage and how we handle your data.
+        - paragraph [ref=e18]:
+          - text: Please review the
+          - link "new policy" [ref=e19] [cursor=pointer]:
+            - /url: /settings/legaldocs?doc=privacy
+          - text: to continue using PROVENIQ Home.
+    - button "I Accept" [ref=e21] [cursor=pointer]
+```

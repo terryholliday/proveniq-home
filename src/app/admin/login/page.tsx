@@ -6,7 +6,7 @@ import { LockKeyhole } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-const ADMIN_PASSWORD = 'Proveniq Home-123$abc';
+const ADMIN_PASSWORD = 'PROVENIQ Home-123$abc';
 const ADMIN_AUTH_KEY = 'admin-authenticated';
 
 export default function AdminLoginPage() {

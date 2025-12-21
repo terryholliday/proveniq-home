@@ -1,5 +1,5 @@
 /**
- * Proveniq Home Analytics Schema
+ * PROVENIQ Home Analytics Schema
  * Defines the contract for all telemetry and tracking within the application.
  */
 

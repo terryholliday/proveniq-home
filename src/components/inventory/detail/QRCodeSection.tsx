@@ -43,7 +43,7 @@ export function QRCodeSection({ item }: QRCodeSectionProps) {
                 <div className="flex-1">
                     <h4 className="font-bold">Item Identification</h4>
                     <p className="text-sm text-muted-foreground">
-                        Print this QR code and attach it to your item. Scanning it with the Proveniq Home app will bring you directly to this page.
+                        Print this QR code and attach it to your item. Scanning it with the PROVENIQ Home app will bring you directly to this page.
                     </p>
                     <div className="mt-4 flex gap-2">
                         <Button onClick={downloadQR}>Download PNG</Button>

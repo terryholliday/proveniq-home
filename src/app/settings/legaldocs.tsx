@@ -92,7 +92,7 @@ export const EULA: React.FC<LegalProps> = ({ onBack }) => (
          I will keep the hardcoded EULA content but maybe wrapped in a component?
          Actually, I'll just paste the original EULA content here.
      */}
-    <p>This End User License Agreement (&quot;Agreement&quot;) is between you and Proveniq Home App and governs use of this app made available through the web or app stores.</p>
+    <p>This End User License Agreement (&quot;Agreement&quot;) is between you and PROVENIQ Home App and governs use of this app made available through the web or app stores.</p>
 
     <h3>1. License Grant</h3>
     <p>Proveniq grants you a limited, non-exclusive, non-transferable, revocable license to use the App for your personal, non-commercial purposes in accordance with this Agreement.</p>
@@ -116,19 +116,19 @@ export const EULA: React.FC<LegalProps> = ({ onBack }) => (
 export const AIDisclosure: React.FC<LegalProps> = ({ onBack }) => (
   <LegalLayout title="AI Services Disclosure & User Consent" icon={<Bot size={32} />} onBack={onBack}>
     {/* Keeping hardcoded for now as it's not in seed */}
-    <p><strong>Proveniq Home AI Services Disclosure &amp; User Consent Addendum</strong></p>
+    <p><strong>PROVENIQ Home AI Services Disclosure &amp; User Consent Addendum</strong></p>
 
     <h3>1. Purpose of This Addendum</h3>
-    <p>This AI Services Disclosure &amp; User Consent Addendum (&quot;Addendum&quot;) supplements the Proveniq Home Terms of Service and Privacy Policy. It governs the use of artificial intelligence features within the Proveniq Home Service.</p>
+    <p>This AI Services Disclosure &amp; User Consent Addendum (&quot;Addendum&quot;) supplements the PROVENIQ Home Terms of Service and Privacy Policy. It governs the use of artificial intelligence features within the PROVENIQ Home Service.</p>
 
-    <h3>2. Use of AI in Proveniq Home</h3>
-    <p>Proveniq Home utilizes third-party Large Language Models (LLMs) and generative AI providers (collectively, &quot;AI Providers&quot;) to assist with image analysis, metadata extraction, item descriptions, indicative valuations, and categorization. A current list of AI sub-processors is available upon request.</p>
+    <h3>2. Use of AI in PROVENIQ Home</h3>
+    <p>PROVENIQ Home utilizes third-party Large Language Models (LLMs) and generative AI providers (collectively, &quot;AI Providers&quot;) to assist with image analysis, metadata extraction, item descriptions, indicative valuations, and categorization. A current list of AI sub-processors is available upon request.</p>
 
     <h3>3. Data Transmission to AI Providers</h3>
     <p>To facilitate these features, the following data may be transmitted to AI Providers: item photographs, text descriptions, and metadata (brand, model, serial numbers).</p>
 
     <h3>4. No Training Use Unless Explicitly Consented</h3>
-    <p>Proveniq Home does not authorize AI Providers to use your data for training their foundational models unless you explicitly opt-in or as otherwise permitted by applicable law.</p>
+    <p>PROVENIQ Home does not authorize AI Providers to use your data for training their foundational models unless you explicitly opt-in or as otherwise permitted by applicable law.</p>
 
     <h3>5. AI OUTPUT LIMITATIONS &amp; DISCLAIMER OF WARRANTIES</h3>
     <p><strong>THE AI SERVICES ARE PROVIDED &quot;AS IS&quot; AND WITH ALL FAULTS. TO THE MAXIMUM EXTENT PERMITTED BY LAW, PROVENIQ DISCLAIMS ALL WARRANTIES REGARDING THE ACCURACY, COMPLETENESS, OR RELIABILITY OF AI OUTPUTS.</strong> We do not claim any guaranteed accuracy percentages; AI outputs may be incomplete, outdated, or incorrect.</p>
@@ -139,10 +139,10 @@ export const AIDisclosure: React.FC<LegalProps> = ({ onBack }) => (
     </ul>
 
     <h3>6. Ownership of Outputs &amp; Indemnification</h3>
-    <p>As between you and Proveniq Home, you are deemed the owner of the AI-generated descriptions and content (&quot;Outputs&quot;) created through your account. You are solely responsible for ensuring Outputs do not infringe third-party intellectual property rights. <strong>You agree to indemnify and hold Proveniq Home harmless against any claims alleging that your use of AI Outputs infringes upon third-party rights or violates applicable laws.</strong></p>
+    <p>As between you and PROVENIQ Home, you are deemed the owner of the AI-generated descriptions and content (&quot;Outputs&quot;) created through your account. You are solely responsible for ensuring Outputs do not infringe third-party intellectual property rights. <strong>You agree to indemnify and hold PROVENIQ Home harmless against any claims alleging that your use of AI Outputs infringes upon third-party rights or violates applicable laws.</strong></p>
 
     <h3>7. Consent</h3>
-    <p>By using AI features in Proveniq Home, you affirmatively consent to the processing of your data by third-party AI Providers as outlined in this Addendum.</p>
+    <p>By using AI features in PROVENIQ Home, you affirmatively consent to the processing of your data by third-party AI Providers as outlined in this Addendum.</p>
   </LegalLayout>
 );
 

@@ -11,7 +11,7 @@ export const ProveniqLogo: React.FC<ProveniqLogoProps> = ({ size = 64, className
   return (
     <Image
       src="/ProveniqLogo.png"
-      alt="Proveniq Home Logo"
+      alt="PROVENIQ Home Logo"
       width={size}
       height={size}
       className={className}

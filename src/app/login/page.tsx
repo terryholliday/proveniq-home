@@ -139,14 +139,13 @@ export default function LoginPage() {
         setError("");
 
         try {
-            // Bug 3 fix: Use controlled state variables directly
             await initiateEmailSignIn(auth, email, password);
-            // initiateEmailSignIn handles its own navigation/success usually or throws
+            // Redirect to dashboard on successful login
+            router.push('/dashboard');
         } catch (e: unknown) {
             console.error(e);
             const message = e instanceof Error ? e.message : "Login failed.";
             setError(message);
-        } finally {
             setIsLoading(false);
         }
     }

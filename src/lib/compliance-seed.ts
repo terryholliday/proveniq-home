@@ -15,10 +15,10 @@ export const SEED_LEGAL_DOCS: Partial<LegalDocument>[] = [
 **Effective Date:** ${new Date().toISOString().split('T')[0]}
 
 ## 1. Introduction
-Proveniq Home ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you use our mobile application and website (collectively, the "Service").
+PROVENIQ Home ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you use our mobile application and website (collectively, the "Service").
 
 ## 2. Data Collection & Cloud Storage
-**Important Update:** As of v2.0, Proveniq Home utilizes Google Cloud Firestore for secure data storage. Your inventory data, including images and descriptions, is synchronized to the cloud to enable cross-device access and disaster recovery.
+**Important Update:** As of v2.0, PROVENIQ Home utilizes Google Cloud Firestore for secure data storage. Your inventory data, including images and descriptions, is synchronized to the cloud to enable cross-device access and disaster recovery.
 
 ## 3. Information We Collect
 - **Personal Data:** Name, email address, and profile information.
@@ -50,19 +50,19 @@ You have the right to access, correct, or delete your personal data. You can req
 **Last Updated:** ${new Date().toISOString().split('T')[0]}
 
 ## 1. Acceptance of Terms
-By accessing or using Proveniq Home, you agree to be bound by these Terms.
+By accessing or using PROVENIQ Home, you agree to be bound by these Terms.
 
 ## 2. User Accounts
 You are responsible for safeguarding your account credentials.
 
 ## 3. Cloud Services
-You acknowledge that Proveniq Home uses cloud-based services for data storage and processing.
+You acknowledge that PROVENIQ Home uses cloud-based services for data storage and processing.
 
 ## 4. AI Disclaimers
 AI-generated content is for informational purposes only and should be verified.
 
 ## 5. Limitation of Liability
-Proveniq Home is provided "as is" without warranties of any kind.
+PROVENIQ Home is provided "as is" without warranties of any kind.
     `,
         lastUpdated: Timestamp.now(),
         updatedBy: 'system',

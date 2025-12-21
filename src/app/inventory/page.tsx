@@ -8,7 +8,7 @@ export default function InventoryPage() {
     return (
         <>
             <PageHeader
-                title="My ARK"
+                title="My Inventory"
                 description="Browse and manage all items in your inventory."
                 action={
                     <Link href="/inventory/add" passHref>

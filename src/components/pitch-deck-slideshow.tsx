@@ -26,7 +26,7 @@ const slides: Slide[] = [
   {
     id: 'cover',
     layout: 'cover',
-    title: "Proveniq Home",
+    title: "PROVENIQ Home",
     subtitle: "The Operating System for Personal Assets",
     content: "Zero-friction inventory, real-time valuation, and automated legacy planning driven by Generative AI.",
     color: "bg-indigo-600"
@@ -85,7 +85,7 @@ const slides: Slide[] = [
     bullets: [
       "Gemini 2.5 AI Vision: Identify make, model, and condition from a single photo.",
       "Real-Time Valuation: Auto-estimation of market value and depreciation.",
-      "Proveniq ClaimsIQ™: Evidence-grade data structure ready for insurance claims.",
+      "PROVENIQ ClaimsIQ™: Evidence-grade data structure ready for insurance claims.",
       "We turn a weekend chore into a 10-minute game."
     ]
   },
@@ -118,8 +118,8 @@ const slides: Slide[] = [
     title: "Business Model",
     bullets: [
       "B2C Subscription: Freemium model. Pro tier ($19.99/mo) unlocks AI valuation, legacy videos, and cloud backups.",
-      "B2B API (Proveniq ClaimsIQ): Licensing data verification tools to Insurance Carriers and Warranty Providers.",
-      "Transaction Fees: 15% fee on items sold via 'Proveniq Bids' marketplace."
+      "B2B API (PROVENIQ ClaimsIQ): Licensing data verification tools to Insurance Carriers and Warranty Providers.",
+      "Transaction Fees: 15% fee on items sold via 'PROVENIQ Bids' marketplace."
     ]
   },
   {

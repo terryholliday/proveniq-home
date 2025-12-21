@@ -20,7 +20,7 @@ export default function TrainingPage() {
     <>
       <PageHeader
         title="Platform Training"
-        description="Internal resources for the Proveniq Home sales and support teams."
+        description="Internal resources for the PROVENIQ Home sales and support teams."
       />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {trainingModules.map((module) => (
