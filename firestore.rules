@@ -44,10 +44,10 @@ service cloud.firestore {
     }
 
     // Inventory Items (Multi-Tenant):
-    // - Users can only access items in their tenant.
+    // - Users can read their own items OR items in their tenant.
     // - Must validate tenantId on write.
     match /items/{itemId} {
-      allow read: if isSignedIn() && (isSameTenant(resource.data.tenantId) || isSystemOrAdmin());
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isSameTenant(resource.data.tenantId) || isSystemOrAdmin());
       allow create: if isSignedIn() && 
                        request.resource.data.tenantId == getTenantId() &&
                        request.resource.data.userId == request.auth.uid;
