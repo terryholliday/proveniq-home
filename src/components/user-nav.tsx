@@ -21,6 +21,28 @@ export function UserNav() {
   const auth = useAuth();
   const router = useRouter();
 
+  const showDevTools = process.env.NODE_ENV !== 'production';
+
+  const handleCopyUid = async () => {
+    if (!user?.uid) return;
+    try {
+      await navigator.clipboard.writeText(user.uid);
+    } catch {
+      window.prompt('Firebase UID', user.uid);
+    }
+  };
+
+  const handleCopyIdToken = async () => {
+    const maybeUser = user as unknown as { getIdToken?: () => Promise<string>; uid?: string } | null;
+    if (!maybeUser?.getIdToken) return;
+    const token = await maybeUser.getIdToken();
+    try {
+      await navigator.clipboard.writeText(token);
+    } catch {
+      window.prompt('Firebase ID Token', token);
+    }
+  };
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -56,6 +78,18 @@ export function UserNav() {
             <UserIcon />
             Profile
           </DropdownMenuItem>
+          {showDevTools ? (
+            <DropdownMenuItem onClick={handleCopyUid}>
+              <UserIcon />
+              Copy UID
+            </DropdownMenuItem>
+          ) : null}
+          {showDevTools ? (
+            <DropdownMenuItem onClick={handleCopyIdToken}>
+              <UserIcon />
+              Copy ID Token
+            </DropdownMenuItem>
+          ) : null}
           <DropdownMenuItem>
             <CreditCard />
             Billing
