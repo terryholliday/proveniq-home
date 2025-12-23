@@ -10,11 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth, useUser } from "@/firebase";
 import {
   createUserWithEmailAndPassword,
-  getRedirectResult,
   GoogleAuthProvider,
   FacebookAuthProvider,
   OAuthProvider as AppleAuthProvider,
-  signInWithRedirect,
+  signInWithPopup,
 } from "firebase/auth";
 import { useUserProfile } from "@/hooks/use-user-profile";
 import { Loader2 } from "lucide-react";
@@ -77,22 +76,8 @@ export default function SignupPage() {
     window.location.reload();
   };
 
-  useEffect(() => {
-    if (auth) {
-      getRedirectResult(auth)
-        .then(async (result) => {
-          if (!result) return;
-          setIsLoading(true);
-          await createUserProfile(result.user);
-          router.push("/onboarding/permissions");
-        })
-        .catch((err) => {
-          const message = err instanceof Error ? err.message : "Social login failed.";
-          setError(message);
-          setIsLoading(false);
-        });
-    }
-  }, [auth, createUserProfile, router]);
+  // Redirect to dashboard if already logged in
+  // (removed getRedirectResult - now using signInWithPopup)
 
   useEffect(() => {
     if (!isUserLoading && user) {
@@ -115,10 +100,18 @@ export default function SignupPage() {
     setError("");
 
     try {
-      await signInWithRedirect(auth, provider);
-    } catch (err) {
+      const result = await signInWithPopup(auth, provider);
+      console.log('[Signup] Popup auth success:', result.user.email);
+      await createUserProfile(result.user);
+      router.push("/onboarding/permissions");
+    } catch (err: unknown) {
+      console.error('[Signup] Popup auth error:', err);
+      const firebaseError = err as { code?: string; message?: string };
       const message = err instanceof Error ? err.message : "Social login failed.";
       setError(message);
+      if (firebaseError?.code === 'auth/unauthorized-domain' || message.includes('unauthorized-domain')) {
+        setShowDemoOption(true);
+      }
       setIsLoading(false);
     }
   };

@@ -109,11 +109,12 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     console.log('FirebaseProvider: Setting up auth listener');
     setUserAuthState({ user: null, isUserLoading: true, userError: null }); // Reset on auth instance change
 
-    // Safety timeout - if auth doesn't resolve in 3 seconds, stop loading
+    // Safety timeout - if auth doesn't resolve in 10 seconds, stop loading
+    // Increased from 3s to handle slow OAuth redirects
     const timeoutId = setTimeout(() => {
-      console.warn("FirebaseProvider: Auth state check timed out after 3 seconds");
+      console.warn("FirebaseProvider: Auth state check timed out after 10 seconds");
       setUserAuthState(prev => prev.isUserLoading ? { ...prev, isUserLoading: false } : prev);
-    }, 3000);
+    }, 10000);
 
     const unsubscribe = onAuthStateChanged(
       auth,

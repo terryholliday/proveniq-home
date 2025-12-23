@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Alert,
@@ -9,7 +9,10 @@ import {
   AlertTitle,
 } from '@/components/ui/alert';
 import { Card } from '@/components/ui/card';
-import { mockInventory } from '@/lib/data';
+import { collection } from 'firebase/firestore';
+import { useFirestore, useUser } from '@/firebase';
+import { useCollection } from '@/firebase/firestore/use-collection';
+import { InventoryItem } from '@/lib/types';
 import {
   Camera,
   Folder,
@@ -24,7 +27,6 @@ import Link from 'next/link';
 import { StatCard } from '@/components/dashboard/stat-card';
 import { ItemCard } from '@/components/inventory/item-card';
 import OnboardingTour from '@/components/onboarding/OnboardingTour';
-import { useUser } from '@/firebase';
 
 const DashboardActionCard = ({
   icon,
@@ -52,7 +54,22 @@ const DashboardActionCard = ({
 export default function DashboardPage() {
   const router = useRouter();
   const { user, isUserLoading } = useUser();
+  const firestore = useFirestore();
   const [showTour, setShowTour] = useState(false);
+
+  // Fetch items from Firestore (fetch all, filter client-side for now)
+  const itemsQuery = useMemo(() => {
+    if (!firestore || !user) return null;
+    return collection(firestore, 'items');
+  }, [firestore, user]);
+
+  const { data: itemsData, isLoading: itemsLoading } = useCollection<InventoryItem>(itemsQuery);
+  const items = itemsData ?? [];
+
+  // Filter to user's items client-side
+  const userItems = useMemo(() => {
+    return items.filter(item => item.userId === user?.uid || !item.userId);
+  }, [items, user]);
 
   // Auth guard: Redirect unauthenticated users to login
   useEffect(() => {
@@ -76,8 +93,8 @@ export default function DashboardPage() {
     setShowTour(false);
   };
 
-  // Show loading state during auth check
-  if (isUserLoading) {
+  // Show loading state during auth check or items loading
+  if (isUserLoading || itemsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -90,14 +107,14 @@ export default function DashboardPage() {
     return null;
   }
 
-  const totalValue = mockInventory.reduce(
-    (sum, item) => sum + (item.marketValue || 0) * item.quantity,
+  const totalValue = userItems.reduce(
+    (sum, item) => sum + (item.marketValue || item.currentValue || 0) * (item.quantity || 1),
     0
   );
-  const totalItems = mockInventory.reduce((sum, item) => sum + item.quantity, 0);
-  const itemsOnLoan = mockInventory.filter((item) => !!item.lent).length;
-  const totalLocations = new Set(mockInventory.map(item => item.location)).size;
-  const recentlyAdded = [...mockInventory].sort((a, b) => new Date(b.addedDate || Date.now()).getTime() - new Date(a.addedDate || Date.now()).getTime()).slice(0, 3);
+  const totalItems = userItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const itemsOnLoan = userItems.filter((item) => !!item.lent || item.isLent).length;
+  const totalLocations = new Set(userItems.map(item => item.location).filter(Boolean)).size;
+  const recentlyAdded = userItems.slice(0, 3);
 
 
   const actions = [
