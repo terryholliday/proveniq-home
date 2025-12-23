@@ -1,14 +1,19 @@
 /**
  * LEDGER Integration Service for HOME App
  * 
- * Implements INTER_APP_CONTRACT.md compliance:
- * - Publishes events to LEDGER via API
- * - Subscribes to ledger.event.appended
- * - Enforces custody state transitions
- * - Uses walletId (Zero PII)
+ * CANONICAL SCHEMA v1.0.0
+ * - Uses DOMAIN_NOUN_VERB_PAST event naming
+ * - Publishes to /api/v1/events/canonical endpoint
+ * - Includes idempotency_key for duplicate prevention
+ * - Uses asset_id (PAID) instead of itemId
  */
 
-const LEDGER_API_BASE = process.env.NEXT_PUBLIC_LEDGER_API_URL || 'http://localhost:8006/api/v1';
+import { createHash, randomUUID } from 'crypto';
+
+const LEDGER_API_BASE = process.env.NEXT_PUBLIC_LEDGER_API_URL || 'http://localhost:8006';
+const SCHEMA_VERSION = '1.0.0';
+const PRODUCER = 'home';
+const PRODUCER_VERSION = '1.0.0';
 
 // =============================================================================
 // TYPES
@@ -53,18 +58,20 @@ export interface ApiResponse<T> {
 }
 
 // =============================================================================
-// EVENT TYPES (per INTER_APP_CONTRACT)
+// CANONICAL EVENT TYPES (DOMAIN_NOUN_VERB_PAST)
 // =============================================================================
 
 export const HOME_EVENT_TYPES = {
-  ITEM_REGISTERED: 'home.item.registered',
-  ITEM_UPDATED: 'home.item.updated',
-  ITEM_PHOTO_ADDED: 'home.item.photo_added',
-  ITEM_DOCUMENT_ADDED: 'home.item.document_added',
-  ITEM_VALUATION_UPDATED: 'home.item.valuation_updated',
-  CUSTODY_CHANGED: 'home.custody.changed',
-  CLAIM_INITIATED: 'home.claim.initiated',
+  ASSET_REGISTERED: 'HOME_ASSET_REGISTERED',
+  ASSET_UPDATED: 'HOME_ASSET_UPDATED',
+  PHOTO_ADDED: 'HOME_PHOTO_ADDED',
+  DOCUMENT_ATTACHED: 'HOME_DOCUMENT_ATTACHED',
+  VALUATION_UPDATED: 'HOME_VALUATION_UPDATED',
+  CUSTODY_CHANGED: 'HOME_CUSTODY_CHANGED',
+  CLAIM_INITIATED: 'HOME_CLAIM_INITIATED',
 } as const;
+
+type HomeEventType = typeof HOME_EVENT_TYPES[keyof typeof HOME_EVENT_TYPES];
 
 // =============================================================================
 // API METHODS
@@ -84,12 +91,12 @@ export async function registerItem(params: {
   return appendEvent({
     itemId: params.itemId,
     walletId: params.walletId,
-    eventType: HOME_EVENT_TYPES.ITEM_REGISTERED,
+    eventType: HOME_EVENT_TYPES.ASSET_REGISTERED,
     payload: {
-      itemType: params.itemType,
+      item_type: params.itemType,
       description: params.description,
-      initialValuation: params.initialValuation,
-      registeredAt: new Date().toISOString(),
+      initial_valuation_cents: params.initialValuation,
+      registered_at: new Date().toISOString(),
     },
     idempotencyKey: params.idempotencyKey,
   });
@@ -132,7 +139,7 @@ export async function addItemPhoto(params: {
   return appendEvent({
     itemId: params.itemId,
     walletId: params.walletId,
-    eventType: HOME_EVENT_TYPES.ITEM_PHOTO_ADDED,
+    eventType: HOME_EVENT_TYPES.PHOTO_ADDED,
     payload: {
       photoHash: params.photoHash,
       photoUrl: params.photoUrl,
@@ -155,7 +162,7 @@ export async function updateValuation(params: {
   return appendEvent({
     itemId: params.itemId,
     walletId: params.walletId,
-    eventType: HOME_EVENT_TYPES.ITEM_VALUATION_UPDATED,
+    eventType: HOME_EVENT_TYPES.VALUATION_UPDATED,
     payload: {
       newValuation: params.newValuation,
       valuationSource: params.valuationSource,
@@ -189,11 +196,16 @@ export async function initiateClaim(params: {
 }
 
 // =============================================================================
-// CORE API METHODS
+// CORE API METHODS (CANONICAL v1.0.0)
 // =============================================================================
 
+function hashPayload(payload: Record<string, unknown>): string {
+  const json = JSON.stringify(payload, Object.keys(payload).sort());
+  return createHash('sha256').update(json).digest('hex');
+}
+
 /**
- * Append an event to the ledger
+ * Append a canonical event to the ledger
  */
 async function appendEvent(params: {
   itemId: string;
@@ -204,27 +216,68 @@ async function appendEvent(params: {
   idempotencyKey?: string;
 }): Promise<ApiResponse<{ event: LedgerEvent }>> {
   try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+    const correlationId = randomUUID();
+    const idempotencyKey = params.idempotencyKey || `home_${randomUUID()}`;
+    const occurredAt = new Date().toISOString();
+    const canonicalHashHex = hashPayload(params.payload);
+
+    // Build canonical envelope
+    const canonicalEvent = {
+      schema_version: SCHEMA_VERSION,
+      event_type: params.eventType,
+      occurred_at: occurredAt,
+      committed_at: occurredAt, // Will be overwritten by Ledger
+      correlation_id: correlationId,
+      idempotency_key: idempotencyKey,
+      producer: PRODUCER,
+      producer_version: PRODUCER_VERSION,
+      subject: {
+        asset_id: params.itemId, // itemId is the PAID
+      },
+      payload: {
+        ...params.payload,
+        wallet_id: params.walletId,
+        custody_state: params.custodyState,
+      },
+      canonical_hash_hex: canonicalHashHex,
     };
 
-    if (params.idempotencyKey) {
-      headers['X-Idempotency-Key'] = params.idempotencyKey;
-    }
-
-    const response = await fetch(`${LEDGER_API_BASE}/events`, {
+    const response = await fetch(`${LEDGER_API_BASE}/api/v1/events/canonical`, {
       method: 'POST',
-      headers,
-      body: JSON.stringify({
-        itemId: params.itemId,
-        walletId: params.walletId,
-        eventType: params.eventType,
-        payload: params.payload,
-        custodyState: params.custodyState,
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(canonicalEvent),
     });
 
-    return await response.json();
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: {
+          code: errorData.error || 'LEDGER_ERROR',
+          message: errorData.message || `HTTP ${response.status}`,
+          details: errorData.details,
+        },
+      };
+    }
+
+    const data = await response.json();
+    return {
+      success: true,
+      data: {
+        event: {
+          eventId: data.event_id,
+          itemId: params.itemId,
+          walletId: params.walletId,
+          eventType: params.eventType,
+          payload: params.payload,
+          payloadHash: canonicalHashHex,
+          previousHash: '',
+          hash: data.entry_hash,
+          timestamp: data.committed_at,
+          sequence: data.sequence_number,
+        },
+      },
+    };
   } catch (error) {
     console.error('[LEDGER] Failed to append event:', error);
     return {
