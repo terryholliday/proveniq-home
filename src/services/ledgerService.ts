@@ -8,7 +8,7 @@
  * - Uses walletId (Zero PII)
  */
 
-const LEDGER_API_BASE = process.env.NEXT_PUBLIC_LEDGER_API_URL || 'http://localhost:3002/v1/ledger';
+const LEDGER_API_BASE = process.env.NEXT_PUBLIC_LEDGER_API_URL || 'http://localhost:8006/api/v1';
 
 // =============================================================================
 // TYPES
@@ -316,9 +316,9 @@ export async function getWalletHistory(
  */
 export async function checkHealth(): Promise<boolean> {
   try {
-    const response = await fetch('http://localhost:3002/health');
+    const response = await fetch('http://localhost:8006/health');
     const data = await response.json();
-    return data.status === 'healthy';
+    return data.status === 'ok' || data.status === 'healthy';
   } catch {
     return false;
   }
