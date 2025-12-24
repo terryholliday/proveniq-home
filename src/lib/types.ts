@@ -23,6 +23,27 @@ export type LegacyContact = {
   designatedDate: string;
 };
 
+// --- OCCUPANCY MODE ---
+export type OccupancyMode = 'owner' | 'renter';
+
+// --- PROPERTIES INTEGRATION ---
+export type PropertiesLinkStatus = 'none' | 'pending' | 'linked' | 'revoked';
+
+export type PropertiesLink = {
+  status: PropertiesLinkStatus;
+  linkedAt?: Timestamp;
+  revokedAt?: Timestamp;
+  propertyId?: string;      // Properties app property ID
+  unitId?: string;          // Properties app unit ID
+  leaseId?: string;         // Properties app lease ID
+  landlordOrgId?: string;   // Properties app organization ID
+  scopes: {
+    moveInPhotos: boolean;  // Share move-in condition photos
+    moveOutPhotos: boolean; // Share move-out condition photos
+    damageReports: boolean; // Share pre-existing damage documentation
+  };
+};
+
 export type UserProfile = {
   id: string;
   uid: string;
@@ -41,6 +62,10 @@ export type UserProfile = {
     cloudStorage?: ConsentRecord;
     marketing?: boolean;
   };
+  // --- OCCUPANCY MODE ---
+  occupancyMode?: OccupancyMode; // 'owner' (default) or 'renter'
+  // --- PROPERTIES INTEGRATION ---
+  propertiesLink?: PropertiesLink;
   // New fields made optional for compatibility with existing mocks - REMOVED DUPLICATES
   // Existing fields to preserve compatibility
   profilePicture?: string;
@@ -197,6 +222,10 @@ export interface ProvenanceEvent {
   verified: boolean;
 }
 
+// --- ITEM OWNERSHIP (for renter mode) ---
+export type ItemOwnershipType = 'personal' | 'landlord_fixture';
+export type ItemSource = 'user_added' | 'ai_detected' | 'properties_sync';
+
 export type InventoryItem = {
   id: string;
   userId: string;
@@ -225,6 +254,11 @@ export type InventoryItem = {
   legacyNotes?: string;
   // [COMPLIANCE] Data tagging for estate export
   rufadaa_class?: RufadaaClass;
+  // --- OWNERSHIP (Renter Mode) ---
+  ownershipType?: ItemOwnershipType;    // 'personal' (default) or 'landlord_fixture'
+  itemSource?: ItemSource;              // How item was added
+  propertiesAssetId?: string;           // Link to Properties app asset (for landlord fixtures)
+  isEditable?: boolean;                 // False if synced from Properties
   // Existing fields to preserve compatibility
   images?: string[];
   currentValue?: number;

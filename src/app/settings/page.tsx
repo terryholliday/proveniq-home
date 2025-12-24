@@ -5,10 +5,15 @@ import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Download, Upload, Trash2, LogOut, Link as LinkIcon, Cloud, AlertTriangle, Mail, Facebook, Store, ShoppingBag, BookText } from "lucide-react";
+import { Download, Upload, Trash2, LogOut, Link as LinkIcon, Cloud, AlertTriangle, Mail, Facebook, Store, ShoppingBag, BookText, Home, Building2 } from "lucide-react";
 import Link from "next/link";
 import { TermsOfService, PrivacyPolicy, EULA, AIDisclosure } from './legaldocs';
 import { useSearchParams } from 'next/navigation';
+import { useUser } from '@/firebase';
+import { useUserProfile } from '@/hooks/use-user-profile';
+import { OccupancyMode } from '@/lib/types';
+import { useToast } from '@/hooks/use-toast';
+import { PropertiesLinkSettings } from '@/components/settings/properties-link-settings';
 
 const SectionHeader = ({ icon, title }: { icon: React.ElementType, title: string }) => {
     const Icon = icon;
@@ -44,8 +49,34 @@ function SettingsContent() {
     const [legalView, setLegalView] = useState<'tos' | 'privacy' | 'eula' | 'ai' | null>(
         (docParam === 'tos' || docParam === 'privacy' || docParam === 'eula' || docParam === 'ai') ? docParam : null
     );
+    const { user } = useUser();
+    const { userProfile, updateUserProfile } = useUserProfile(user);
+    const { toast } = useToast();
+    const [isUpdatingOccupancy, setIsUpdatingOccupancy] = useState(false);
 
     const handleBack = () => setLegalView(null);
+
+    const handleOccupancyChange = async (mode: OccupancyMode) => {
+        if (!updateUserProfile || mode === userProfile?.occupancyMode) return;
+        setIsUpdatingOccupancy(true);
+        try {
+            await updateUserProfile({ occupancyMode: mode });
+            toast({
+                title: 'Occupancy Mode Updated',
+                description: mode === 'owner' 
+                    ? 'All items will be tracked as personal property.'
+                    : 'You can now distinguish between your belongings and landlord fixtures.',
+            });
+        } catch {
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: 'Failed to update occupancy mode.',
+            });
+        } finally {
+            setIsUpdatingOccupancy(false);
+        }
+    };
 
     if (legalView) {
         if (legalView === 'tos') return <TermsOfService onBack={handleBack} />;
@@ -54,6 +85,8 @@ function SettingsContent() {
         if (legalView === 'ai') return <AIDisclosure onBack={handleBack} />;
     }
 
+    const currentOccupancy = userProfile?.occupancyMode || 'owner';
+
     return (
         <>
             <PageHeader
@@ -61,6 +94,69 @@ function SettingsContent() {
                 description="Manage your data, preferences, and integrations."
             />
             <div className="grid gap-8 max-w-4xl mx-auto">
+                {/* Occupancy Mode Section */}
+                <div>
+                    <SectionHeader icon={Home} title="Occupancy Mode" />
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Do you own or rent your home?</CardTitle>
+                            <CardDescription>
+                                This determines how items are tracked and whether landlord fixtures are separated.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent className="grid gap-3">
+                            <button
+                                onClick={() => handleOccupancyChange('owner')}
+                                disabled={isUpdatingOccupancy}
+                                className={`flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all ${
+                                    currentOccupancy === 'owner'
+                                        ? 'border-primary bg-primary/5'
+                                        : 'border-border hover:border-primary/50'
+                                }`}
+                            >
+                                <Home className={`h-5 w-5 ${currentOccupancy === 'owner' ? 'text-primary' : 'text-muted-foreground'}`} />
+                                <div className="flex-1">
+                                    <div className="font-medium">I Own My Home</div>
+                                    <div className="text-sm text-muted-foreground">All items tracked as personal property</div>
+                                </div>
+                            </button>
+                            <button
+                                onClick={() => handleOccupancyChange('renter')}
+                                disabled={isUpdatingOccupancy}
+                                className={`flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all ${
+                                    currentOccupancy === 'renter'
+                                        ? 'border-primary bg-primary/5'
+                                        : 'border-border hover:border-primary/50'
+                                }`}
+                            >
+                                <Building2 className={`h-5 w-5 ${currentOccupancy === 'renter' ? 'text-primary' : 'text-muted-foreground'}`} />
+                                <div className="flex-1">
+                                    <div className="font-medium">I Rent My Home</div>
+                                    <div className="text-sm text-muted-foreground">Distinguish personal items from landlord fixtures</div>
+                                </div>
+                            </button>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* Properties Link (Renter Mode Only) */}
+                {currentOccupancy === 'renter' && userProfile && updateUserProfile && (
+                    <div>
+                        <SectionHeader icon={Building2} title="Landlord Connection" />
+                        <PropertiesLinkSettings
+                            userProfile={userProfile}
+                            updateUserProfile={updateUserProfile}
+                            getIdToken={async () => {
+                                const firebaseUser = user as unknown as { getIdToken?: () => Promise<string> };
+                                if (firebaseUser?.getIdToken) {
+                                    return await firebaseUser.getIdToken();
+                                }
+                                throw new Error('Unable to get ID token');
+                            }}
+                        />
+                    </div>
+                )}
+
                 <div>
                     <SectionHeader icon={LinkIcon} title="Integrations" />
                     <div className="grid gap-4">

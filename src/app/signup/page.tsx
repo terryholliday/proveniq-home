@@ -103,7 +103,7 @@ export default function SignupPage() {
       const result = await signInWithPopup(auth, provider);
       console.log('[Signup] Popup auth success:', result.user.email);
       await createUserProfile(result.user);
-      router.push("/onboarding/permissions");
+      router.push("/onboarding/occupancy");
     } catch (err: unknown) {
       console.error('[Signup] Popup auth error:', err);
       const firebaseError = err as { code?: string; message?: string };
@@ -135,7 +135,7 @@ export default function SignupPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await createUserProfile(userCredential.user, { firstName, lastName });
-      router.push("/onboarding/permissions");
+      router.push("/onboarding/occupancy");
     } catch (err: unknown) {
       const firebaseError = err as { code?: string; message?: string };
       const message = err instanceof Error ? err.message : "Could not create account.";
