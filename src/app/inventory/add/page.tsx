@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useFirebase, useUser } from '@/firebase/provider';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { ItemReviewModal, AIAnalysisResult, ReviewedItemData } from '@/components/inventory/ItemReviewModal';
@@ -92,6 +92,32 @@ export default function AddItemPage() {
         if (!user || !firestore) return null;
 
         try {
+            // 1. Get Core valuation (async, don't block save)
+            let coreValuation = data.estimatedValue;
+            try {
+                const valResponse = await fetch('/api/core/valuation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id: `temp-${Date.now()}`,
+                        name: data.name,
+                        category: data.category,
+                        condition: data.condition?.toLowerCase() || 'good',
+                        brand: data.brand,
+                        model: data.model,
+                        purchasePrice: data.estimatedValue,
+                    }),
+                });
+                if (valResponse.ok) {
+                    const valData = await valResponse.json();
+                    coreValuation = valData.estimatedValue || data.estimatedValue;
+                    console.log('[Core] Valuation received:', coreValuation);
+                }
+            } catch (e) {
+                console.warn('[Core] Valuation unavailable, using AI estimate');
+            }
+
+            // 2. Save to Firestore
             const docRef = await addDoc(collection(firestore, 'items'), {
                 userId: user.uid,
                 name: data.name,
@@ -101,7 +127,7 @@ export default function AddItemPage() {
                 condition: data.condition,
                 brand: data.brand,
                 model: data.model,
-                marketValue: data.estimatedValue,
+                marketValue: coreValuation,
                 purchasePrice: data.estimatedValue,
                 createdAt: serverTimestamp(),
                 updatedAt: serverTimestamp(),
@@ -109,6 +135,38 @@ export default function AddItemPage() {
                 tenantId: 'consumer',
                 status: 'active'
             });
+
+            // 3. Register with Core to get PAID (async, don't block UI)
+            try {
+                const regResponse = await fetch('/api/core/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: user.uid,
+                        item: {
+                            id: docRef.id,
+                            name: data.name,
+                            category: data.category,
+                            estimatedValue: coreValuation,
+                            condition: data.condition?.toLowerCase() || 'good',
+                        },
+                    }),
+                });
+                if (regResponse.ok) {
+                    const regData = await regResponse.json();
+                    if (regData.paid) {
+                        // Update Firestore with PAID
+                        await updateDoc(doc(firestore, 'items', docRef.id), {
+                            paid: regData.paid,
+                            coreRegisteredAt: new Date().toISOString(),
+                        });
+                        console.log('[Core] Asset registered with PAID:', regData.paid);
+                    }
+                }
+            } catch (e) {
+                console.warn('[Core] PAID registration unavailable');
+            }
+
             return docRef.id;
         } catch (error) {
             console.error("Save failed", error);
