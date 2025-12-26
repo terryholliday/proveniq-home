@@ -81,11 +81,13 @@ export default function LegacyPlannerPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Button variant="outline" size="lg">
-            <Users className="mr-2 h-5 w-5" />
-            Manage Beneficiaries
-          </Button>
-          <Button variant="outline" size="lg">
+          <Link href="/legacy-planner/beneficiaries">
+            <Button variant="outline" size="lg" className="w-full">
+              <Users className="mr-2 h-5 w-5" />
+              Manage Beneficiaries
+            </Button>
+          </Link>
+          <Button variant="outline" size="lg" onClick={() => window.print()}>
             <FileText className="mr-2 h-5 w-5" />
             Generate Full Report
           </Button>
