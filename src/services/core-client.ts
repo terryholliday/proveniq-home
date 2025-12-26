@@ -126,6 +126,42 @@ export interface ProvenanceResult {
   scoredAt: string;
 }
 
+// P1: Condition Assessment
+export interface ConditionAssessmentRequest {
+  assetId: string;
+  imageUrls: string[];
+  category: string;
+  context?: 'initial' | 'claim' | 'inspection' | 'sale' | 'service';
+  previousCondition?: 'new' | 'excellent' | 'good' | 'fair' | 'poor';
+}
+
+export interface ConditionAssessmentResult {
+  assetId: string;
+  assessmentId: string;
+  condition: 'new' | 'excellent' | 'good' | 'fair' | 'poor';
+  conditionScore: number;
+  confidenceScore: number;
+  damageDetected: boolean;
+  damages: Array<{
+    type: string;
+    severity: 'minor' | 'moderate' | 'severe';
+    location: string;
+    valueImpactPercent: number;
+  }>;
+  estimatedValueImpact: number;
+  conditionMultiplier: number;
+  analysisNotes: string[];
+  assessedAt: string;
+}
+
+// P1: Market Intelligence
+export interface MarketPriceSuggestion {
+  suggestedPrice: number;
+  priceRange: { low: number; high: number };
+  confidence: number;
+  factors: string[];
+}
+
 // ============================================
 // API CLIENT
 // ============================================
@@ -265,6 +301,67 @@ class CoreClient {
     } catch (error) {
       console.error('[Core] Provenance error:', error);
       return this.localProvenanceFallback(request);
+    }
+  }
+
+  /**
+   * P1: Assess condition from photos
+   */
+  async assessCondition(request: ConditionAssessmentRequest): Promise<ConditionAssessmentResult | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/v1/condition/assess`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Source-App': 'proveniq-home',
+        },
+        body: JSON.stringify(request),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(`[Core] Condition assessed: ${result.condition} (${result.conditionScore}/100)`);
+        return result;
+      }
+
+      console.warn('[Core] Condition assessment failed:', response.status);
+      return null;
+    } catch (error) {
+      console.error('[Core] Condition assessment error:', error);
+      return null;
+    }
+  }
+
+  /**
+   * P1: Get market price suggestion
+   */
+  async getMarketPrice(
+    category: string,
+    condition: string,
+    brand?: string,
+    purchasePrice?: number
+  ): Promise<MarketPriceSuggestion | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/v1/market/suggest-price`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Source-App': 'proveniq-home',
+        },
+        body: JSON.stringify({ category, condition, brand, purchasePrice }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(`[Core] Market price: $${result.suggestedPrice} (${result.confidence}% confidence)`);
+        return result;
+      }
+
+      console.warn('[Core] Market price failed:', response.status);
+      return null;
+    } catch (error) {
+      console.error('[Core] Market price error:', error);
+      return null;
     }
   }
 
