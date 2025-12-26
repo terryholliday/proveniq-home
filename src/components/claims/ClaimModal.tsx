@@ -52,7 +52,38 @@ export default function ClaimModal({ items, claimType, onClose }: ClaimModalProp
             .filter(Boolean);
 
         try {
-            // Try to submit to ClaimsIQ service
+            // 1. Pre-screen for fraud via Core (non-blocking warning)
+            let fraudWarning: string | null = null;
+            try {
+                const fraudResponse = await fetch('/api/core/fraud-screen', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: user?.uid || 'anonymous',
+                        item: {
+                            id: items[0].id,
+                            category: items[0].category,
+                            estimatedValue: totalValueCents / 100,
+                            purchasePrice: items[0].purchasePrice,
+                            purchaseDate: items[0].purchaseDate,
+                            hasReceipt: !!items[0].receiptUrl,
+                            images: items[0].images || (items[0].imageUrl ? [items[0].imageUrl] : []),
+                        },
+                        claimType: 'insurance',
+                    }),
+                });
+                if (fraudResponse.ok) {
+                    const fraudData = await fraudResponse.json();
+                    console.log('[Core] Fraud pre-screen:', fraudData.result?.riskLevel);
+                    if (fraudData.result?.riskLevel === 'HIGH' || fraudData.result?.riskLevel === 'CRITICAL') {
+                        fraudWarning = `Claim flagged for review (Risk: ${fraudData.result.riskLevel})`;
+                    }
+                }
+            } catch (e) {
+                console.warn('[Core] Fraud pre-screening unavailable');
+            }
+
+            // 2. Try to submit to ClaimsIQ service
             const result = await submitInsuranceClaim({
                 itemId: items[0].id,
                 itemName: items.map(i => i.name).join(', '),
