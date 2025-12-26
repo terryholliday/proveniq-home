@@ -18,6 +18,7 @@ import { FinancialsSection } from '@/components/inventory/detail/FinancialsSecti
 import { LocationSection } from '@/components/inventory/detail/LocationSection';
 import { MaintenanceSection } from '@/components/inventory/detail/MaintenanceSection';
 import { LegacySection } from '@/components/inventory/detail/LegacySection';
+import { WarrantySection } from '@/components/inventory/detail/WarrantySection';
 import { QRCodeSection } from '@/components/inventory/detail/QRCodeSection';
 import { SalesTools } from '@/components/inventory/detail/SalesTools';
 import { LendingInfo } from '@/components/inventory/detail/LendingInfo';
@@ -160,6 +161,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
 
             <DescriptionSection item={item!} onUpdate={handleUpdate} />
             <FinancialsSection item={item!} onUpdate={handleUpdate} />
+            <WarrantySection item={item!} onUpdate={handleUpdate} />
             <LocationSection item={item!} onUpdate={handleUpdate} />
             <MaintenanceSection item={item!} user={appUser!} onUpdate={handleUpdate} onUpgradeReq={handleUpgradeRequest} />
             {provenanceSummary && <ProvenanceTimeline summary={provenanceSummary} />}

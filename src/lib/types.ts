@@ -247,6 +247,19 @@ export type InventoryItem = {
   container?: string;
   addedDate?: string;
   warrantyInfo?: string;
+  // [WARRANTY TRACKING]
+  warranty?: {
+    hasWarranty: boolean;
+    provider?: string;           // Manufacturer, retailer, or extended warranty provider
+    type?: 'manufacturer' | 'extended' | 'retailer' | 'service_plan';
+    expirationDate?: string;     // ISO date string
+    coverageDetails?: string;    // What's covered
+    claimPhone?: string;         // Phone number for claims
+    claimUrl?: string;           // URL for online claims
+    policyNumber?: string;       // Warranty policy/contract number
+    documentUrl?: string;        // Uploaded warranty document
+    reminderSent?: boolean;      // Has expiration reminder been sent
+  };
   lent?: LentDetails;
   exif?: ExifData;
   boxId?: string;
