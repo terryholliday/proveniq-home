@@ -7,6 +7,7 @@ import { Move, InventoryItem, Box, PackingPlan, GroupingSuggestion } from '@/lib
 import { getBoxes, saveBox, deleteBox, updateItem } from '@/lib/data';
 import { generatePackingPlan } from '@/lib/backend';
 import { ArrowLeft, Plus, Printer, Trash2, Loader2, Sparkles, Check, Crown, Box as BoxIcon } from 'lucide-react';
+import PrintableBoxLabel from '@/components/printableboxlabel';
 import { checkPermission, PERMISSIONS } from '@/lib/subscription-service';
 
 const PackingPlanModal = ({ plan, onClose, onCreateBox }: { plan: PackingPlan, onClose: () => void, onCreateBox: (group: GroupingSuggestion) => void }) => {
@@ -244,6 +245,27 @@ const MoveDetail = ({ move, items, onBack, onUpdateItems, onPrintLabel, onUpgrad
 export default function MovePlannerPage() {
   const [selectedMove, setSelectedMove] = useState<Move | null>(null);
   const [moves, setMoves] = useState<Move[]>([]);
+  const [allItems, setAllItems] = useState<InventoryItem[]>([]);
+  const [showPrintLabel, setShowPrintLabel] = useState<{ box: Box; items: InventoryItem[] } | null>(null);
+
+  // Load moves from localStorage on mount
+  useEffect(() => {
+    const savedMoves = localStorage.getItem('proveniq_moves');
+    if (savedMoves) {
+      setMoves(JSON.parse(savedMoves));
+    }
+    // Load mock inventory for now - in production this would come from Firebase
+    import('@/lib/data').then(({ mockInventory }) => {
+      setAllItems(mockInventory || []);
+    });
+  }, []);
+
+  // Save moves to localStorage whenever they change
+  useEffect(() => {
+    if (moves.length > 0) {
+      localStorage.setItem('proveniq_moves', JSON.stringify(moves));
+    }
+  }, [moves]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newMoveName, setNewMoveName] = useState('');
   const [newMoveDate, setNewMoveDate] = useState('');
@@ -276,8 +298,39 @@ export default function MovePlannerPage() {
     }
   };
 
+  const handlePrintLabel = (box: Box, items: InventoryItem[]) => {
+    setShowPrintLabel({ box, items });
+  };
+
+  const handleUpdateItems = () => {
+    // Refresh items from data source
+    import('@/lib/data').then(({ mockInventory }) => {
+      setAllItems(mockInventory || []);
+    });
+  };
+
+  if (showPrintLabel) {
+    return (
+      <PrintableBoxLabel
+        box={showPrintLabel.box}
+        items={showPrintLabel.items}
+        onDone={() => setShowPrintLabel(null)}
+      />
+    );
+  }
+
   if (selectedMove) {
-    return <MoveDetail move={selectedMove} items={[]} onBack={() => setSelectedMove(null)} onUpdateItems={() => { }} onPrintLabel={() => { }} onUpgradeReq={() => { }} isLandscape={false} />;
+    return (
+      <MoveDetail
+        move={selectedMove}
+        items={allItems}
+        onBack={() => setSelectedMove(null)}
+        onUpdateItems={handleUpdateItems}
+        onPrintLabel={handlePrintLabel}
+        onUpgradeReq={() => {}}
+        isLandscape={false}
+      />
+    );
   }
 
   return (
